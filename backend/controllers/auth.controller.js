@@ -8,6 +8,7 @@ const {
 const ApiError = require("../utils/ApiError.js");
 const userSchema = require("../models/user.model.js");
 const { hashPassword, compairPassword } = require("../utils/hashPassword.js");
+const generateJwtToken = require("../utils/generatejwttoken.js");
 
 const userRegsitration = tryCatch(async (req, res) => {
   const { username, fullName, email, password } = req.body;
@@ -69,10 +70,41 @@ const userLogin = tryCatch(async (req, res) => {
   const userInfo = await userSchema.findOne({
     $or: [{ username: userId }, { email: userId }],
   });
-  const encryptPassword = userInfo.password
-  const isPasswordCorrect = await compairPassword(password, encryptPassword)
-  if(!userInfo && !isPasswordCorrect){
-    
+  if (!userInfo) {
+    throw new ApiError(BAD_REQUEST, "Username or email is incorrect");
   }
+  if (!(await compairPassword(password, userInfo.password))) {
+    throw new ApiError(BAD_REQUEST, "username or password is incorrect");
+  }
+
+  const accessToken = generateJwtToken(
+    userInfo._id,
+    process.env.ACCESS_TOKEN_SECRET_KEY,
+    "15m"
+  );
+  const refreshToken = generateJwtToken(
+    userInfo._id,
+    process.env.REFRESH_TOKEN_SECRET_KEY,
+    "1d"
+  );
+  const options = {
+    httpOnly: true,
+    secure: true,
+  };
+  return res
+    .status(200)
+    .cookie("refreshToken", refreshToken, options)
+    .cookie("accessToken", accessToken, options)
+    .json({
+      data: {
+        username: userInfo.username,
+        email: userInfo.email,
+        fullName: userInfo.fullName,
+        bio: userInfo.bio,
+        profileImg: userInfo.profileImg,
+        coverImg: userInfo.coverImg,
+      },
+      messge: "login successfully",
+    });
 });
 module.exports = { userLogin, userRegsitration };
