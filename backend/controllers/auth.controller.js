@@ -1,6 +1,78 @@
-const tryCatch = require("../utils/tryCatch");
+const tryCatch = require("../utils/tryCatch.js");
+const {
+  BAD_REQUEST,
+  SUCCESS,
+  INTERNAL_SERVER_ERROR,
+} = require("../utils/httpStatusCodes.js");
 
-const userLogin = tryCatch((req, res) => {
-    res.status(200).json({ message: "everythig looks good!" });
+const ApiError = require("../utils/ApiError.js");
+const userSchema = require("../models/user.model.js");
+const { hashPassword, compairPassword } = require("../utils/hashPassword.js");
+
+const userRegsitration = tryCatch(async (req, res) => {
+  const { username, fullName, email, password } = req.body;
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  const fields = [username, fullName, email, password];
+  if (fields.some((field) => !field || field.trim() === "")) {
+    throw new ApiError(BAD_REQUEST, "all fields are required");
+  }
+  if (password.length < 6)
+    throw new ApiError(BAD_REQUEST, "Password must contain atleast 6 ");
+
+  if (!emailRegex.test(email))
+    throw new ApiError(BAD_REQUEST, "Please provide vaild email id !");
+
+  const isUserPresent = await userSchema.findOne({ username });
+  if (isUserPresent)
+    throw new ApiError(BAD_REQUEST, "Username is already present!");
+
+  const isEmailPresent = await userSchema.findOne({ email });
+  if (isEmailPresent)
+    throw new ApiError(BAD_REQUEST, "Email id Already present!");
+
+  const encryptPassword = await hashPassword(password);
+
+  const userData = new userSchema({
+    username,
+    fullName,
+    email,
+    password: encryptPassword,
+  });
+  const newUser = await userData.save();
+  if (newUser) {
+    res.status(SUCCESS).json({
+      meassage: "Register SuccessFully !",
+      data: {
+        _id: newUser._id,
+        username: newUser.username,
+        fullName: newUser.fullName,
+        email: newUser.email,
+      },
+    });
+  } else {
+    throw new ApiError(
+      INTERNAL_SERVER_ERROR,
+      "Can't register a new user ! please try after sometime."
+    );
+  }
 });
-module.exports = { userLogin };
+
+const userLogin = tryCatch(async (req, res) => {
+  const userId = req.body.username ? req.body.username : req.body.email;
+  const password = req.body.password;
+  if (!userId)
+    throw new ApiError(BAD_REQUEST, "Please provide email or username");
+  if (!password) throw new ApiError(BAD_REQUEST, "invalid password");
+
+  const userInfo = await userSchema.findOne({
+    $or: [{ username: userId }, { email: userId }],
+  });
+  const encryptPassword = userInfo.password
+  const isPasswordCorrect = await compairPassword(password, encryptPassword)
+  if(!userInfo && !isPasswordCorrect){
+    
+  }
+});
+module.exports = { userLogin, userRegsitration };

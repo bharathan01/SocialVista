@@ -1,7 +1,7 @@
 
 
 
-const tryCatch = (Controller) => async (error, req, res, next) => {
+const tryCatch = (Controller) => async (req, res, next) => {
   try {
     await Controller(req, res);
   } catch (error) {

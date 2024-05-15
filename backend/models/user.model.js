@@ -19,6 +19,7 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       require: true,
+      minLength:6
     },
     profileImg: {
       type: String,
@@ -32,11 +33,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
-    likedPost: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Post",
-      default: [],
-    },
+    // likedPost: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "Post",
+    //   default: [],
+    // },
     following: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
