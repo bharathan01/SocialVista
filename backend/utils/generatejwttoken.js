@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken')
 
 
-const generateJwtToken = (playLoad,secretKey,exprTime) =>{
-    return jwt.sign({playLoad},secretKey,{expiresIn:exprTime})
+const generateJwtToken = (userInfo,secretKey,exprTime) =>{
+    return jwt.sign({userInfo},secretKey,{expiresIn:exprTime})
 }
 
 module.exports = generateJwtToken

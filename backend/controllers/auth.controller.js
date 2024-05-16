@@ -97,6 +97,7 @@ const userLogin = tryCatch(async (req, res) => {
     .cookie("accessToken", accessToken, options)
     .json({
       data: {
+        id:userInfo._id,
         username: userInfo.username,
         email: userInfo.email,
         fullName: userInfo.fullName,
@@ -107,4 +108,12 @@ const userLogin = tryCatch(async (req, res) => {
       messge: "login successfully",
     });
 });
-module.exports = { userLogin, userRegsitration };
+
+const userProfileUpadate =() =>{
+
+}
+const userLoguot = () =>{
+
+}
+
+module.exports = { userLogin, userRegsitration,userProfileUpadate ,userLoguot};
