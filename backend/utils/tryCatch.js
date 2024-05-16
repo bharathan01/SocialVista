@@ -3,7 +3,7 @@
 
 const tryCatch = (Controller) => async (req, res, next) => {
   try {
-    await Controller(req, res);
+    await Controller(req, res,next);
   } catch (error) {
     next(error);
   }

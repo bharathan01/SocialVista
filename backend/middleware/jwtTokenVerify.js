@@ -1,35 +1,36 @@
 const jwt = require("jsonwebtoken");
-const ApiError = require("../utils/ApiError");
+const ApiError = require("../utils/ApiError.js");
 const { UNAUTHORIZED } = require("../utils/httpStatusCodes.js");
 const generateJwtToken = require("../utils/generatejwttoken.js");
+const tryCatch = require("../utils/tryCatch.js");
 
 const verifyJwtToken = (token, secretKey) => {
   return jwt.verify(token, secretKey);
 };
 
-const isAuthorizedUser = async (req, res, next) => {
+const isAuthorizedUser = tryCatch( async(req, res, next) => {
   const accessToken = req.cookies?.accessToken;
   if (!accessToken) {
     throw new ApiError(
       UNAUTHORIZED,
-      "Unauthorized access, Please login again!"
+      "Unauthorized access, Please login again! "
     );
   }
-
   try {
     const authorizedAccessToken = verifyJwtToken(
       accessToken,
       process.env.ACCESS_TOKEN_SECRET_KEY
     );
-    req.userId = authorizedAccessToken.userId; // Assuming the token contains a userId
+    req.userId = authorizedAccessToken.userInfo;
     return next();
   } catch (error) {
+    console.log(error)
     if (error.name === "TokenExpiredError") {
       const refreshToken = req.cookies?.refreshToken;
       if (!refreshToken) {
         throw new ApiError(
           UNAUTHORIZED,
-          "Unauthorized access, Please login again!"
+          "Unauthorized access, Please login again! "
         );
       }
 
@@ -41,7 +42,7 @@ const isAuthorizedUser = async (req, res, next) => {
         if (!authorizedRefreshToken) {
           throw new ApiError(
             UNAUTHORIZED,
-            "Unauthorized access, Please login again!"
+            "Unauthorized access, Please login again! "
           );
         }
 
@@ -57,21 +58,21 @@ const isAuthorizedUser = async (req, res, next) => {
         };
 
         res.cookie("accessToken", newAccessToken, options);
-        req.userId = authorizedRefreshToken.userInfo._id; // Assuming userInfo contains an _id field
+        req.userId = authorizedRefreshToken.userInfo; // Assuming userInfo contains an _id field
         return next();
       } catch (refreshError) {
         throw new ApiError(
           UNAUTHORIZED,
-          "Unauthorized access, Please login again!"
+          "Unauthorized access, Please login again! "
         );
       }
     } else {
       throw new ApiError(
         UNAUTHORIZED,
-        "Unauthorized access, Please login again!"
+        "Unauthorized access, Please login again! "
       );
     }
   }
-};
+});
 
 module.exports = isAuthorizedUser;

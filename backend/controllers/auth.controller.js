@@ -44,6 +44,7 @@ const userRegsitration = tryCatch(async (req, res) => {
   const newUser = await userData.save();
   if (newUser) {
     res.status(SUCCESS).json({
+      SUCCESS:true,
       meassage: "Register SuccessFully !",
       data: {
         _id: newUser._id,
@@ -96,6 +97,7 @@ const userLogin = tryCatch(async (req, res) => {
     .cookie("refreshToken", refreshToken, options)
     .cookie("accessToken", accessToken, options)
     .json({
+      SUCCESS:true,
       data: {
         id:userInfo._id,
         username: userInfo.username,
@@ -109,11 +111,18 @@ const userLogin = tryCatch(async (req, res) => {
     });
 });
 
-const userProfileUpadate =() =>{
+const userProfileUpadate = tryCatch((req,res) =>{
+  const user = req.userId
+  return res.status(200).json({user})
+});
 
-}
-const userLoguot = () =>{
-
-}
+const userLoguot = tryCatch((req,res) =>{
+   res.cookie("accessToken","",{maxAge:0})
+   res.cookie("refreshToken","",{maxAge:0})
+   res.status(SUCCESS).json({
+    SUCCESS:true,
+    message:"Logout Successfully"
+   })
+})
 
 module.exports = { userLogin, userRegsitration,userProfileUpadate ,userLoguot};
