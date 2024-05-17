@@ -9,6 +9,7 @@ const {
 const ApiError = require("../utils/ApiError.js");
 const userSchema = require("../models/user.model.js");
 const { hashPassword, compairPassword } = require("../utils/hashPassword.js");
+const { default: mongoose } = require("mongoose");
 
 const getUserProfile = tryCatch(async (req, res) => {
   const user = req.params.id;
@@ -33,9 +34,25 @@ const userProfileUpadate = tryCatch((req, res) => {
 
   return res.status(200).json({ user });
 });
-const suggestedUsers = tryCatch((req, res) => {
+const suggestedUsers = tryCatch(async (req, res) => {
   const user = req.userId;
-  return res.status(200).json({ user });
+  const alreadyFollowed = await userSchema.findById(user).select("following");
+  const getRamdomUser = await userSchema.aggregate([
+    {
+      $match: {
+        _id: { $ne: new mongoose.Types.ObjectId(user) },
+      },
+    },
+    {
+      $sample: { size: 10 },
+    },
+  ]);
+  console.log(getRamdomUser);
+  const whoNotfollowByUser = getRamdomUser.filter(
+    (userData) => !alreadyFollowed.following.includes(userData._id)
+  );
+
+  return res.status(200).json({ whoNotfollowByUser });
 });
 const followUnfollowUser = tryCatch(async (req, res) => {
   const { id } = req.params;
