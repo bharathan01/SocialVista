@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       require: true,
-      minLength:6
+      minLength: 6,
     },
     profileImg: {
       type: String,
@@ -33,25 +33,31 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
-    // likedPost: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   ref: "Post",
-    //   default: [],
-    // },
-    following: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      default: []
-    }],
-    followers: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      default:[]
-    }],
+    likedPost: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Post",
+        default: [],
+      },
+    ],
+    following: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        default: [],
+      },
+    ],
+    followers: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        default: [],
+      },
+    ],
   },
   {
     timestamps: true,
   }
 );
 
-module.exports = mongoose.model("User",userSchema);
+module.exports = mongoose.model("User", userSchema);
