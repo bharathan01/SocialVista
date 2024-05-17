@@ -111,11 +111,6 @@ const userLogin = tryCatch(async (req, res) => {
     });
 });
 
-const userProfileUpadate = tryCatch((req,res) =>{
-  const user = req.userId
-  return res.status(200).json({user})
-});
-
 const userLoguot = tryCatch((req,res) =>{
    res.cookie("accessToken","",{maxAge:0})
    res.cookie("refreshToken","",{maxAge:0})
@@ -125,4 +120,4 @@ const userLoguot = tryCatch((req,res) =>{
    })
 })
 
-module.exports = { userLogin, userRegsitration,userProfileUpadate ,userLoguot};
+module.exports = { userLogin, userRegsitration,userLoguot};
