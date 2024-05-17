@@ -7,11 +7,13 @@ const userRouter = require("./routes/user.route.js");
 const errorHandle = require("./middleware/errorHander.js");
 const ApiError = require("./utils/ApiError.js");
 const {NOT_FOUND} = require("./utils/httpStatusCodes.js");
+const cloudinaryConfig = require("./db/cloudinaryConfig.js");
 
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(cookieParser());
+cloudinaryConfig();
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/user", userRouter);
