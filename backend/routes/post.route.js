@@ -1,0 +1,34 @@
+const express = require("express");
+const {
+  getAllPost,
+  creatNewPost,
+  updatePost,
+  deletePost,
+  userOwnPost,
+  getFollowingPost,
+  likeUnlikePost,
+  likedPost,
+  commentPost,
+} = require("../controllers/post.controller.js");
+
+const router = express.Router();
+
+//post
+router.get("/allPost", getAllPost);
+router.post("/newPost", creatNewPost);
+router.post("/userOwnPost/:id", userOwnPost);
+router.post("/getFollowingPost/:id", getFollowingPost);
+router.post("/updatePost/:id", updatePost);
+router.post("/deletePost/:id", deletePost);
+
+//like
+router.post("/like/:id", likeUnlikePost);
+router.get("/likedpost/:id", likedPost);
+
+//comment
+router.post("/comment/:id", commentPost);
+// router.post("/likeComment/:id",likeCommentPost);
+// router.post('/deleteComment/:id',deleteCommet);
+// router.post('/updateComment/:id',updateComment;
+
+module.exports = router;
