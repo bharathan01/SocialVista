@@ -1,5 +1,5 @@
-const { post } = require("../app.js");
 const Post = require("../models/post.model.js");
+const userSchema = require("../models/user.model.js");
 const ApiError = require("../utils/ApiError.js");
 const {
   uploadFiletoCloudinary,
@@ -70,7 +70,31 @@ const creatNewPost = tryCatch(async (req, res) => {
     uploadedPost,
   });
 });
-const getFollowingPost = tryCatch(async (req, res) => {});
+const getFollowingPost = tryCatch(async (req, res) => {
+  const userId = req.userId;
+  const userInfo = await userSchema.findById(userId);
+  if (!userInfo) throw new ApiError(BAD_REQUEST, "user not found!");
+
+  const following = userInfo.following;
+  const followingUserPost = await Post.find({
+    user: { $in: following },
+  })
+    .sort({ createdAt: -1 })
+    .populate({ path: "user", select: "-password" })
+    .populate({ path: "comments.user", select: "-password" });
+
+  if (!followingUserPost)
+    throw new ApiError(
+      INTERNAL_SERVER_ERROR,
+      "internal server error ,try after sometime!"
+    );
+
+  return res.status(SUCCESS).json({
+    SUCCESS: true,
+    message: "following user post",
+    followingUserPost,
+  });
+});
 const userOwnPost = tryCatch(async (req, res) => {
   const userId = req.userId;
 
@@ -149,7 +173,39 @@ const deletePost = tryCatch(async (req, res) => {
     message: "post deleted successfully",
   });
 });
-const likeUnlikePost = (req, res) => {};
+const likeUnlikePost = tryCatch(async (req, res) => {
+  const postId = req.params.id;
+  const userId = req.userId;
+
+  const post = await Post.findById(postId);
+
+  const isUserLiked = post.likes.includes(userId);
+  if (isUserLiked) {
+    await Post.updateOne({ _id: postId }, { $pull: { likes: userId } });
+    await userSchema.updateOne(
+      { _id: userId },
+      { $pull: { likedPost: postId } }
+    );
+    const updatedLike = post.likes.filter(
+      (id) => id.toString() !== userId.toString()
+    );
+    return res.status(SUCCESS).json({
+      SUCCESS: true,
+      message: "successfully liked a post",
+      updatedLike,
+    });
+  } else {
+    post.likes.push(userId);
+    await User.updateOne({ _id: userId }, { $push: { likedPosts: postId } });
+    await post.save();
+    const updatedLike = post.likes;
+    return res.status(SUCCESS).json({
+      SUCCESS: true,
+      message: "successfully liked a post",
+      updatedLike,
+    });
+  }
+});
 const likedPost = (req, res) => {};
 const commentPost = (req, res) => {};
 
