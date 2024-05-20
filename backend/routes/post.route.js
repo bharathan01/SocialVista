@@ -20,7 +20,7 @@ router.post("/newPost",isAuthorizedUser, creatNewPost);
 router.post("/userOwnPost/:id", userOwnPost);
 router.post("/getFollowingPost/:id", getFollowingPost);
 router.post("/updatePost/:id", updatePost);
-router.post("/deletePost/:id", deletePost);
+router.post("/deletePost/:id",isAuthorizedUser, deletePost);
 
 //like
 router.post("/like/:id", likeUnlikePost);

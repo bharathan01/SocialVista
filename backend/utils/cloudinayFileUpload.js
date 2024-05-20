@@ -13,11 +13,11 @@ const uploadFiletoCloudinary = async (filePath) => {
   return upload;
 };
 
-const distroyFileFromCloudinary = async (filenaem) => {
+const distroyFileFromCloudinary = async (filePath) => {
   const distroy = await cloudinary.uploader.destroy(
-    user.profileImg.split("/").pop().split(".")[0]
+    filePath.split("/").pop().split(".")[0]
   );
-  if (distroy)
+  if (!distroy)
     throw new ApiError(
       INTERNAL_SERVER_ERROR,
       "Internal server error! please try after some time!"

@@ -1,6 +1,10 @@
+const { post } = require("../app.js");
 const Post = require("../models/post.model.js");
 const ApiError = require("../utils/ApiError.js");
-const { uploadFiletoCloudinary } = require("../utils/cloudinayFileUpload.js");
+const {
+  uploadFiletoCloudinary,
+  distroyFileFromCloudinary,
+} = require("../utils/cloudinayFileUpload.js");
 const {
   BAD_REQUEST,
   NOT_FOUND,
@@ -9,7 +13,6 @@ const {
   SUCCESS,
 } = require("../utils/httpStatusCodes.js");
 const tryCatch = require("../utils/tryCatch.js");
-const { cloudinary } = require("cloudinary").v2;
 
 const getAllPost = async (req, res) => {
   const allPost = await Post.find()
@@ -67,10 +70,33 @@ const creatNewPost = tryCatch(async (req, res) => {
     uploadedPost,
   });
 });
-const getFollowingPost = (req, res) => {};
+const getFollowingPost = tryCatch(async (req, res) => {});
 const userOwnPost = (req, res) => {};
 const updatePost = (req, res) => {};
-const deletePost = (req, res) => {};
+const deletePost = tryCatch(async (req, res) => {
+  const postId = req.params.id;
+  const userId = req.userId;
+
+  const postInfo = await Post.findById(postId).populate({
+    path: "user",
+    select: "-password",
+  });
+  if (!userId === postInfo.user._id.toString())
+    throw new ApiError(
+      BAD_REQUEST,
+      "user is not authorized to delete the post!"
+    );
+  if (postInfo.img) {
+    const deleteImgCloud = await distroyFileFromCloudinary(postInfo.img);
+  }
+  const postDeleted = await Post.findByIdAndDelete(postId);
+  if (!postDeleted)
+    throw new ApiError(INTERNAL_SERVER_ERROR, "can not delete the post! 2");
+  return res.status(SUCCESS).json({
+    SUCCESS: true,
+    message: "post deleted successfully",
+  });
+});
 const likeUnlikePost = (req, res) => {};
 const likedPost = (req, res) => {};
 const commentPost = (req, res) => {};

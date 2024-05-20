@@ -87,7 +87,6 @@ const suggestedUsers = tryCatch(async (req, res) => {
       $sample: { size: 10 },
     },
   ]);
-  console.log(getRamdomUser);
   const whoNotfollowByUser = getRamdomUser.filter(
     (userData) => !alreadyFollowed.following.includes(userData._id)
   );
