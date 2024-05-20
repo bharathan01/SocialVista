@@ -10,12 +10,13 @@ const {
   likedPost,
   commentPost,
 } = require("../controllers/post.controller.js");
+const isAuthorizedUser = require("../middleware/jwtTokenVerify.js");
 
 const router = express.Router();
 
 //post
 router.get("/allPost", getAllPost);
-router.post("/newPost", creatNewPost);
+router.post("/newPost",isAuthorizedUser, creatNewPost);
 router.post("/userOwnPost/:id", userOwnPost);
 router.post("/getFollowingPost/:id", getFollowingPost);
 router.post("/updatePost/:id", updatePost);

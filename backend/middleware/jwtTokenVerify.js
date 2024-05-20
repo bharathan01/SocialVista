@@ -24,7 +24,6 @@ const isAuthorizedUser = tryCatch( async(req, res, next) => {
     req.userId = authorizedAccessToken.userInfo;
     return next();
   } catch (error) {
-    console.log(error)
     if (error.name === "TokenExpiredError") {
       const refreshToken = req.cookies?.refreshToken;
       if (!refreshToken) {

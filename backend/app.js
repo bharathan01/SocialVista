@@ -18,7 +18,7 @@ cloudinaryConfig();
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/user", userRouter);
-app.use("api/v1/post",postRouter)
+app.use("/api/v1/post",postRouter)
 
 app.use("**", (req, res) => {
   throw new ApiError(NOT_FOUND , "Page not found")
