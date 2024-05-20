@@ -14,6 +14,7 @@ const {
   SUCCESS,
 } = require("../utils/httpStatusCodes.js");
 const tryCatch = require("../utils/tryCatch.js");
+const Notification = require("../models/notification.model.js");
 
 const getAllPost = async (req, res) => {
   const allPost = await Post.find()
@@ -203,6 +204,13 @@ const likeUnlikePost = tryCatch(async (req, res) => {
     );
     await post.save();
     const updatedLike = post.likes;
+    const newNotification = new Notification({
+      type: "like",
+      from: userId,
+      to: post.user,
+    });
+
+    await newNotification.save();
     return res.status(SUCCESS).json({
       SUCCESS: true,
       message: "successfully liked a post",
@@ -251,6 +259,13 @@ const commentPost = tryCatch(async (req, res) => {
   post.comments.push(comments);
 
   await post.save();
+  const newNotification = new Notification({
+    type: "comment",
+    from: userId,
+    to: post.user,
+  });
+
+  await newNotification.save();
 
   return res.status(SUCCESS).json({
     SUCCESS: true,
@@ -258,6 +273,10 @@ const commentPost = tryCatch(async (req, res) => {
     post,
   });
 });
+
+// const deleteCommet = tryCatch(async(req,res) =>{
+    
+// })
 
 module.exports = {
   getAllPost,

@@ -29,7 +29,6 @@ router.get("/likedpost",isAuthorizedUser, likedPost);
 //comment
 router.post("/comment/:id",isAuthorizedUser, commentPost);
 // router.post("/likeComment/:id",likeCommentPost);
-// router.post('/deleteComment/:id',deleteCommet);
-// router.post('/updateComment/:id',updateComment;
+// router.post('/deleteComment/:id',isAuthorizedUser,deleteCommet);
 
 module.exports = router;

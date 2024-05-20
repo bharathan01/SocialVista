@@ -1,4 +1,4 @@
-const mongoose =  require("mongoose");
+const mongoose = require("mongoose");
 
 const postSchema = new mongoose.Schema(
   {
@@ -30,6 +30,12 @@ const postSchema = new mongoose.Schema(
           ref: "User",
           required: true,
         },
+        like: [
+          {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+          },
+        ]
       },
     ],
   },
@@ -38,4 +44,4 @@ const postSchema = new mongoose.Schema(
 
 const Post = mongoose.model("Post", postSchema);
 
-module.exports = Post
+module.exports = Post;

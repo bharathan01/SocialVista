@@ -14,6 +14,7 @@ const {
   distroyFileFromCloudinary,
   uploadFiletoCloudinary,
 } = require("../utils/cloudinayFileUpload.js");
+const Notification = require("../models/notification.model.js");
 
 const getUserProfile = tryCatch(async (req, res) => {
   const user = req.params.id;
@@ -49,7 +50,7 @@ const userProfileUpadate = tryCatch(async (req, res) => {
     const uploadedResponse = await uploadFiletoCloudinary(profileImg);
     profileImg = uploadedResponse.secure_url;
   }
-  if (coverImg) { 
+  if (coverImg) {
     if (currentUserInfo.coverImg) {
       await distroyFileFromCloudinary(currentUserInfo.coverImg);
     }
@@ -63,16 +64,19 @@ const userProfileUpadate = tryCatch(async (req, res) => {
   currentUserInfo.bio = bio || currentUserInfo.bio;
   currentUserInfo.profileImg = profileImg || currentUserInfo.profileImg;
   currentUserInfo.coverImg = coverImg || currentUserInfo.coverImg;
-   
-  const updateUser = await currentUserInfo.save()
-  if(!updateUser)
-    throw new ApiError(INTERNAL_SERVER_ERROR ,"can not update profile! try after sometime.")
 
-  return res.status(SUCCESS).json({ 
-    SUCCESS:true,
-    message:"user profile updated successfully",
-    updateUser
-   });
+  const updateUser = await currentUserInfo.save();
+  if (!updateUser)
+    throw new ApiError(
+      INTERNAL_SERVER_ERROR,
+      "can not update profile! try after sometime."
+    );
+
+  return res.status(SUCCESS).json({
+    SUCCESS: true,
+    message: "user profile updated successfully",
+    updateUser,
+  });
 });
 const suggestedUsers = tryCatch(async (req, res) => {
   const user = req.userId;
@@ -136,6 +140,13 @@ const followUnfollowUser = tryCatch(async (req, res) => {
         FORBIDDEN,
         "can not follow the user ! try after sometime"
       );
+    const newNotification = new Notification({
+      type: "follow",
+      from: req.userId,
+      to: userInfoToFollow._id,
+    });
+
+    await newNotification.save();
 
     return res.status(SUCCESS).json({
       SUCCESS: true,
