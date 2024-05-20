@@ -17,7 +17,7 @@ const router = express.Router();
 //post
 router.get("/allPost",isAuthorizedUser, getAllPost);
 router.post("/newPost",isAuthorizedUser, creatNewPost);
-router.post("/userOwnPost/:id", userOwnPost);
+router.get("/userOwnPost",isAuthorizedUser, userOwnPost);
 router.post("/getFollowingPost/:id", getFollowingPost);
 router.post("/updatePost/:id", updatePost);
 router.post("/deletePost/:id",isAuthorizedUser, deletePost);

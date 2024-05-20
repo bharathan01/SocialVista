@@ -71,7 +71,29 @@ const creatNewPost = tryCatch(async (req, res) => {
   });
 });
 const getFollowingPost = tryCatch(async (req, res) => {});
-const userOwnPost = (req, res) => {};
+const userOwnPost = tryCatch(async (req, res) => {
+  const userId = req.userId;
+
+  const postInfo = await Post.find({ user: userId })
+    .sort({ createdAt: -1 })
+    .populate({
+      path: "user",
+      select: "-password",
+    })
+    .populate({
+      path: "comments.user",
+      select: "-password",
+    });
+
+  if (!postInfo)
+    throw new ApiError(INTERNAL_SERVER_ERROR, "can not fetch user post!");
+
+  res.status(SUCCESS).json({
+    SUCCESS: true,
+    message: "fetch user post sueccessfull",
+    postInfo,
+  });
+});
 const updatePost = (req, res) => {};
 const deletePost = tryCatch(async (req, res) => {
   const postId = req.params.id;
