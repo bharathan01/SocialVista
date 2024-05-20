@@ -12,7 +12,27 @@ const tryCatch = require("../utils/tryCatch.js");
 const { cloudinary } = require("cloudinary").v2;
 
 const getAllPost = async (req, res) => {
-  const allPost = await Post.find();
+  const allPost = await Post.find()
+    .sort({ createAt: -1 })
+    .populate({
+      path: "user",
+      select: "-password",
+    })
+    .populate({
+      path: "comments.user",
+      select: "-passowrd",
+    });
+
+  if (!allPost)
+    throw new ApiError(
+      INTERNAL_SERVER_ERROR,
+      "can not fetch all post! try after sometime."
+    );
+  res.status(SUCCESS).json({
+    SUCCESS: true,
+    message: "successfully fetch all posts",
+    allPost,
+  });
 };
 
 const creatNewPost = tryCatch(async (req, res) => {
@@ -26,7 +46,7 @@ const creatNewPost = tryCatch(async (req, res) => {
     const postUrl = await uploadFiletoCloudinary(postImage);
     postImage = postUrl.secure_url;
   }
-  console.log(postImage)
+  console.log(postImage);
   const newPost = new Post({
     user: currentUser,
     text: postContent,

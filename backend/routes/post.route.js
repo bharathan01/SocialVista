@@ -15,7 +15,7 @@ const isAuthorizedUser = require("../middleware/jwtTokenVerify.js");
 const router = express.Router();
 
 //post
-router.get("/allPost", getAllPost);
+router.get("/allPost",isAuthorizedUser, getAllPost);
 router.post("/newPost",isAuthorizedUser, creatNewPost);
 router.post("/userOwnPost/:id", userOwnPost);
 router.post("/getFollowingPost/:id", getFollowingPost);
