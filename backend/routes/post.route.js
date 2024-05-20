@@ -24,10 +24,10 @@ router.post("/deletePost/:id",isAuthorizedUser, deletePost);
 
 //like
 router.get("/like/:id",isAuthorizedUser, likeUnlikePost);
-router.get("/likedpost/:id", likedPost);
+router.get("/likedpost",isAuthorizedUser, likedPost);
 
 //comment
-router.post("/comment/:id", commentPost);
+router.post("/comment/:id",isAuthorizedUser, commentPost);
 // router.post("/likeComment/:id",likeCommentPost);
 // router.post('/deleteComment/:id',deleteCommet);
 // router.post('/updateComment/:id',updateComment;

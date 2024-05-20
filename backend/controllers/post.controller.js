@@ -1,3 +1,4 @@
+const { compareSync } = require("bcrypt");
 const Post = require("../models/post.model.js");
 const userSchema = require("../models/user.model.js");
 const ApiError = require("../utils/ApiError.js");
@@ -23,7 +24,7 @@ const getAllPost = async (req, res) => {
     })
     .populate({
       path: "comments.user",
-      select: "-passowrd",
+      select: "-password",
     });
 
   if (!allPost)
@@ -191,12 +192,15 @@ const likeUnlikePost = tryCatch(async (req, res) => {
     );
     return res.status(SUCCESS).json({
       SUCCESS: true,
-      message: "successfully liked a post",
+      message: "successfully unliked a post",
       updatedLike,
     });
   } else {
     post.likes.push(userId);
-    await User.updateOne({ _id: userId }, { $push: { likedPosts: postId } });
+    await userSchema.updateOne(
+      { _id: userId },
+      { $push: { likedPost: postId } }
+    );
     await post.save();
     const updatedLike = post.likes;
     return res.status(SUCCESS).json({
@@ -206,8 +210,54 @@ const likeUnlikePost = tryCatch(async (req, res) => {
     });
   }
 });
-const likedPost = (req, res) => {};
-const commentPost = (req, res) => {};
+const likedPost = tryCatch(async (req, res) => {
+  const userId = req.userId;
+
+  const user = await userSchema.findById(userId);
+  if (!user) throw new ApiError(BAD_REQUEST, "user not found!");
+
+  const likedPosts = await Post.find({ _id: { $in: user.likedPost } })
+    .populate({
+      path: "user",
+      select: "-password",
+    })
+    .populate({
+      path: "comments.user",
+      select: "-password",
+    });
+
+  res.status(SUCCESS).json({
+    SUCCESS: true,
+    message: "user liked post",
+    likedPosts,
+  });
+});
+const commentPost = tryCatch(async (req, res) => {
+  const postId = req.params.id;
+  const userId = req.userId;
+  const { content } = req.body;
+
+  if (!content)
+    throw new ApiError(BAD_REQUEST, "Comment not be an empty string!");
+
+  const post = await Post.findById(postId);
+  if (!post) throw new ApiError(BAD_REQUEST, "Post not found!");
+
+  const comments = {
+    user: userId,
+    text: content,
+  };
+
+  post.comments.push(comments);
+
+  await post.save();
+
+  return res.status(SUCCESS).json({
+    SUCCESS: true,
+    message: "commented successfully",
+    post,
+  });
+});
 
 module.exports = {
   getAllPost,
