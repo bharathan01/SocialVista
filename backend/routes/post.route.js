@@ -19,7 +19,7 @@ router.get("/allPost",isAuthorizedUser, getAllPost);
 router.post("/newPost",isAuthorizedUser, creatNewPost);
 router.get("/userOwnPost",isAuthorizedUser, userOwnPost);
 router.post("/getFollowingPost/:id", getFollowingPost);
-router.post("/updatePost/:id", updatePost);
+router.post("/updatePost/:id",isAuthorizedUser, updatePost);
 router.post("/deletePost/:id",isAuthorizedUser, deletePost);
 
 //like
