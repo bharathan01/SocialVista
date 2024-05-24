@@ -3,8 +3,8 @@ import logo from "../../../public/images/logo.png";
 import { Link } from "react-router-dom";
 function Header() {
   return (
-    <div className="w-full h-16 flex items-center justify-around border-b-2 border-b-slate-600 sticky top-0 z-30 b">
-      <div className="w-1/2 ml-4 flex items-center" >
+    <div className="w-full h-16 flex items-center  border-b-2 border-b-slate-600 sticky top-0 z-30 bg-[#000000]">
+      <div className="md:w-1/2 w:2/3 ml-4 flex items-center" >
         <div className="object-contain">
           <Link to={"/"}>
             {" "}
@@ -15,7 +15,7 @@ function Header() {
             <h1 className="font-extrabold text-xl">SOCIAL VISTA.</h1>
         </div>
       </div>
-      <div className="w-1/2"></div>
+      <div className="md:w-1/2"></div>
     </div>
   );
 }

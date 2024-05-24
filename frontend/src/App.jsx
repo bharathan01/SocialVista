@@ -6,14 +6,16 @@ import { Header, LeftSidebar, RightSidebar } from "./components";
 function App() {
   return (
     <div>
-      <Header/>
-      <div className="flex mx-auto ">
+      <Header />
+      <div className="flex">
         <LeftSidebar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/signup" element={<SignUp />} />
-        </Routes>
+        <div className="flex-grow xl:ml-[14%] lg:ml-[20%] ml-[60px]">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/signin" element={<SignIn />} />
+            <Route path="/signup" element={<SignUp />} />
+          </Routes>
+        </div>
         <RightSidebar />
       </div>
     </div>
