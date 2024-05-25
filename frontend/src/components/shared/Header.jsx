@@ -3,7 +3,7 @@ import logo from "../../../public/images/logo.png";
 import { Link } from "react-router-dom";
 function Header() {
   return (
-    <div className="w-full h-16 flex items-center  border-b-2 border-b-slate-600 sticky top-0 z-30 bg-[#000000]">
+    <div className="w-full h-16 flex items-center  border-b-2 border-b-slate-600 fixed top-0 z-30 bg-[#000000]">
       <div className="md:w-1/2 w:2/3 ml-4 flex items-center" >
         <div className="object-contain">
           <Link to={"/"}>
