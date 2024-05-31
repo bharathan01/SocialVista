@@ -7,7 +7,12 @@ import Suggections from "./suggection/Suggections.jsx";
 
 function RightSidebar() {
   return (
-    <div className="xl:w-1/4  lg:w-[30%] md:w-[40%] md:block hidden  mt-[64px]">
+    <div
+      className="xl:w-1/4  lg:w-[30%] md:w-[40%] md:block hidden  mt-[64px] fixed right-0 h-[91vh] overflow-y-scroll"
+      style={{
+        scrollbarWidth: "none",
+      }}
+    >
       <div className="w-[95%] flex  flex-col justify-center bg-gray-900 rounded-md mt-4">
         <div className="w-full flex justify-between p-2 mb-5">
           <div>
@@ -43,10 +48,10 @@ function RightSidebar() {
           {userProfiles.map((profile, index) => {
             return (
               <React.Fragment key={index}>
-                <Suggections 
-                profileImg={profile.profileImage}
-                username={profile.username}
-                fullname={profile.fullName}
+                <Suggections
+                  profileImg={profile.profileImage}
+                  username={profile.username}
+                  fullname={profile.fullName}
                 />
               </React.Fragment>
             );

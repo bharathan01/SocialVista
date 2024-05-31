@@ -7,7 +7,7 @@ function Home() {
   console.log(changePage);
 
   return (
-    <div className="w-full min-h-screen overflow-y-auto p-2">
+    <div className=" min-h-screen overflow-y-auto p-2 xl:w-[71%] lg:w-[62%] md:w-[57%] ">
       <div className="flex justify-around items-center p-4 fixed top-[64px] bg-black xl:w-[61%] lg:w-[53%] md:w-[55%] w-[85%]">
         <div
           className="hover:cursor-pointer p-1"
