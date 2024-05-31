@@ -10,7 +10,7 @@ function App() {
       <Header />
       <div className="flex">
         <LeftSidebar />
-        <div className="flex-grow xl:ml-[14%] lg:ml-[20%] ml-[60px] mt-[64px]">
+        <div className="flex-grow xl:ml-[14%] lg:ml-[20%] ml-[60px] mt-[64px] w-[63%]">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/signin" element={<SignIn />} />
