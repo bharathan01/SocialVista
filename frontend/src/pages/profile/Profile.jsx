@@ -3,9 +3,14 @@ import { Link } from "react-router-dom";
 
 import cover from "../../../public/images/cover.png";
 import avathar from "../../../public/images/avatar-placeholder.png";
+import { useState } from "react";
+import OriginalPost from "../post/originalPost/OriginalPost";
+import LikedPost from "../post/likedPost/LikedPost";
 
 function Profile() {
-  const isUser = false;
+  const isUser = true;
+  const [isSelectedPage, setSelectedPage] = useState("posts");
+
   return (
     <div className="min-h-screen overflow-y-auto xl:w-[71%] lg:w-[62%] md:w-[57%] ">
       <div className="flex w-full flex-col">
@@ -27,7 +32,7 @@ function Profile() {
           <div className="w-full">
             <div className="w-full flex items-center justify-end p-3">
               {isUser ? (
-                <div className="w-[120px] p-2 border-2 border-white rounded-full text-center">
+                <div className="w-[120px] p-2 border-2 border-white rounded-full text-center" onClick={()=>document.getElementById('my_modal_3').showModal()}>
                   <span>Edit Profile</span>
                 </div>
               ) : (
@@ -36,6 +41,20 @@ function Profile() {
                 </div>
               )}
             </div>
+            <dialog id="my_modal_3" className="modal">
+              <div className="modal-box">
+                <form method="dialog">
+                  {/* if there is a button in form, it will close the modal */}
+                  <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                    ✕
+                  </button>
+                </form>
+                <h3 className="font-bold text-lg">Hello!</h3>
+                <p className="py-4">
+                  Press ESC key or click on ✕ button to close
+                </p>
+              </div>
+            </dialog>
             <div className="w-full flex flex-col gap-1 mt-[10px]">
               <div className="sm:ml-[50px] ml-[30px] flex flex-col gap-1 ">
                 <div>
@@ -48,23 +67,52 @@ function Profile() {
               <div className="sm:ml-[50px] ml-[30px]">
                 <span className="lg:text-base text-sm">
                   Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                  Dicta, ullam! Lorem ipsum dolor sit amet consectetur adipisicing elit. At, quibusdam! Modi, vero veritatis dolor earum placeat aperiam tempore reprehenderit. Consequuntur ducimus sequi, nam commodi accusamus id, molestias labore eum officia laborum deleniti dicta! Molestiae, ipsa soluta sed hic saepe accusantium officia eum ea, possimus pariatur sint reprehenderit corrupti itaque quae.
+                  Dicta, ullam! Lorem ipsum dolor sit amet consectetur
+                  adipisicing elit. At, quibusdam! Modi, vero veritatis dolor
+                  earum placeat aperiam tempore reprehenderit. Consequuntur
+                  ducimus sequi, nam commodi accusamus id, molestias labore eum
+                  officia laborum deleniti dicta! Molestiae, ipsa soluta sed hic
+                  saepe accusantium officia eum ea, possimus pariatur sint
+                  reprehenderit corrupti itaque quae.
                 </span>
               </div>
             </div>
             <div className="flex mt-4 sm:ml-[50px] ml-[30px] gap-3 ">
               <div>
-                <span className="font-bold text-lg">200 </span><span className="opacity-55"> followers</span>
+                <span className="font-bold text-lg">200 </span>
+                <span className="opacity-55"> followers</span>
               </div>
               <Link>
-                 <div><span className="font-bold text-lg">159</span><span className="opacity-55"> following</span></div>
+                <div>
+                  <span className="font-bold text-lg">159</span>
+                  <span className="opacity-55"> following</span>
+                </div>
               </Link>
-              <div><span className="font-bold text-lg">20 </span><span className="opacity-55"> Posts</span></div>
+              <div>
+                <span className="font-bold text-lg">20 </span>
+                <span className="opacity-55"> Posts</span>
+              </div>
             </div>
           </div>
         </div>
-        <div className="w-full bg-white mt-2 p-2">
-            
+        <div className="w-full mt-6 p-2 flex items-center justify-around border-b-2">
+          <div
+            className={`w-[50%] text-center p-2 
+            ${isSelectedPage === "posts" ? "bg-gray-900" : ""}`}
+            onClick={() => setSelectedPage("posts")}
+          >
+            <span>Posts</span>
+          </div>
+          <div
+            className={`w-[50%]  text-center p-2 
+            ${isSelectedPage === "likedpost" ? "bg-gray-900" : ""}`}
+            onClick={() => setSelectedPage("likedpost")}
+          >
+            <span>Liked Post</span>
+          </div>
+        </div>
+        <div className="m-3 mt-5">
+          {isSelectedPage === "posts" ? <OriginalPost /> : <LikedPost />}
         </div>
       </div>
     </div>
