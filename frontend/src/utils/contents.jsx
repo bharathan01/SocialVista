@@ -7,17 +7,17 @@ import { RiApps2AddLine } from "react-icons/ri";
 import { IoNewspaperOutline } from "react-icons/io5";
 
  const content = [
-  { name: "Home", icon: <GoHome />, type: "home" },
-  { name: "Serach", icon: <IoSearch />, type: "Serach" },
-  { name: "Explore", icon: <SiAzuredataexplorer />, type: "Explore" },
-  { name: "Message", icon: <LuMessageSquarePlus />, type: "Message" },
+  { name: "Home", icon: <GoHome />, path: "" },
+  { name: "Serach", icon: <IoSearch />, path: "serach" },
+  { name: "Explore", icon: <SiAzuredataexplorer />, path: "explore" },
+  { name: "Message", icon: <LuMessageSquarePlus />, path: "message" },
   {
     name: "Notification",
     icon: <IoNotificationsOutline />,
-    type: "Notification",
+    path: "notification",
   },
-  { name: "Create", icon: <RiApps2AddLine />, type: "Create" },
-  { name: "News", icon: <IoNewspaperOutline />, type: "News" },
+  { name: "Create", icon: <RiApps2AddLine />, path: "create" },
+  { name: "News", icon: <IoNewspaperOutline />, path: "news" },
 ];
 
 export default content

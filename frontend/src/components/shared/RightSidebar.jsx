@@ -8,7 +8,7 @@ import Suggections from "./suggection/Suggections.jsx";
 function RightSidebar() {
   return (
     <div
-      className="xl:w-1/4  lg:w-[30%] md:w-[40%] md:block hidden  mt-[64px] fixed right-0 h-[91vh] overflow-y-scroll"
+      className="xl:w-1/4  lg:w-[30%] md:w-[39%] md:block hidden  mt-[64px] fixed right-0 h-[91vh] overflow-y-scroll"
       style={{
         scrollbarWidth: "none",
       }}

@@ -3,7 +3,7 @@ import Home from "./pages/home/Home";
 import SignIn from "./pages/auth/login/SignIn";
 import SignUp from "./pages/auth/register/SignUp";
 import { Header, LeftSidebar, RightSidebar } from "./components";
-import { News } from "./pages";
+import { News, Notification, Profile, Messages, Explore } from "./pages";
 function App() {
   return (
     <div>
@@ -16,6 +16,10 @@ function App() {
             <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/news" element={<News />} />
+            <Route path="/Notification" element={<Notification />} />
+            <Route path="/Profile" element={<Profile />} />
+            <Route path="/message" element={<Messages />} />
+            <Route path="/explore" element={<Explore />} />
           </Routes>
         </div>
         <RightSidebar />
