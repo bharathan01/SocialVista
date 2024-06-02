@@ -7,5 +7,4 @@ function LikedPost() {
     </div>
   )
 }
-
 export default LikedPost
