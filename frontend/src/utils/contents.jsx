@@ -8,7 +8,7 @@ import { IoNewspaperOutline } from "react-icons/io5";
 
  const content = [
   { name: "Home", icon: <GoHome />, path: "" },
-  { name: "Serach", icon: <IoSearch />, path: "serach" },
+  { name: "Search", icon: <IoSearch />, path: "search" },
   { name: "Explore", icon: <SiAzuredataexplorer />, path: "explore" },
   { name: "Message", icon: <LuMessageSquarePlus />, path: "message" },
   {

@@ -6,6 +6,7 @@ import avathar from "../../../public/images/avatar-placeholder.png";
 import { useState } from "react";
 import OriginalPost from "../post/originalPost/OriginalPost";
 import LikedPost from "../post/likedPost/LikedPost";
+import {UpdateProfile} from "../../components"
 
 function Profile() {
   const isUser = true;
@@ -42,17 +43,14 @@ function Profile() {
               )}
             </div>
             <dialog id="my_modal_3" className="modal">
-              <div className="modal-box">
+              <div className="modal-box md:w-[550px] w-[300px]">
                 <form method="dialog">
                   {/* if there is a button in form, it will close the modal */}
                   <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
                     ✕
                   </button>
                 </form>
-                <h3 className="font-bold text-lg">Hello!</h3>
-                <p className="py-4">
-                  Press ESC key or click on ✕ button to close
-                </p>
+                  <UpdateProfile/>
               </div>
             </dialog>
             <div className="w-full flex flex-col gap-1 mt-[10px]">

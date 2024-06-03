@@ -17,7 +17,7 @@ function SingleNptificatiion() {
           <span className="md:text-lg text-sm">Arun liked your post</span>
         </div>
       </div>
-      <div className="absolute">
+      <div className="">
         <div className="dropdown dropdown-end">
           <div tabIndex={0} role="button" className="btn m-1">
             Click
