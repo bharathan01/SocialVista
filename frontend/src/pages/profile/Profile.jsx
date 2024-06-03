@@ -1,16 +1,26 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import cover from "../../../public/images/cover.png";
 import avathar from "../../../public/images/avatar-placeholder.png";
 import { useState } from "react";
 import OriginalPost from "../post/originalPost/OriginalPost";
 import LikedPost from "../post/likedPost/LikedPost";
-import {UpdateProfile} from "../../components"
+import { UpdateProfile } from "../../components";
 
 function Profile() {
+  const navigate = useNavigate();
+
   const isUser = true;
   const [isSelectedPage, setSelectedPage] = useState("posts");
+
+  // const handleEditProfile = () => {
+  //   navigate("/profile/edit");
+  // };
+
+  // const closeModal = () => {
+  //   navigate("/profile");
+  // };
 
   return (
     <div className="min-h-screen overflow-y-auto xl:w-[71%] lg:w-[62%] md:w-[57%] ">
@@ -33,7 +43,13 @@ function Profile() {
           <div className="w-full">
             <div className="w-full flex items-center justify-end p-3">
               {isUser ? (
-                <div className="w-[120px] p-2 border-2 border-white rounded-full text-center" onClick={()=>document.getElementById('my_modal_3').showModal()}>
+                <div
+                  className="w-[120px] p-2 border-2 border-white rounded-full text-center"
+                  onClick={() =>{
+                    document.getElementById("my_modal_3").showModal();
+                    // handleEditProfile();
+                  }}
+                >
                   <span>Edit Profile</span>
                 </div>
               ) : (
@@ -50,7 +66,7 @@ function Profile() {
                     ✕
                   </button>
                 </form>
-                  <UpdateProfile/>
+                <UpdateProfile />
               </div>
             </dialog>
             <div className="w-full flex flex-col gap-1 mt-[10px]">

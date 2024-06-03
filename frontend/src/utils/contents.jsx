@@ -16,7 +16,7 @@ import { IoNewspaperOutline } from "react-icons/io5";
     icon: <IoNotificationsOutline />,
     path: "notification",
   },
-  { name: "Create", icon: <RiApps2AddLine />, path: "create" },
+  { name: "Create", icon: <RiApps2AddLine />, path: "" },
   { name: "News", icon: <IoNewspaperOutline />, path: "news" },
 ];
 

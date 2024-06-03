@@ -1,10 +1,20 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import Following from "../following/Follow";
 import Foryou from "../foryou/Foryou";
+import { CreateNewPostContext } from "../../hooks/contexts/createpost/CreatePost";
+import{CreatePost} from "../../components"
 
 function Home() {
   const [changePage, setChangePage] = useState("following");
-  console.log(changePage);
+  const { isCreatePostOpen } = useContext(CreateNewPostContext);
+
+  const openCreatePostModel = () => {
+    document.getElementById("my_modal_3")?.showModal();
+  };
+ 
+  useMemo(()=>{
+    openCreatePostModel();
+  },[isCreatePostOpen])
 
   return (
     <div className=" min-h-screen overflow-y-auto p-2 xl:w-[71%] lg:w-[62%] md:w-[57%] ">
@@ -37,6 +47,16 @@ function Home() {
       <div className="mt-[65px]">
         {changePage === "following" ? <Following /> : <Foryou />}
       </div>
+      <dialog id="my_modal_3" className="modal">
+        <div className="modal-box md:w-[550px] w-[300px]">
+          <form method="dialog">
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+              ✕
+            </button>
+          </form>
+          <CreatePost/>
+        </div>
+      </dialog>
     </div>
   );
 }
