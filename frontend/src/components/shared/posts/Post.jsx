@@ -39,10 +39,10 @@ function Post() {
             </div>
             {isMenuOpen && (
               <div className="w-[130px] xl:right-[28%] lg:right-[34%] sm:right-[46%] right-[13%] bg-gray-900 absolute flex flex-col items-center rounded-md">
-                <ul className="flex flex-col gap-2 p-3">
-                  <li className="p-2 hover:bg-black">Share</li>
-                  <li className="p-2 hover:bg-black">Update</li>
-                  <li className="p-2 hover:bg-black text-red-700">Delete</li>
+                <ul className="flex flex-col gap-2 w-full text-center">
+                  <li className="p-2 hover:bg-gray-800 w-full">Share</li>
+                  <li className="p-2 hover:bg-gray-800 w-full">Update</li>
+                  <li className="p-2 hover:bg-gray-800 w-full text-red-700">Delete</li>
                 </ul>
               </div>
             )}
