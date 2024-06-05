@@ -6,8 +6,8 @@ function SignIn() {
   const navigate = useNavigate();
   return (
     <div className="w-full  flex items-center justify-center md:mb-0 mb-20">
-      <div className="w-11/12 h-screen flex flex-col md:flex-row items-center justify-center">
-        <div className="w-full md:w-1/2 h-full  md:h-3/4  flex items-center justify-end">
+      <div className="w-11/12 md:h-screen flex flex-col md:flex-row items-center justify-center">
+        <div className="w-full md:w-1/2  flex items-center justify-end">
           <div>
             <div className="md:w-full w-1/2 h-1/2">
               <img src={logo} alt="logo" />
@@ -15,9 +15,9 @@ function SignIn() {
           </div>
           <div></div>
         </div>
-        <div className="w-full md:w-1/2 h-3/4 flex flex-col justify-center items-center gap-9">
-          <div className="">
-            <h1 className=" text-3xl md:text-6xl">Sign In</h1>
+        <div className="w-full md:w-1/2  flex flex-col justify-center items-center gap-9">
+          <div className="h-[55px]">
+            <span className=" text-3xl">Sign In</span>
           </div>
           <div className="w-full lg:w-1/2 flex flex-col gap-3">
             <form>

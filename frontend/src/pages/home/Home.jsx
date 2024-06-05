@@ -17,6 +17,7 @@ function Home() {
   },[isCreatePostOpen])
 
   return (
+    <div className="flex-grow xl:ml-[14%] lg:ml-[20%] ml-[60px] mt-[64px] w-[63%]">
     <div className=" min-h-screen overflow-y-auto p-2 xl:w-[71%] lg:w-[62%] md:w-[57%] ">
       <div className="flex justify-around items-center p-4 fixed top-[64px] bg-black xl:w-[61%] lg:w-[53%] md:w-[55%] w-[85%]">
         <div
@@ -57,6 +58,7 @@ function Home() {
           <CreatePost/>
         </div>
       </dialog>
+    </div>
     </div>
   );
 }
