@@ -16,7 +16,7 @@ function App() {
     <div>
       <Header />
       <div className="flex">
-        <LeftSidebar />
+        {/* <LeftSidebar /> */}
 
         <Routes>
           <Route path="/" element={<Home />} />
@@ -30,7 +30,7 @@ function App() {
           <Route path="/search" element={<Search />} />
         </Routes>
 
-        <RightSidebar />
+        {/* <RightSidebar /> */}
       </div>
     </div>
   );

@@ -4,6 +4,15 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../../../../public/images/logo.png";
 function SignIn() {
   const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const formValues = Object.fromEntries(formData.entries());
+    console.log('Username:', formValues.username);
+
+  };
+
   return (
     <div className="w-full  flex items-center justify-center md:mb-0 mb-20">
       <div className="w-11/12 md:h-screen flex flex-col md:flex-row items-center justify-center">
@@ -20,7 +29,7 @@ function SignIn() {
             <span className=" text-3xl">Sign In</span>
           </div>
           <div className="w-full lg:w-1/2 flex flex-col gap-3">
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className="w-full flex flex-col gap-4">
                 <div className="flex flex-col gap-1">
                   <label className="text-white">Username or Email</label>
@@ -28,6 +37,7 @@ function SignIn() {
                     type="text"
                     placeholder="username,email"
                     className="input input-bordered border-gray-700 input-primary w-full md:max-w-sm max-w-2xl"
+                    name="username"
                   />
                 </div>
                 <div className="flex flex-col gap-1">
@@ -36,9 +46,12 @@ function SignIn() {
                     type="password"
                     placeholder="Password"
                     className="input input-bordered border-gray-700 input-primary w-full md:max-w-sm max-w-2xl"
+                    name="password"
                   />
                   <div className="flex justify-end">
-                    <Link className="btn-link" to="/signup">Forgot Password</Link>
+                    <Link className="btn-link" to="/signup">
+                      Forgot Password
+                    </Link>
                   </div>
                 </div>
                 <div>
@@ -54,7 +67,10 @@ function SignIn() {
             </div>
             <div className="divider">OR</div>
             <div>
-              <button className="btn btn-primary w-full" onClick={()=>navigate('/signup')}>
+              <button
+                className="btn btn-primary w-full"
+                onClick={() => navigate("/signup")}
+              >
                 Create an account
               </button>
             </div>
