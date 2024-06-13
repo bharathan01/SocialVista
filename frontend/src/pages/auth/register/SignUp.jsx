@@ -1,9 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../../../public/images/logo.png";
 
 function SignUp() {
+  const [userFormCredentials, setUserFormCredentials] = useState({
+    username: "",
+    fullName: "",
+    email: "",
+    password: "",
+  });
+  const [fieldError, setFieldError] = useState({});
+
+  const handleFieldChange = (e) => {
+    const {name ,value} = e.target
+    setUserFormCredentials({...userFormCredentials , [name]:value})
+  };
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    console.log(userFormCredentials);
+  };
+
   const navigate = useNavigate();
   return (
     <div className="w-full md:h-screen  flex items-center justify-center md:mb-0 mb-20">
@@ -21,23 +38,29 @@ function SignUp() {
             <span className=" text-3xl">Sign Up</span>
           </div>
           <div className="w-full lg:w-1/2 flex flex-col gap-3">
-            <form>
+            <form onSubmit={handleFormSubmit}>
               <div className="w-full flex flex-col gap-4">
                 <div className="flex gap-1">
-                  <div className="flex flex-col gap-1">
+                  <div className="flex flex-col gap-1 md:w-full">
                     <label className="text-white">Username</label>
                     <input
                       type="text"
                       placeholder="username"
                       className="input input-bordered border-gray-700 input-primary w-full md:max-w-sm max-w-2xl"
+                      name="username"
+                      value={userFormCredentials.username}
+                      onChange={handleFieldChange}
                     />
                   </div>
-                  <div className="flex flex-col gap-1">
+                  <div className="flex flex-col gap-1 md:w-full">
                     <label className="text-white">full name</label>
                     <input
                       type="text"
                       placeholder="fullname"
                       className="input input-bordered border-gray-700 input-primary w-full md:max-w-sm max-w-2xl"
+                      name="fullName"
+                      value={userFormCredentials.fullName}
+                      onChange={handleFieldChange}
                     />
                   </div>
                 </div>
@@ -47,6 +70,9 @@ function SignUp() {
                     type="text"
                     placeholder="email"
                     className="input input-bordered border-gray-700 input-primary w-full md:max-w-sm max-w-2xl"
+                    name="email"
+                    value={userFormCredentials.email}
+                    onChange={handleFieldChange}
                   />
                 </div>
 
@@ -56,10 +82,13 @@ function SignUp() {
                     type="password"
                     placeholder="Password"
                     className="input input-bordered border-gray-700 input-primary w-full md:max-w-sm max-w-2xl"
+                    name="password"
+                    value={userFormCredentials.password}
+                    onChange={handleFieldChange}
                   />
                 </div>
                 <div>
-                  <button className="btn btn-primary w-full">Sign up</button>
+                  <button className="btn bg-[#772ba9] w-full">Sign up</button>
                 </div>
               </div>
             </form>
