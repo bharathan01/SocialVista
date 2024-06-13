@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../../../public/images/logo.png";
+import { validateForm } from "../../../utils/validateFrom/ValidateForm";
 
 function SignUp() {
   const [userFormCredentials, setUserFormCredentials] = useState({
@@ -13,15 +14,14 @@ function SignUp() {
   const [fieldError, setFieldError] = useState({});
 
   const handleFieldChange = (e) => {
-    const {name ,value} = e.target
-    setUserFormCredentials({...userFormCredentials , [name]:value})
+    const { name, value } = e.target;
+    setUserFormCredentials({ ...userFormCredentials, [name]: value });
   };
   const handleFormSubmit = (e) => {
     e.preventDefault();
+    setFieldError(validateForm(userFormCredentials))
     console.log(userFormCredentials);
   };
-
-  const navigate = useNavigate();
   return (
     <div className="w-full md:h-screen  flex items-center justify-center md:mb-0 mb-20">
       <div className="w-11/12  flex flex-col md:flex-row items-center justify-center">
@@ -51,6 +51,7 @@ function SignUp() {
                       value={userFormCredentials.username}
                       onChange={handleFieldChange}
                     />
+                    {<p>{fieldError.username}</p>}
                   </div>
                   <div className="flex flex-col gap-1 md:w-full">
                     <label className="text-white">full name</label>
