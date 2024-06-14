@@ -3,6 +3,7 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../../../public/images/logo.png";
 import { validateForm } from "../../../utils/validateFrom/ValidateForm";
+import { registerUser } from "../../../service/api/auth/AuthController";
 
 function SignUp() {
   const [userFormCredentials, setUserFormCredentials] = useState({
@@ -17,10 +18,10 @@ function SignUp() {
     const { name, value } = e.target;
     setUserFormCredentials({ ...userFormCredentials, [name]: value });
   };
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async(e) => {
     e.preventDefault();
-    setFieldError(validateForm(userFormCredentials))
-    console.log(userFormCredentials);
+    const userData = await registerUser(userFormCredentials)
+    console.log(userData)
   };
   return (
     <div className="w-full md:h-screen  flex items-center justify-center md:mb-0 mb-20">
