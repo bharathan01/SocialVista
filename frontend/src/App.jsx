@@ -11,6 +11,7 @@ import {
   Explore,
   Search,
 } from "./pages";
+import Check from "./pages/Check";
 function App() {
   return (
     <div>
@@ -28,6 +29,7 @@ function App() {
           <Route path="/message" element={<Messages />} />
           <Route path="/explore" element={<Explore />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/just" element={<Check/>} />
         </Routes>
 
         {/* <RightSidebar /> */}
