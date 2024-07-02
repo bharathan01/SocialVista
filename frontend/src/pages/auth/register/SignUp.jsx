@@ -21,7 +21,6 @@ function SignUp() {
     e.preventDefault();
     try {
       const userData = await register(userFormCredentials);
-      console.log(userData)
       if (userData.status === "SUCCESS") {
         navigate("/signin");
       } else {
@@ -36,106 +35,110 @@ function SignUp() {
       }
     } catch (error) {
       console.error("Error submitting form:", error);
-      // Handle any unexpected errors here
     }
   };
   return (
-    <div className="w-full md:h-screen  flex items-center justify-center md:mb-0 mb-20">
-      <div className="w-11/12  flex flex-col md:flex-row items-center justify-center mt-5">
-        <div className="w-full md:w-1/2   md:h-3/4  flex items-center justify-end">
-          <div>
-            <div className="md:w-full w-1/2 h-1/2">
-              <img src={logo} alt="logo" />
-            </div>
-          </div>
-          <div></div>
+    <div className="w-full md:h-screen  flex items-center justify-center lg:gap-24 md:flex-row flex-col">
+      <div className="md:w-[50%] flex flex-col lg:items-end items-center">
+        <div className="md:mt-0 mt-2">
+          <img src={logo} alt="logo" className="lg:w-full lg:h-full md:w-[200px] md:h-[200px] w-[100px] h-100px]" />
         </div>
-        <div className="w-full md:w-1/2 h-3/4 flex flex-col justify-center items-center gap-9">
-          <div className="h-[55px]">
-            <span className=" text-3xl">Sign Up</span>
+        <div>
+          <h2 className="md:text-2xl text-xl font-thin text-center mt-5">
+            Experience the joy of sharing and connecting on <br />
+            <span className="font-bold md:text-3xl text-2xl text-[#772ba9]">
+              SOCIALVISTA.
+            </span>
+            <br />
+            <span className="text-xl font-thin">
+              where your moments matter.
+            </span>
+          </h2>
+        </div>
+      </div>
+      <div className="md:w-[50%] w-full flex md:items-start items-center justify-center flex-col md:mt-0  md:mb-0 mb-6">
+        <div className="xl:w-[60%] w-[90%] md:mb-5 md:mt-24">
+          <div className="h-[70px] text-center">
+            <span className="text-3xl">Sign Up</span>
           </div>
-          <div className="w-full lg:w-1/2 flex flex-col gap-3">
-            <form onSubmit={handleFormSubmit}>
-              <div className="w-full flex flex-col gap-4">
-                <div className="flex gap-1">
-                  <div className="flex flex-col gap-1 md:w-full">
-                    <label className="text-white">Username</label>
-                    <input
-                      type="text"
-                      placeholder="username"
-                      className="input input-bordered border-gray-700 input-primary w-full md:max-w-sm max-w-2xl"
-                      name="username"
-                      value={userFormCredentials.username}
-                      onChange={handleFieldChange}
-                    />
-                    {
-                      error?.username && <p className="text-red-600">{error.username}</p>
-                    }
-                  </div>
-                  <div className="flex flex-col gap-1 md:w-full">
-                    <label className="text-white">full name</label>
-                    <input
-                      type="text"
-                      placeholder="fullname"
-                      className="input input-bordered border-gray-700 input-primary w-full md:max-w-sm max-w-2xl"
-                      name="fullName"
-                      value={userFormCredentials.fullName}
-                      onChange={handleFieldChange}
-                    />
-                     {
-                      error?.fullName && <p className="text-red-600">{error.fullName}</p>
-                    }
-                  </div>
-                </div>
-                <div className="flex flex-col gap-1">
-                  <label className="text-white">Email</label>
+          <form onSubmit={handleFormSubmit}>
+            <div className=" flex flex-col gap-4">
+              <div className="flex gap-1 md:flex-row flex-col">
+                <div className="flex flex-col gap-1 md:w-full">
+                  <label className="text-white">Username</label>
                   <input
                     type="text"
-                    placeholder="email"
+                    placeholder="username"
                     className="input input-bordered border-gray-700 input-primary w-full md:max-w-sm max-w-2xl"
-                    name="email"
-                    value={userFormCredentials.email}
+                    name="username"
+                    value={userFormCredentials.username}
                     onChange={handleFieldChange}
                   />
-                   {
-                      error?.email && <p className="text-red-600">{error.email}</p>
-                    }
+                  {error?.username && (
+                    <p className="text-red-600">{error.username}</p>
+                  )}
                 </div>
-
-                <div className="flex flex-col gap-1">
-                  <label className="text-white">Password</label>
+                <div className="flex flex-col gap-1 md:w-full">
+                  <label className="text-white">full name</label>
                   <input
-                    type="password"
-                    placeholder="Password"
+                    type="text"
+                    placeholder="fullname"
                     className="input input-bordered border-gray-700 input-primary w-full md:max-w-sm max-w-2xl"
-                    name="password"
-                    value={userFormCredentials.password}
+                    name="fullName"
+                    value={userFormCredentials.fullName}
                     onChange={handleFieldChange}
                   />
-                   {
-                      error?.password && <p className="text-red-600">{error.password}</p>
-                    }
-                </div>
-                <div>
-                  <button className="btn bg-[#772ba9] w-full">Sign up</button>
+                  {error?.fullName && (
+                    <p className="text-red-600">{error.fullName}</p>
+                  )}
                 </div>
               </div>
-            </form>
-            <div>
-              <button className="btn btn-outline bg-white w-full">
-                <FcGoogle />
-                Sign up with Google
-              </button>
+              <div className="flex flex-col gap-1">
+                <label className="text-white">Email</label>
+                <input
+                  type="text"
+                  placeholder="email"
+                  className="input input-bordered border-gray-700 input-primary w-full  max-w-2xl"
+                  name="email"
+                  value={userFormCredentials.email}
+                  onChange={handleFieldChange}
+                />
+                {error?.email && <p className="text-red-600">{error.email}</p>}
+              </div>
+
+              <div className="flex flex-col gap-1">
+                <label className="text-white">Password</label>
+                <input
+                  type="password"
+                  placeholder="Password"
+                  className="input input-bordered border-gray-700 input-primary w-full max-w-2xl"
+                  name="password"
+                  value={userFormCredentials.password}
+                  onChange={handleFieldChange}
+                />
+                {error?.password && (
+                  <p className="text-red-600">{error.password}</p>
+                )}
+              </div>
+              <div>
+                <button className="btn bg-[#772ba9] w-full">Sign up</button>
+              </div>
             </div>
-            <div className="divider h-6">OR</div>
-            <div>
-              <button
-                className="btn btn-primary w-full"
-                onClick={() => navigate("/signin")}
-              >
-                Already hava an account
-              </button>
-            </div>
+          </form>
+          <div className="mt-3">
+            <button className="btn btn-outline bg-white w-full">
+              <FcGoogle />
+              Sign up with Google
+            </button>
+          </div>
+          <div className="divider h-6">OR</div>
+          <div>
+            <button
+              className="btn btn-primary w-full"
+              onClick={() => navigate("/signin")}
+            >
+              Already hava an account
+            </button>
           </div>
         </div>
       </div>

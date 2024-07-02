@@ -6,17 +6,22 @@ const { AUTH } = ApiEndPoint;
 
 export const login = async (userData) => {
   try {
-    console.log(import.meta.env.VITE_BASE_URL);
-    return await API.post(AUTH.LOGIN, userData);
-  } catch (error) {
-    console.log(error);
+    const responce = await API.post(AUTH.LOGIN, userData);
+    return responce.data;
+  } catch (errors) {
+    if (errors.response) {
+      const error = errors?.response?.data;
+      return error;
+    } else {
+      console.log("eeror maessege :", errors.message);
+    }
   }
 };
 
 export const register = async (userData) => {
   try {
     const responce = await API.post(AUTH.REGISTER, userData);
-    return responce.data
+    return responce.data;
   } catch (errors) {
     if (errors.response) {
       const error = errors?.response?.data;

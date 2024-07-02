@@ -69,10 +69,24 @@ const userLogin = tryCatch(async (req, res) => {
     $or: [{ username: userId }, { email: userId }],
   });
   if (!userInfo) {
-    throw new ApiError(BAD_REQUEST, "Username or email is incorrect");
+    throw new ApiError(BAD_REQUEST, {
+      errors: [
+        {
+          path: "usernameOrEmail",
+          msg: "invalid user credentials!",
+        },
+      ],
+    });
   }
   if (!(await compairPassword(password, userInfo.password))) {
-    throw new ApiError(BAD_REQUEST, "username or password is incorrect");
+    throw new ApiError(BAD_REQUEST, {
+      errors: [
+        {
+          path: "usernameOrEmail",
+          msg: "invalid user credentials!",
+        },
+      ],
+    });
   }
 
   const accessToken = generateJwtToken(
@@ -94,7 +108,7 @@ const userLogin = tryCatch(async (req, res) => {
     .cookie("refreshToken", refreshToken, options)
     .cookie("accessToken", accessToken, options)
     .json({
-      SUCCESS: true,
+      status: "SUCCESS",
       data: {
         id: userInfo._id,
         username: userInfo.username,
