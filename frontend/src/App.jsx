@@ -15,7 +15,7 @@ import Check from "./pages/Check";
 function App() {
   return (
     <div>
-      <Header />
+      {/* <Header /> */}
       <div className="flex">
         {/* <LeftSidebar /> */}
 

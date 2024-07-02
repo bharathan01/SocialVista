@@ -5,22 +5,39 @@ import logo from "../../../../public/images/logo.png";
 import { register } from "../../../service/api/auth/AuthController";
 
 function SignUp() {
+  const navigate = useNavigate();
+  const [error, setError] = useState({});
   const [userFormCredentials, setUserFormCredentials] = useState({
     username: "",
     fullName: "",
     email: "",
     password: "",
   });
-  const [fieldError, setFieldError] = useState({});
-
   const handleFieldChange = (e) => {
     const { name, value } = e.target;
     setUserFormCredentials({ ...userFormCredentials, [name]: value });
   };
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    const userData = await register(userFormCredentials);
-    console.log(userData);
+    try {
+      const userData = await register(userFormCredentials);
+      console.log(userData)
+      if (userData.status === "SUCCESS") {
+        navigate("/signin");
+      } else {
+        const errData = userData?.message?.errors;
+        if (errData && Array.isArray(errData)) {
+          const newErrors = {};
+          errData.forEach((ele) => {
+            newErrors[ele.path] = ele.msg;
+          });
+          setError(newErrors);
+        }
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      // Handle any unexpected errors here
+    }
   };
   return (
     <div className="w-full md:h-screen  flex items-center justify-center md:mb-0 mb-20">
@@ -51,7 +68,9 @@ function SignUp() {
                       value={userFormCredentials.username}
                       onChange={handleFieldChange}
                     />
-                    {<p>{fieldError.username}</p>}
+                    {
+                      error?.username && <p className="text-red-600">{error.username}</p>
+                    }
                   </div>
                   <div className="flex flex-col gap-1 md:w-full">
                     <label className="text-white">full name</label>
@@ -63,6 +82,9 @@ function SignUp() {
                       value={userFormCredentials.fullName}
                       onChange={handleFieldChange}
                     />
+                     {
+                      error?.fullName && <p className="text-red-600">{error.fullName}</p>
+                    }
                   </div>
                 </div>
                 <div className="flex flex-col gap-1">
@@ -75,6 +97,9 @@ function SignUp() {
                     value={userFormCredentials.email}
                     onChange={handleFieldChange}
                   />
+                   {
+                      error?.email && <p className="text-red-600">{error.email}</p>
+                    }
                 </div>
 
                 <div className="flex flex-col gap-1">
@@ -86,8 +111,10 @@ function SignUp() {
                     name="password"
                     value={userFormCredentials.password}
                     onChange={handleFieldChange}
-                    accept="image/*"
                   />
+                   {
+                      error?.password && <p className="text-red-600">{error.password}</p>
+                    }
                 </div>
                 <div>
                   <button className="btn bg-[#772ba9] w-full">Sign up</button>

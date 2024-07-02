@@ -3,7 +3,7 @@ const ApiError = require("../utils/ApiError");
 const { BAD_REQUEST } = require("../utils/httpStatusCodes");
 
 const loginValidate = [
-  check().custom((_, { req }) => {
+  check("usernameOrEmail").custom((value, { req }) => {
     if (!req.body.username && !req.body.email) {
       throw new Error("Please enter either username or email!");
     }
@@ -17,8 +17,6 @@ const registerValidate = [
   body("username").notEmpty().withMessage("Please enter your username !"),
   body("email").isEmail().withMessage("Please enter a valid email !"),
   body("password")
-    .notEmpty()
-    .withMessage("Please enter your password !")
     .isLength({ min: 6 })
     .withMessage("Password must contain at least 6 characters"),
   body("fullName").notEmpty().withMessage("Please enter your full name !"),

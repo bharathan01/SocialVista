@@ -14,11 +14,25 @@ const userRegsitration = tryCatch(async (req, res) => {
   const { username, fullName, email, password } = req.body;
   const isUserPresent = await userSchema.findOne({ username });
   if (isUserPresent)
-    throw new ApiError(BAD_REQUEST, "Username is already present!");
+    throw new ApiError(BAD_REQUEST, {
+      errors: [
+        {
+          path: "username",
+          msg: "Username is already present !",
+        },
+      ],
+    });
 
   const isEmailPresent = await userSchema.findOne({ email });
   if (isEmailPresent)
-    throw new ApiError(BAD_REQUEST, "Email id Already present!");
+    throw new ApiError(BAD_REQUEST, {
+      errors: [
+        {
+          path: "email",
+          msg: "email is already present !",
+        },
+      ],
+    });
 
   const encryptPassword = await hashPassword(password);
 
@@ -31,7 +45,7 @@ const userRegsitration = tryCatch(async (req, res) => {
   const newUser = await userData.save();
   if (newUser) {
     res.status(SUCCESS).json({
-      SUCCESS: true,
+      status: "SUCCESS",
       meassage: "Register SuccessFully !",
       data: {
         _id: newUser._id,
@@ -51,7 +65,6 @@ const userRegsitration = tryCatch(async (req, res) => {
 const userLogin = tryCatch(async (req, res) => {
   const userId = req.body.username ? req.body.username : req.body.email;
   const password = req.body.password;
-
   const userInfo = await userSchema.findOne({
     $or: [{ username: userId }, { email: userId }],
   });
