@@ -9,8 +9,7 @@ function SignIn() {
     e.preventDefault();
     const formData = new FormData(e.target);
     const formValues = Object.fromEntries(formData.entries());
-    console.log('Username:', formValues.username);
-
+    console.log("Username:", formValues.username);
   };
 
   return (
@@ -65,7 +64,7 @@ function SignIn() {
                 Log in with Google
               </button>
             </div>
-            <div className="divider">OR</div>
+            <div className="divider h-6">OR</div>
             <div>
               <button
                 className="btn btn-primary w-full"

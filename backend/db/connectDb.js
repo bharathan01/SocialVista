@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const  mongoDbUrl  = require("../utils/contance.js");
 
 async function connectDb() {
-    console.log(mongoDbUrl)
   try {
     const connected = await mongoose.connect(mongoDbUrl);
     console.log(

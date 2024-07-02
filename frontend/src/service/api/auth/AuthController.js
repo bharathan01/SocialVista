@@ -1,17 +1,23 @@
-import {ApiEndPoint} from "../../../utils/apiEndPoints/ApiEndPoint";
 
-export async function registerUser(fields) {
-    //use the validation logic here
+import { API } from "../../../config/apiClient.js/apiClient";
+import { ApiEndPoint } from "../../../utils/apiEndPoints/ApiEndPoint";
+import axios from "axios";
+
+const { AUTH } = ApiEndPoint;
+const { VITE_BASE_URL } = import.meta.env;
+
+export const login = async (userData) => {
   try {
-    const isUserRegisterd = await fetch(ApiEndPoint.AUTH.REGISTER, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(fields),
-    });
-    return await isUserRegisterd.json();
+    console.log(import.meta.env.VITE_BASE_URL);
+    return API.post(AUTH.LOGIN, userData);
   } catch (error) {
     console.log(error);
   }
-}
+};
+export const register = async (userData) => {
+  try {
+    return await axios.post(VITE_BASE_URL+AUTH.REGISTER, userData);
+  } catch (error) {
+    console.log(error.message);
+  }
+};

@@ -15,4 +15,3 @@ const errorHandle = (error, req, res, next) => {
 };
 
 module.exports = errorHandle
-

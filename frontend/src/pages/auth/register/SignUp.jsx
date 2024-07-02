@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../../../public/images/logo.png";
-import { validateForm } from "../../../utils/validateFrom/ValidateForm";
-import { registerUser } from "../../../service/api/auth/AuthController";
+import { register } from "../../../service/api/auth/AuthController";
 
 function SignUp() {
   const [userFormCredentials, setUserFormCredentials] = useState({
@@ -18,14 +17,14 @@ function SignUp() {
     const { name, value } = e.target;
     setUserFormCredentials({ ...userFormCredentials, [name]: value });
   };
-  const handleFormSubmit = async(e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    const userData = await registerUser(userFormCredentials)
-    console.log(userData)
+    const userData = await register(userFormCredentials);
+    console.log(userData);
   };
   return (
     <div className="w-full md:h-screen  flex items-center justify-center md:mb-0 mb-20">
-      <div className="w-11/12  flex flex-col md:flex-row items-center justify-center">
+      <div className="w-11/12  flex flex-col md:flex-row items-center justify-center mt-5">
         <div className="w-full md:w-1/2   md:h-3/4  flex items-center justify-end">
           <div>
             <div className="md:w-full w-1/2 h-1/2">
@@ -87,6 +86,7 @@ function SignUp() {
                     name="password"
                     value={userFormCredentials.password}
                     onChange={handleFieldChange}
+                    accept="image/*"
                   />
                 </div>
                 <div>
@@ -100,7 +100,7 @@ function SignUp() {
                 Sign up with Google
               </button>
             </div>
-            <div className="divider">OR</div>
+            <div className="divider h-6">OR</div>
             <div>
               <button
                 className="btn btn-primary w-full"
