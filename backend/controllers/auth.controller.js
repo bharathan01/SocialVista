@@ -12,19 +12,6 @@ const generateJwtToken = require("../utils/generatejwttoken.js");
 
 const userRegsitration = tryCatch(async (req, res) => {
   const { username, fullName, email, password } = req.body;
-
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-  const fields = [username, fullName, email, password];
-  if (fields.some((field) => !field || field.trim() === "")) {
-    throw new ApiError(BAD_REQUEST, "all fields are required");
-  }
-  if (password.length < 6)
-    throw new ApiError(BAD_REQUEST, "Password must contain atleast 6 ");
-
-  if (!emailRegex.test(email))
-    throw new ApiError(BAD_REQUEST, "Please provide vaild email id !");
-
   const isUserPresent = await userSchema.findOne({ username });
   if (isUserPresent)
     throw new ApiError(BAD_REQUEST, "Username is already present!");
@@ -44,7 +31,7 @@ const userRegsitration = tryCatch(async (req, res) => {
   const newUser = await userData.save();
   if (newUser) {
     res.status(SUCCESS).json({
-      SUCCESS:true,
+      SUCCESS: true,
       meassage: "Register SuccessFully !",
       data: {
         _id: newUser._id,
@@ -64,9 +51,6 @@ const userRegsitration = tryCatch(async (req, res) => {
 const userLogin = tryCatch(async (req, res) => {
   const userId = req.body.username ? req.body.username : req.body.email;
   const password = req.body.password;
-  if (!userId)
-    throw new ApiError(BAD_REQUEST, "Please provide email or username");
-  if (!password) throw new ApiError(BAD_REQUEST, "invalid password");
 
   const userInfo = await userSchema.findOne({
     $or: [{ username: userId }, { email: userId }],
@@ -97,9 +81,9 @@ const userLogin = tryCatch(async (req, res) => {
     .cookie("refreshToken", refreshToken, options)
     .cookie("accessToken", accessToken, options)
     .json({
-      SUCCESS:true,
+      SUCCESS: true,
       data: {
-        id:userInfo._id,
+        id: userInfo._id,
         username: userInfo.username,
         email: userInfo.email,
         fullName: userInfo.fullName,
@@ -111,13 +95,13 @@ const userLogin = tryCatch(async (req, res) => {
     });
 });
 
-const userLoguot = tryCatch((req,res) =>{
-   res.cookie("accessToken","",{maxAge:0})
-   res.cookie("refreshToken","",{maxAge:0})
-   res.status(SUCCESS).json({
-    SUCCESS:true,
-    message:"Logout Successfully"
-   })
-})
+const userLoguot = tryCatch((req, res) => {
+  res.cookie("accessToken", "", { maxAge: 0 });
+  res.cookie("refreshToken", "", { maxAge: 0 });
+  res.status(SUCCESS).json({
+    SUCCESS: true,
+    message: "Logout Successfully",
+  });
+});
 
-module.exports = { userLogin, userRegsitration,userLoguot};
+module.exports = { userLogin, userRegsitration, userLoguot };
