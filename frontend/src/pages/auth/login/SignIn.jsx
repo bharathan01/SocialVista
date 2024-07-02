@@ -3,8 +3,12 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../../../public/images/logo.png";
 import { login } from "../../../service/api/auth/AuthController";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../../../redux/slice/userAuth.slice";
 function SignIn() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { userInfo, isUserLoggedIn } = useSelector((state) => state.userAuth);
   const [logInCredentials, setlogIncredentials] = useState({
     userId: "",
     password: "",
@@ -32,6 +36,7 @@ function SignIn() {
     try {
       const response = await login(isUserField());
       if (response.status === "SUCCESS") {
+        dispatch(loginUser(response.data));
         navigate("/");
       } else {
         const errData = response?.message?.errors;

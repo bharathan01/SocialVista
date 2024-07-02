@@ -12,14 +12,16 @@ import {
   Search,
 } from "./pages";
 import Check from "./pages/Check";
+import { useSelector } from "react-redux";
 function App() {
+  const { isUserLoggedIn } = useSelector((state) => state.userAuth);
   return (
     <div>
-      {/* <Header /> */}
+      {isUserLoggedIn && <Header />}
       <div className="flex">
-        {/* <LeftSidebar /> */}
-
+        {isUserLoggedIn && <LeftSidebar />}
         <Routes>
+
           <Route path="/" element={<Home />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
@@ -29,10 +31,9 @@ function App() {
           <Route path="/message" element={<Messages />} />
           <Route path="/explore" element={<Explore />} />
           <Route path="/search" element={<Search />} />
-          <Route path="/just" element={<Check/>} />
+          <Route path="/just" element={<Check />} />
         </Routes>
-
-        {/* <RightSidebar /> */}
+        {isUserLoggedIn && <RightSidebar />}
       </div>
     </div>
   );
