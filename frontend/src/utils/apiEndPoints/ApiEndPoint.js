@@ -9,7 +9,8 @@ export const ApiEndPoint = {
     LOGOUT:'auth/logout'
   },
   CURR_USER:{
-    GET_CURR_USER: ""
+    GET_CURR_USER: "",
+    GET_FOLLOWING_POST: "/post/getFollowingPost",
   },
   POST: {
     ADD: "/post/add",
