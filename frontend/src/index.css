@@ -8,3 +8,6 @@
     padding: 0px;
     box-sizing: border-box;
 }
+::-webkit-scrollbar {
+    width: 1px;
+  }

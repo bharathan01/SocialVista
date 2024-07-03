@@ -2,19 +2,15 @@ import React, { useContext, useEffect, useMemo, useState } from "react";
 import Following from "../following/Follow";
 import Foryou from "../foryou/Foryou";
 import { CreateNewPostContext } from "../../hooks/contexts/createpost/CreatePost";
-import{CreatePost} from "../../components"
+import{CreatePost,LogOutConfirm} from "../../components"
 
 function Home() {
   const [changePage, setChangePage] = useState("following");
-  const { isCreatePostOpen } = useContext(CreateNewPostContext);
+  const { toggleCreatePost,toggleIsLogOutCard } = useContext(CreateNewPostContext);
 
   const openCreatePostModel = () => {
-    document.getElementById("my_modal_3")?.showModal();
+    document.getElementById("openCreatePostcard")?.showModal();
   };
- 
-  useMemo(()=>{
-    openCreatePostModel();
-  },[isCreatePostOpen])
 
   return (
     <div className="flex-grow xl:ml-[14%] lg:ml-[20%] ml-[60px] mt-[64px] w-[63%]">
@@ -48,7 +44,7 @@ function Home() {
       <div className="mt-[65px]">
         {changePage === "following" ? <Following /> : <Foryou />}
       </div>
-      <dialog id="my_modal_3" className="modal">
+      <dialog id="openCreatePostcard" className="modal">
         <div className="modal-box md:w-[550px] w-[300px]">
           <form method="dialog">
             <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
@@ -56,6 +52,16 @@ function Home() {
             </button>
           </form>
           <CreatePost/>
+        </div>
+      </dialog>
+      <dialog id="openLogOutcard" className="modal">
+        <div className="modal-box flex items-center justify-center">
+          <form method="dialog">
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+              ✕
+            </button>
+          </form>
+           <LogOutConfirm/> 
         </div>
       </dialog>
     </div>

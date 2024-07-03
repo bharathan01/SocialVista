@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 
 import MenuBar from "../common/MenuBar";
 import contents from "../../utils/contents.jsx";
 import profileImage from "../../../public/images/avatar-placeholder.png";
 import { CiLogout } from "react-icons/ci";
+import { CreateNewPostContext } from "../../hooks/contexts/createpost/CreatePost.jsx";
 
 function LeftSidebar() {
+  const {toggleIslogOutCard} = useContext(CreateNewPostContext)
   const [activeMenu , setActiveMenu] = useState(null)
   const handleClick = (menu) =>{
     setActiveMenu(menu)
@@ -39,7 +41,7 @@ function LeftSidebar() {
               Bharathan
             </div>
           </Link>
-          <div className="text-2xl lg:block hidden hover:bg-gray-900 p-1 hover:cursor-pointer">
+          <div className="text-2xl lg:block hidden hover:bg-gray-900 p-1 hover:cursor-pointer" onClick={()=>toggleIslogOutCard('openLogOutcard')}>
             <CiLogout />
           </div>
         </div>

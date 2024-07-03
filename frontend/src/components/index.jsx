@@ -8,3 +8,4 @@ export {default as SingleNews} from "./shared/singlenews/SingleNews.jsx";
 export {default as SingleNotification} from "./shared/singlenotification/SingleNotification.jsx";
 export {default as UpdateProfile} from "./shared/updateprofle/UpdateProfile.jsx";
 export {default as CreatePost} from "./shared/createpost/CreatePost.jsx";
+export {default as LogOutConfirm} from "./shared/logoutConfirm/LogOutConfirm.jsx"

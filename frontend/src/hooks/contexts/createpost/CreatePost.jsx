@@ -5,18 +5,20 @@ const CreateNewPostContext = createContext();
 
 // Create the provider component
 const CreateNewPostProvider = ({ children }) => {
-  const [isCreatePostOpen, setCreatePostOpen] = useState(false);
-
-  const toggleCreatePost = () => {
-    setCreatePostOpen((prev) => !prev);
+  const toggleCreatePost = (elememt) => {
+    document.getElementById(elememt)?.showModal();
   };
-
+  const toggleIslogOutCard = (element) => {
+    document.getElementById(element)?.showModal();
+  };
   return (
-    <CreateNewPostContext.Provider value={{ isCreatePostOpen, toggleCreatePost }}>
+    <CreateNewPostContext.Provider
+      value={{ toggleCreatePost, toggleIslogOutCard }}
+    >
       {children}
     </CreateNewPostContext.Provider>
   );
 };
 
 // Export the context and provider
-export { CreateNewPostContext ,CreateNewPostProvider };
+export { CreateNewPostContext, CreateNewPostProvider };

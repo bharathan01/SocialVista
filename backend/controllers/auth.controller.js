@@ -123,10 +123,10 @@ const userLogin = tryCatch(async (req, res) => {
 });
 
 const userLoguot = tryCatch((req, res) => {
-  res.cookie("accessToken", "", { maxAge: 0 });
-  res.cookie("refreshToken", "", { maxAge: 0 });
+  res.clearCookie("accessToken");
+  res.clearCookie("refreshToken");
   res.status(SUCCESS).json({
-    SUCCESS: true,
+    status: "SUCCESS",
     message: "Logout Successfully",
   });
 });

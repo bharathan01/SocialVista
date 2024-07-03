@@ -31,3 +31,17 @@ export const register = async (userData) => {
     }
   }
 };
+
+export const logOut = async () => {
+  try {
+    const responce = await API.get(AUTH.LOGOUT);
+    return responce.data;
+  } catch (error) {
+    if (errors.response) {
+      const error = errors?.response?.data;
+      return error;
+    } else {
+      console.log("eeror maessege :", errors.message);
+    }
+  }
+};
