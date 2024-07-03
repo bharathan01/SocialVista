@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import profileImage from "../../../../public/images/avatar-placeholder.png";
 import demo from "../../../../public/images/demo.jpg";
@@ -11,18 +11,24 @@ import { FaRegBookmark } from "react-icons/fa";
 import { FaBookmark } from "react-icons/fa";
 import { VscSend } from "react-icons/vsc";
 
-function Post() {
+function Post({posts}) {
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [isCommentOpen, setCommentOpen] = useState(false);
+  const {img,user,comments,likes,text} = posts
+  useEffect(()=>{
+    
+  },[])
   return (
     <div className="flex flex-row w-full justify-center ">
       <div className="w-full">
         <div className="flex justify-between">
           <div className="flex gap-2 items-center">
             <div className="flex justify-center items-center rounded-full md:w-[40px] md:h-[40px] w-[30px] h-[30px]">
-              <img src={profileImage} alt="" />
+              {
+                user.profileImg ?  <img src={user.profileImg} alt="" />: <img src={profileImage} alt="" />
+              }
             </div>
-            <div className="text-lg">username</div>
+            <div className="text-lg">{user.username}</div>
           </div>
           <div className="">
             <div>
@@ -49,23 +55,14 @@ function Post() {
           </div>
         </div>
         <div className="mt-3 rounded-lg">
-          <img src={demo} alt="" />
+          <img src={img}alt="" />
         </div>
         <div className="flex items-center justify-center">
           <div className="flex items-center justify-center p-2">
             <span className="md:text-sm text-xs">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores
-              eligendi soluta quos, error veniam sunt praesentium repellendus
-              neque voluptas, reprehenderit sed commodi magni mollitia, ipsam
-              autem doloribus adipisci ipsa numquam reiciendis accusamus vero
-              deleniti at! Maxime vitae magni unde voluptate, quaerat ea impedit
-              accusamus odit dolorum repellat aut nesciunt cumque minima iure
-              laudantium, fugiat magnam deleniti fuga, blanditiis rerum
-              voluptatibus beatae eius illum quisquam! Asperiores minima quae
-              harum doloribus velit? Asperiores id atque obcaecati voluptates
-              nulla nostrum eius beatae est, officiis accusamus cupiditate. Nisi
-              mollitia odio aperiam totam eveniet. Obcaecati esse totam numquam
-              nesciunt optio asperiores placeat eius earum itaque!
+              {
+                text
+              }
             </span>
           </div>
         </div>

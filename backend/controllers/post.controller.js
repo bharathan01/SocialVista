@@ -92,7 +92,7 @@ const getFollowingPost = tryCatch(async (req, res) => {
     );
 
   return res.status(SUCCESS).json({
-    SUCCESS: true,
+    status: "SUCCESS",
     message: "following user post",
     followingUserPost,
   });

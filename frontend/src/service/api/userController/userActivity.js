@@ -12,7 +12,7 @@ export const getFollowingPost = async () => {
       const error = errors?.response?.data;
       return error;
     } else {
-      console.log("eeror maessege :", errors.message);
+      console.log("error maessege :", errors.message);
     }
   }
 };
