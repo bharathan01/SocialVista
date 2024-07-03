@@ -8,8 +8,11 @@ export const ApiEndPoint = {
     REGISTER: '/auth/register',
     LOGOUT:'auth/logout'
   },
+  CURR_USER:{
+    GET_CURR_USER: ""
+  },
   POST: {
-    ADD: `${import.meta.env.BASE_URL}/post/add`,
+    ADD: "/post/add",
     UPDATE: `${import.meta.env.BASE_URL}/post/update`,
     DELETE: `${import.meta.env.BASE_URL}/post/delete`,
     COMMENT: `${import.meta.env.BASE_URL}/post/comment`,

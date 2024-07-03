@@ -1,5 +1,5 @@
 import React from 'react'
-import {Post} from '../../components'
+import Post from '../../shared/posts/Post'
 
 function Following() {
   return (

@@ -8,7 +8,7 @@ function Header() {
         <div className="object-contain">
           <Link to={"/"}>
             {" "}
-            <img src={logo} alt="" className="w-14 h-14" />
+            <img src={logo} alt="" className="w-10 h-10" />
           </Link>
         </div>
         <div>

@@ -1,6 +1,5 @@
 import { API } from "../../../config/apiClient.js/apiClient.js";
 import { ApiEndPoint } from "../../../utils/apiEndPoints/ApiEndPoint";
-import axios from "axios";
 
 const { AUTH } = ApiEndPoint;
 
@@ -31,6 +30,7 @@ export const register = async (userData) => {
     }
   }
 };
+
 
 export const logOut = async () => {
   try {
