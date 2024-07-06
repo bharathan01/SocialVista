@@ -11,6 +11,8 @@ export const ApiEndPoint = {
   CURR_USER:{
     GET_CURR_USER: "",
     GET_FOLLOWING_POST: "/post/getFollowingPost",
+    GET_FORYOU_POST: "/post/allPost",
+    GET_LIKEUNLIKE_POST: "/post/like",
   },
   POST: {
     ADD: "/post/add",

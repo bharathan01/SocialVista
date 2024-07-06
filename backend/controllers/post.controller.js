@@ -34,7 +34,7 @@ const getAllPost = async (req, res) => {
       "can not fetch all post! try after sometime."
     );
   res.status(SUCCESS).json({
-    SUCCESS: true,
+    status: 'SUCCESS',
     message: "successfully fetch all posts",
     allPost,
   });
@@ -192,7 +192,7 @@ const likeUnlikePost = tryCatch(async (req, res) => {
       (id) => id.toString() !== userId.toString()
     );
     return res.status(SUCCESS).json({
-      SUCCESS: true,
+      status: 'SUCCESS',
       message: "successfully unliked a post",
       updatedLike,
     });
@@ -212,7 +212,7 @@ const likeUnlikePost = tryCatch(async (req, res) => {
 
     await newNotification.save();
     return res.status(SUCCESS).json({
-      SUCCESS: true,
+      status: 'SUCCESS',
       message: "successfully liked a post",
       updatedLike,
     });
