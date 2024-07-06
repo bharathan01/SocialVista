@@ -268,7 +268,7 @@ const commentPost = tryCatch(async (req, res) => {
   await newNotification.save();
 
   return res.status(SUCCESS).json({
-    SUCCESS: true,
+    status: 'SUCCESS',
     message: "commented successfully",
     post,
   });

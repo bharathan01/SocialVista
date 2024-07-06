@@ -10,14 +10,18 @@ import { FiSend } from "react-icons/fi";
 import { FaRegBookmark } from "react-icons/fa";
 import { FaBookmark } from "react-icons/fa";
 import { VscSend } from "react-icons/vsc";
-import { likeUnlikePost } from "../../../service/api/userController/userActivity";
+import {
+  commentPost,
+  likeUnlikePost,
+} from "../../../service/api/userController/userActivity";
 import { useSelector } from "react-redux";
 
-function Post({ posts }) {
+function Post({ posts, onComment }) {
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [isCommentOpen, setCommentOpen] = useState(false);
   const [isUserLiked, setUserLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(false);
+
   const { userInfo } = useSelector((state) => state.userAuth);
   const { img, user, comments, likes, text, _id } = posts;
   const isUserAlreadyLiked = () => {
@@ -31,6 +35,13 @@ function Post({ posts }) {
       ? setLikeCount((prev) => prev - 1)
       : setLikeCount((prev) => prev + 1);
     setUserLiked((prev) => !prev);
+  };
+  const commentOnThePost = async () => {
+    const commentContent = document.getElementById("comment").value;
+    const response = await commentPost(_id, { content: commentContent });
+    if (response.status === "SUCCESS") {
+      onComment();
+    }
   };
   useEffect(() => {
     isUserAlreadyLiked();
@@ -129,9 +140,14 @@ function Post({ posts }) {
                     type="text"
                     placeholder="comment here..."
                     className="h-[40px] w-full p-4 outline-none"
+                    name="comment"
+                    id="comment"
                   />
                 </div>
-                <div className="absolute right-0 md:h-[40px] md:w-[40px]  h-[30px] w-[30px] rounded-full bg-[#772ba9] md:text-2xl text-lg flex items-center justify-center hover:cursor-pointer">
+                <div
+                  className="absolute right-0 md:h-[40px] md:w-[40px]  h-[30px] w-[30px] rounded-full bg-[#772ba9] md:text-2xl text-lg flex items-center justify-center hover:cursor-pointer"
+                  onClick={commentOnThePost}
+                >
                   <VscSend />
                 </div>
               </div>

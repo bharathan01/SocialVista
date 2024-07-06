@@ -13,6 +13,7 @@ export const ApiEndPoint = {
     GET_FOLLOWING_POST: "/post/getFollowingPost",
     GET_FORYOU_POST: "/post/allPost",
     GET_LIKEUNLIKE_POST: "/post/like",
+    COMMENT_POST: "/post/comment",
   },
   POST: {
     ADD: "/post/add",

@@ -30,9 +30,21 @@ export const getForYouPost = async () => {
   }
 };
 export const likeUnlikePost = async (postId) => {
-  console.log(`CURR_USER.GET_LIKEUNLIKE_POST/${postId}`)
   try {
     const responce = await API.get(`${CURR_USER.GET_LIKEUNLIKE_POST}/${postId}`);
+    return responce.data;
+  } catch (errors) {
+    if (errors.response) {
+      const error = errors?.response?.data;
+      return error;
+    } else {
+      console.log("error maessege :", errors.message);
+    }
+  }
+};
+export const commentPost = async (postId,commentData) => {
+  try {
+    const responce = await API.post(`${CURR_USER.COMMENT_POST}/${postId}`,commentData);
     return responce.data;
   } catch (errors) {
     if (errors.response) {
