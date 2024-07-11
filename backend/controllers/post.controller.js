@@ -34,7 +34,7 @@ const getAllPost = async (req, res) => {
       "can not fetch all post! try after sometime."
     );
   res.status(SUCCESS).json({
-    status: 'SUCCESS',
+    status: "SUCCESS",
     message: "successfully fetch all posts",
     allPost,
   });
@@ -192,7 +192,7 @@ const likeUnlikePost = tryCatch(async (req, res) => {
       (id) => id.toString() !== userId.toString()
     );
     return res.status(SUCCESS).json({
-      status: 'SUCCESS',
+      status: "SUCCESS",
       message: "successfully unliked a post",
       updatedLike,
     });
@@ -212,7 +212,7 @@ const likeUnlikePost = tryCatch(async (req, res) => {
 
     await newNotification.save();
     return res.status(SUCCESS).json({
-      status: 'SUCCESS',
+      status: "SUCCESS",
       message: "successfully liked a post",
       updatedLike,
     });
@@ -254,6 +254,7 @@ const commentPost = tryCatch(async (req, res) => {
   const comments = {
     user: userId,
     text: content,
+    time: new Date(),
   };
 
   post.comments.push(comments);
@@ -268,14 +269,14 @@ const commentPost = tryCatch(async (req, res) => {
   await newNotification.save();
 
   return res.status(SUCCESS).json({
-    status: 'SUCCESS',
+    status: "SUCCESS",
     message: "commented successfully",
     post,
   });
 });
 
 // const deleteCommet = tryCatch(async(req,res) =>{
-    
+
 // })
 
 module.exports = {

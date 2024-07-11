@@ -2,12 +2,15 @@ import React, { useEffect } from "react";
 import profileImage from "../../../../public/images/avatar-placeholder.png";
 import { IoIosHeartEmpty } from "react-icons/io";
 import { IoIosHeart } from "react-icons/io";
+import { relativeTimeString } from "../../../utils/date/DateAndTime";
 
-function comments({ comments }) {
+function comments({ comments, isCommentSuccess }) {
+  useEffect(() => {
+  }, [isCommentSuccess]);
   return comments.length <= 0 ? (
     <div>No comments</div>
   ) : (
-    comments.map((comment, index) => {
+    comments.reverse().map((comment, index) => {
       return (
         <React.Fragment key={index}>
           <div className="flex gap-2 flex-col justify-between">
@@ -21,7 +24,7 @@ function comments({ comments }) {
               </div>
               <div>
                 <span className="text-base">{comment.user.username}</span>
-                <span className="text-sm opacity-70 ml-2">1h ago</span>
+                <span className="text-sm opacity-70 ml-2">{relativeTimeString(comment.time)}</span>
               </div>
             </div>
             <div className="flex justify-between">

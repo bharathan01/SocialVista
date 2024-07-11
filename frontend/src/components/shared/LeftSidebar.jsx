@@ -45,7 +45,7 @@ function LeftSidebar() {
             </div>
           </Link>
           <Link to="/Profile">
-            <div className="text-lg lg:block md:hidden hidden hover:cursor-pointer ">
+            <div className="text-md lg:block md:hidden hidden hover:cursor-pointer ">
               {userInfo.fullName}
             </div>
           </Link>

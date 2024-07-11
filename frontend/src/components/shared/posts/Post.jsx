@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 
 import profileImage from "../../../../public/images/avatar-placeholder.png";
-import demo from "../../../../public/images/demo.jpg";
 import Comments from "./comments";
 import { FaHeart } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
@@ -10,17 +9,20 @@ import { FiSend } from "react-icons/fi";
 import { FaRegBookmark } from "react-icons/fa";
 import { FaBookmark } from "react-icons/fa";
 import { VscSend } from "react-icons/vsc";
+import Spinner from "../../common/loader/SpinnerLoader";
 import {
   commentPost,
   likeUnlikePost,
 } from "../../../service/api/userController/userActivity";
 import { useSelector } from "react-redux";
 
-function Post({ posts, onComment }) {
+function Post({ posts }) {
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [isCommentOpen, setCommentOpen] = useState(false);
   const [isUserLiked, setUserLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(false);
+  const [isCommentSuccess, setCommentSuccess] = useState(false);
+  const [commenttLoader, setCommentLoader] = useState(false);
 
   const { userInfo } = useSelector((state) => state.userAuth);
   const { img, user, comments, likes, text, _id } = posts;
@@ -36,15 +38,30 @@ function Post({ posts, onComment }) {
       : setLikeCount((prev) => prev + 1);
     setUserLiked((prev) => !prev);
   };
+  const addNewComment = (commentContent) => {
+    const newComment = {
+      text: commentContent,
+      user: {
+        username: userInfo.username,
+        profileImg: userInfo.profileImg,
+      },
+    };
+    comments.push(newComment);
+  };
   const commentOnThePost = async () => {
+    setCommentLoader(true);
     const commentContent = document.getElementById("comment").value;
     const response = await commentPost(_id, { content: commentContent });
     if (response.status === "SUCCESS") {
-      onComment();
+      addNewComment(commentContent);
+      setCommentSuccess(true);
+      setCommentLoader(false);
     }
+    setCommentLoader(false);
   };
   useEffect(() => {
     isUserAlreadyLiked();
+    console.log(isUserLiked)
     setLikeCount(likes.length);
   }, []);
   return (
@@ -112,19 +129,19 @@ function Post({ posts, onComment }) {
               onClick={() => setCommentOpen(!isCommentOpen)}
             >
               <span className="md:text-2xl text-lg">
-                <FaRegCommentAlt />
+                <FaRegCommentAlt  className="hover:cursor-pointer"/>
               </span>
               <span>{comments.length}</span>
             </div>
             <div className="flex flex-col w-10 h-12 justify-start items-center">
               <span className="md:text-2xl text-lg">
-                <FiSend />
+                <FiSend className="hover:cursor-pointer" />
               </span>
             </div>
           </div>
           <div className="flex flex-col w-10 h-12 justify-start items-center">
             <span className="md:text-2xl text-lg">
-              <FaRegBookmark />
+              <FaRegBookmark className="hover:cursor-pointer" />
             </span>
           </div>
         </div>
@@ -148,12 +165,15 @@ function Post({ posts, onComment }) {
                   className="absolute right-0 md:h-[40px] md:w-[40px]  h-[30px] w-[30px] rounded-full bg-[#772ba9] md:text-2xl text-lg flex items-center justify-center hover:cursor-pointer"
                   onClick={commentOnThePost}
                 >
-                  <VscSend />
+                  {commenttLoader ? <Spinner /> : <VscSend />}
                 </div>
               </div>
             </div>
             <div>
-              <Comments comments={comments} />
+              <Comments
+                comments={comments}
+                isCommentSuccess={isCommentSuccess}
+              />
             </div>
           </div>
         )}
