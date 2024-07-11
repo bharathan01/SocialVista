@@ -55,3 +55,16 @@ export const commentPost = async (postId,commentData) => {
     }
   }
 };
+export const createPost = async (postData) => {
+  try {
+    const responce = await API.post(`${CURR_USER.COMMENT_POST}/${postId}`,commentData);
+    return responce.data;
+  } catch (errors) {
+    if (errors.response) {
+      const error = errors?.response?.data;
+      return error;
+    } else {
+      console.log("error maessege :", errors.message);
+    }
+  }
+};

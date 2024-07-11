@@ -26,11 +26,7 @@ function Post({ posts }) {
 
   const { userInfo } = useSelector((state) => state.userAuth);
   const { img, user, comments, likes, text, _id } = posts;
-  const isUserAlreadyLiked = () => {
-    likes.map((ele) => {
-      ele === userInfo.id ? setUserLiked(true) : setUserLiked(false);
-    });
-  };
+
   const likeApost = async () => {
     const response = await likeUnlikePost(_id);
     isUserLiked
@@ -60,8 +56,7 @@ function Post({ posts }) {
     setCommentLoader(false);
   };
   useEffect(() => {
-    isUserAlreadyLiked();
-    console.log(isUserLiked)
+    setUserLiked(likes.includes(userInfo.id));
     setLikeCount(likes.length);
   }, []);
   return (
@@ -129,7 +124,7 @@ function Post({ posts }) {
               onClick={() => setCommentOpen(!isCommentOpen)}
             >
               <span className="md:text-2xl text-lg">
-                <FaRegCommentAlt  className="hover:cursor-pointer"/>
+                <FaRegCommentAlt className="hover:cursor-pointer" />
               </span>
               <span>{comments.length}</span>
             </div>
