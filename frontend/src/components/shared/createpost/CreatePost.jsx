@@ -1,11 +1,15 @@
 import React, { useRef, useState } from "react";
 import coverPlaceHolder from "../../../../public/images/cover.png";
 import { CiImageOn } from "react-icons/ci";
+import { createPost } from "../../../service/api/userController/userActivity";
+import Spinner from "../../common/loader/SpinnerLoader";
+
 function CreatePost() {
   const postImage = useRef(null);
   const [postImg, setPostImg] = useState(null);
   const [postContent, setPostContent] = useState(null);
   const [error, setError] = useState(false);
+  const [createPostLoader, setLoader] = useState(false);
 
   const postImageChange = (e) => {
     const file = e.target.files[0];
@@ -20,13 +24,24 @@ function CreatePost() {
   const postContentOnChange = (e) => {
     setPostContent(e.target.value);
   };
-  const createPosthandles = () => {
-    if (postContent === null && postImg === null) setError(true);
-
-    const formData = new FormData()
-    formData.append('postImage',postImg)
-    formData.append('postContent',postContent)
-    
+  const createPostHandles = async () => {
+    setLoader(true);
+    const formData = new FormData();
+    if (postImg) {
+      formData.append("postImage", postImg);
+    }
+    if (postContent.trim() !== "") {
+      formData.append("postContent", postContent);
+    }
+    const response = await createPost(formData);
+    if (response.status !== "SUCCESS") {
+      setError(true);
+      setLoader(false);
+    } else {
+      setPostImg(null);
+      setPostContent("");
+      setLoader(false);
+    }
   };
   return (
     <div className="flex flex-col p-3 justify-center items-center gap-2 w-full">
@@ -35,6 +50,8 @@ function CreatePost() {
           className="textarea textarea-ghost w-full border-none bg-gray-900"
           placeholder="Write your thoughts..."
           onChange={postContentOnChange}
+          value={postContent}
+          disabled={createPostLoader}
         ></textarea>
       </div>
       {postImg && (
@@ -65,14 +82,15 @@ function CreatePost() {
             hidden
             ref={postImage}
             onChange={(e) => postImageChange(e)}
+            disabled={createPostLoader}
           />
         </div>
         <div>
           <button
             className="btn bg-[#772ba9] rounded-2xl"
-            onClick={createPosthandles}
+            onClick={createPostHandles}
           >
-            Post
+            {createPostLoader ? <Spinner /> : "Post"}
           </button>
         </div>
       </div>

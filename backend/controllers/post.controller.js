@@ -44,22 +44,24 @@ const creatNewPost = tryCatch(async (req, res) => {
   let { postImage, postContent } = req.body;
   const currentUser = req.userId;
   if (!postContent && !postImage)
-    throw new ApiError(BAD_REQUEST, "post is empty");
+    throw new ApiError(BAD_REQUEST, {
+    error:'empty',
+    errMsg:"Upload your post !"
+  });
   if (!currentUser) throw new ApiError(UNAUTHORIZED, "unauthorized access");
 
   if (postImage) {
     const postUrl = await uploadFiletoCloudinary(postImage);
     postImage = postUrl.secure_url;
   }
-  console.log(postImage);
+
   const newPost = new Post({
     user: currentUser,
     text: postContent,
     img: postImage,
   });
-
+   
   const uploadedPost = await newPost.save();
-
   if (!uploadedPost)
     throw new ApiError(
       INTERNAL_SERVER_ERROR,
@@ -67,7 +69,7 @@ const creatNewPost = tryCatch(async (req, res) => {
     );
 
   return res.status(SUCCESS).json({
-    SUCCESS: true,
+    status: 'SUCCESS',
     Message: "post created successfully",
     uploadedPost,
   });

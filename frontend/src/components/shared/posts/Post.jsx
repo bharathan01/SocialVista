@@ -49,6 +49,7 @@ function Post({ posts }) {
     const commentContent = document.getElementById("comment").value;
     const response = await commentPost(_id, { content: commentContent });
     if (response.status === "SUCCESS") {
+      document.getElementById("comment").value = "";
       addNewComment(commentContent);
       setCommentSuccess(true);
       setCommentLoader(false);
@@ -100,11 +101,11 @@ function Post({ posts }) {
           </div>
         </div>
         <div className="mt-3 rounded-lg flex items-center justify-center">
-          <img src={img} alt="" className="w-[500px] h-[500px]" />
+          {img && <img src={img} alt="" className="w-[500px] h-[500px]" />}
         </div>
-        <div className="flex items-center justify-center">
-          <div className="flex items-center justify-center p-2">
-            <span className="md:text-base text-xs">{text}</span>
+        <div className="flex items-center">
+          <div className="flex items-center p-2">
+            <span className="md:text-lg text-xs">{text}</span>
           </div>
         </div>
         <div className="flex justify-between items-center p-2">

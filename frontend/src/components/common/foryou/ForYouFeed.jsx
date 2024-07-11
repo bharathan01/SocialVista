@@ -47,7 +47,7 @@ function ForYouFeed() {
           </span>
         </div>
       ) : (
-        forYouPost.map((post, index) => (
+        forYouPost.slice().reverse().map((post, index) => (
           <React.Fragment key={index}>
             <Post posts={post} />
           </React.Fragment>

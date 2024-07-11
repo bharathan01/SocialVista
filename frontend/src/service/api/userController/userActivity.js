@@ -31,7 +31,9 @@ export const getForYouPost = async () => {
 };
 export const likeUnlikePost = async (postId) => {
   try {
-    const responce = await API.get(`${CURR_USER.GET_LIKEUNLIKE_POST}/${postId}`);
+    const responce = await API.get(
+      `${CURR_USER.GET_LIKEUNLIKE_POST}/${postId}`
+    );
     return responce.data;
   } catch (errors) {
     if (errors.response) {
@@ -42,9 +44,12 @@ export const likeUnlikePost = async (postId) => {
     }
   }
 };
-export const commentPost = async (postId,commentData) => {
+export const commentPost = async (postId, commentData) => {
   try {
-    const responce = await API.post(`${CURR_USER.COMMENT_POST}/${postId}`,commentData);
+    const responce = await API.post(
+      `${CURR_USER.COMMENT_POST}/${postId}`,
+      commentData
+    );
     return responce.data;
   } catch (errors) {
     if (errors.response) {
@@ -57,7 +62,12 @@ export const commentPost = async (postId,commentData) => {
 };
 export const createPost = async (postData) => {
   try {
-    const responce = await API.post(`${CURR_USER.COMMENT_POST}/${postId}`,commentData);
+    const responce = await API.post(CURR_USER.NEW_POST, postData, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
     return responce.data;
   } catch (errors) {
     if (errors.response) {

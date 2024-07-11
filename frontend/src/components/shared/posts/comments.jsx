@@ -10,7 +10,7 @@ function comments({ comments, isCommentSuccess }) {
   return comments.length <= 0 ? (
     <div>No comments</div>
   ) : (
-    comments.reverse().map((comment, index) => {
+    comments.slice().reverse().map((comment, index) => {
       return (
         <React.Fragment key={index}>
           <div className="flex gap-2 flex-col justify-between">

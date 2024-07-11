@@ -13,12 +13,15 @@ const { NOT_FOUND } = require("./utils/httpStatusCodes.js");
 const cloudinaryConfig = require("./db/cloudinaryConfig.js");
 
 const app = express();
-app.use(cors({
-  origin:'http://localhost:5173',
-  credentials:true
-}));
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json({}));
+app.use(express.urlencoded({ extended: true}));
 app.use(cookieParser());
 cloudinaryConfig();
 

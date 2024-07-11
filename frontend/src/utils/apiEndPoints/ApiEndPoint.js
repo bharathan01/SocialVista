@@ -14,6 +14,7 @@ export const ApiEndPoint = {
     GET_FORYOU_POST: "/post/allPost",
     GET_LIKEUNLIKE_POST: "/post/like",
     COMMENT_POST: "/post/comment",
+    NEW_POST: "/post/newPost",
   },
   POST: {
     ADD: "/post/add",
@@ -22,8 +23,5 @@ export const ApiEndPoint = {
     COMMENT: `${import.meta.env.BASE_URL}/post/comment`,
     LIKE_UNLIKE: `${import.meta.env.BASE_URL}/post/like-unlike`,
     LIKED: `${import.meta.env.BASE_URL}/post/liked`,
-  },
-  COMMENT: {
-    LIKE: `${import.meta.env.BASE_URL}/comment/like`,
   },
 };
