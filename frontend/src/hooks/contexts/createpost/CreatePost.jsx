@@ -11,9 +11,12 @@ const CreateNewPostProvider = ({ children }) => {
   const toggleIslogOutCard = (element) => {
     document.getElementById(element)?.showModal();
   };
+  const toggleUpdatePostCard = (element) => {
+    document.getElementById(element)?.showModal();
+  };
   return (
     <CreateNewPostContext.Provider
-      value={{ toggleCreatePost, toggleIslogOutCard }}
+      value={{ toggleCreatePost, toggleIslogOutCard ,toggleUpdatePostCard}}
     >
       {children}
     </CreateNewPostContext.Provider>

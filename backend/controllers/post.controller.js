@@ -45,9 +45,9 @@ const creatNewPost = tryCatch(async (req, res) => {
   const currentUser = req.userId;
   if (!postContent && !postImage)
     throw new ApiError(BAD_REQUEST, {
-    error:'empty',
-    errMsg:"Upload your post !"
-  });
+      error: "empty",
+      errMsg: "Upload your post !",
+    });
   if (!currentUser) throw new ApiError(UNAUTHORIZED, "unauthorized access");
 
   if (postImage) {
@@ -60,7 +60,7 @@ const creatNewPost = tryCatch(async (req, res) => {
     text: postContent,
     img: postImage,
   });
-   
+
   const uploadedPost = await newPost.save();
   if (!uploadedPost)
     throw new ApiError(
@@ -69,7 +69,7 @@ const creatNewPost = tryCatch(async (req, res) => {
     );
 
   return res.status(SUCCESS).json({
-    status: 'SUCCESS',
+    status: "SUCCESS",
     Message: "post created successfully",
     uploadedPost,
   });
@@ -156,7 +156,7 @@ const updatePost = tryCatch(async (req, res) => {
 const deletePost = tryCatch(async (req, res) => {
   const postId = req.params.id;
   const userId = req.userId;
-
+  
   const postInfo = await Post.findById(postId).populate({
     path: "user",
     select: "-password",
@@ -173,7 +173,7 @@ const deletePost = tryCatch(async (req, res) => {
   if (!postDeleted)
     throw new ApiError(INTERNAL_SERVER_ERROR, "can not delete the post! 2");
   return res.status(SUCCESS).json({
-    SUCCESS: true,
+    status: "SUCCESS",
     message: "post deleted successfully",
   });
 });

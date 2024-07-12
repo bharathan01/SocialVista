@@ -78,3 +78,16 @@ export const createPost = async (postData) => {
     }
   }
 };
+export const deletePost = async (postId) => {
+  try {
+    const responce = await API.post(`${CURR_USER.DELETE_POST}/${postId}`);
+    return responce.data;
+  } catch (errors) {
+    if (errors.response) {
+      const error = errors?.response?.data;
+      return error;
+    } else {
+      console.log("error maessege :", errors.message);
+    }
+  }
+};

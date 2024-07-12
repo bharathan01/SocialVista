@@ -15,6 +15,7 @@ export const ApiEndPoint = {
     GET_LIKEUNLIKE_POST: "/post/like",
     COMMENT_POST: "/post/comment",
     NEW_POST: "/post/newPost",
+    DELETE_POST: "/post/deletePost",
   },
   POST: {
     ADD: "/post/add",

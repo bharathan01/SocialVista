@@ -9,7 +9,7 @@ function Following() {
   const [followersPost, setFollowersPost] = useState([]);
   const [loader, setLoader] = useState(false);
   const [isReloadPage, setReloadPage] = useState(false);
-  const [isCommentedLoader, setIsCommentedLoader] = useState(false);
+  const [isPostDeleted, setPostDeleted] = useState(false);
 
   const getFollowingUsersPost = async () => {
     setLoader(true);
@@ -26,13 +26,12 @@ function Following() {
       setLoader(false);
     }
   };
-  const handleComment = () => {
-    setIsCommentedLoader(true);
+  const isUserDeletePost = () => {
+    setPostDeleted(true);
   };
-
   useEffect(() => {
     getFollowingUsersPost();
-  }, [isCommentedLoader]);
+  }, [isPostDeleted]);
 
   return (
     <div className="flex flex-col gap-10">
@@ -54,7 +53,7 @@ function Following() {
       ) : (
         followersPost.map((post, index) => (
           <React.Fragment key={index}>
-            <Post posts={post} onComment={handleComment} />
+            <Post posts={post} onDelete={() => isUserDeletePost()} />
           </React.Fragment>
         ))
       )}

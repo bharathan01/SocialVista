@@ -11,7 +11,6 @@ import {
   Explore,
   Search,
 } from "./pages";
-import Check from "./pages/Check";
 import { useSelector } from "react-redux";
 
 const ProtectedRoute = ({ isUserLoggedIn, children }) => {
@@ -81,14 +80,6 @@ function App() {
             element={
               <ProtectedRoute isUserLoggedIn={isUserLoggedIn}>
                 <Search />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/just"
-            element={
-              <ProtectedRoute isUserLoggedIn={isUserLoggedIn}>
-                <Check />
               </ProtectedRoute>
             }
           />

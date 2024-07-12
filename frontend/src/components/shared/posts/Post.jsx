@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import profileImage from "../../../../public/images/avatar-placeholder.png";
 import Comments from "./comments";
@@ -12,11 +12,14 @@ import { VscSend } from "react-icons/vsc";
 import Spinner from "../../common/loader/SpinnerLoader";
 import {
   commentPost,
+  deletePost,
   likeUnlikePost,
 } from "../../../service/api/userController/userActivity";
 import { useSelector } from "react-redux";
+import { CreateNewPostContext } from "../../../hooks/contexts/createpost/CreatePost";
+import UpdatePost from "./UpdatePost";
 
-function Post({ posts }) {
+function Post({ posts, onDelete }) {
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [isCommentOpen, setCommentOpen] = useState(false);
   const [isUserLiked, setUserLiked] = useState(false);
@@ -26,6 +29,7 @@ function Post({ posts }) {
 
   const { userInfo } = useSelector((state) => state.userAuth);
   const { img, user, comments, likes, text, _id } = posts;
+  const { toggleUpdatePostCard } = useContext(CreateNewPostContext);
 
   const likeApost = async () => {
     const response = await likeUnlikePost(_id);
@@ -56,12 +60,27 @@ function Post({ posts }) {
     }
     setCommentLoader(false);
   };
+  const delePosthandler = async () => {
+    const responce = await deletePost(_id);
+    responce.status === "SUCCESS" ? onDelete() : "";
+    onDelete();
+  };
   useEffect(() => {
     setUserLiked(likes.includes(userInfo.id));
     setLikeCount(likes.length);
   }, []);
   return (
     <div className="flex flex-row w-full justify-center ">
+      <dialog id="openUpdatePostcard" className="modal">
+        <div className="modal-box flex items-center justify-center">
+          <form method="dialog">
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+              ✕
+            </button>
+          </form>
+          <UpdatePost updatePostData={posts} />
+        </div>
+      </dialog>
       <div className="w-full">
         <div className="flex justify-between">
           <div className="flex gap-2 items-center">
@@ -90,18 +109,42 @@ function Post({ posts }) {
             {isMenuOpen && (
               <div className="w-[130px] xl:right-[28%] lg:right-[34%] sm:right-[46%] right-[13%] bg-gray-900 absolute flex flex-col items-center rounded-md">
                 <ul className="flex flex-col gap-2 w-full text-center">
-                  <li className="p-2 hover:bg-gray-800 w-full">Share</li>
-                  <li className="p-2 hover:bg-gray-800 w-full">Update</li>
-                  <li className="p-2 hover:bg-gray-800 w-full text-red-700">
-                    Delete
+                  <li className="p-2 hover:bg-gray-800 w-full hover:cursor-pointer">
+                    Share
                   </li>
+                  {userInfo.id === user._id ? (
+                    <>
+                      <li
+                        className="p-2 hover:bg-gray-800 w-full hover:cursor-pointer"
+                        onClick={() =>
+                          toggleUpdatePostCard("openUpdatePostcard")
+                        }
+                      >
+                        Update
+                      </li>
+                      <li
+                        className="p-2 hover:bg-gray-800 w-full text-red-700 hover:cursor-pointer"
+                        onClick={delePosthandler}
+                      >
+                        Delete
+                      </li>
+                    </>
+                  ) : (
+                    ""
+                  )}
                 </ul>
               </div>
             )}
           </div>
         </div>
         <div className="mt-3 rounded-lg flex items-center justify-center">
-          {img && <img src={img} alt="" className="w-[500px] h-[500px]" />}
+          {img && (
+            <img
+              src={img}
+              alt=""
+              className="lg:w-[500px] lg:h-[500px] max-w-[500px] max-h-[500px] object-contain"
+            />
+          )}
         </div>
         <div className="flex items-center">
           <div className="flex items-center p-2">

@@ -11,3 +11,4 @@ export {default as CreatePost} from "./shared/createpost/CreatePost.jsx";
 export {default as LogOutConfirm} from "./shared/logoutConfirm/LogOutConfirm.jsx";
 export {default as Following} from "./common/following/Follow.jsx";
 export {default as ForYouFeed } from "./common/foryou/ForYouFeed.jsx"; 
+export {default as UpdatePost } from "./shared/posts/UpdatePost.jsx"; 

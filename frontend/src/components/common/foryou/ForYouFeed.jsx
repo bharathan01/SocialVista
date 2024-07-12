@@ -9,6 +9,7 @@ function ForYouFeed() {
   const [forYouPost, setforYouPost] = useState([]);
   const [loader, setLoader] = useState(false);
   const [isReloadPage, setReloadPage] = useState(false);
+  const [isPostDeleted, setPostDeleted] = useState(false);
 
   const getForYouUsersPost = async () => {
     setLoader(true);
@@ -25,10 +26,12 @@ function ForYouFeed() {
       setLoader(false);
     }
   };
-
+  const isUserDeletePost = () => {
+    setPostDeleted(true);
+  };
   useEffect(() => {
     getForYouUsersPost();
-  }, []);
+  }, [isPostDeleted]);
   return (
     <div className="flex flex-col gap-10">
       {isReloadPage ? (
@@ -47,11 +50,14 @@ function ForYouFeed() {
           </span>
         </div>
       ) : (
-        forYouPost.slice().reverse().map((post, index) => (
-          <React.Fragment key={index}>
-            <Post posts={post} />
-          </React.Fragment>
-        ))
+        forYouPost
+          .slice()
+          .reverse()
+          .map((post, index) => (
+            <React.Fragment key={index}>
+              <Post posts={post} onDelete={() => isUserDeletePost()} />
+            </React.Fragment>
+          ))
       )}
     </div>
   );

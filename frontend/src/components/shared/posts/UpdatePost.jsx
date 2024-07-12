@@ -1,9 +1,10 @@
-import React, { useRef, useState } from "react";
+// import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { CiImageOn } from "react-icons/ci";
 import { createPost } from "../../../service/api/userController/userActivity";
 import Spinner from "../../common/loader/SpinnerLoader";
 
-function CreatePost() {
+function UpdatePost({ UpdatePostData }) {
   const postImage = useRef(null);
   const [postImg, setPostImg] = useState(null);
   const [postContent, setPostContent] = useState("");
@@ -42,6 +43,10 @@ function CreatePost() {
       setLoader(false);
     }
   };
+  useEffect(() => {
+    console.log(UpdatePostData);
+    console.log('haii')
+  }, []);
   return (
     <div className="flex flex-col p-3 justify-center items-center gap-2 w-full">
       <div className="w-full">
@@ -97,4 +102,4 @@ function CreatePost() {
   );
 }
 
-export default CreatePost;
+export default UpdatePost;
