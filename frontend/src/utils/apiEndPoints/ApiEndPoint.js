@@ -16,6 +16,7 @@ export const ApiEndPoint = {
     COMMENT_POST: "/post/comment",
     NEW_POST: "/post/newPost",
     DELETE_POST: "/post/deletePost",
+    UPDATE_POST: "/post/updatePost",
   },
   POST: {
     ADD: "/post/add",

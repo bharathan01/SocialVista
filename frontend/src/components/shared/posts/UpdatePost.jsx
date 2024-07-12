@@ -1,13 +1,13 @@
 // import React from "react";
 import React, { useEffect, useRef, useState } from "react";
 import { CiImageOn } from "react-icons/ci";
-import { createPost } from "../../../service/api/userController/userActivity";
+import { updatePost } from "../../../service/api/userController/userActivity";
 import Spinner from "../../common/loader/SpinnerLoader";
 
-function UpdatePost({ UpdatePostData }) {
+function UpdatePost({ updatePostData }) {
   const postImage = useRef(null);
   const [postImg, setPostImg] = useState(null);
-  const [postContent, setPostContent] = useState("");
+  const [postContent, setPostContent] = useState();
   const [error, setError] = useState(false);
   const [createPostLoader, setLoader] = useState(false);
 
@@ -33,10 +33,11 @@ function UpdatePost({ UpdatePostData }) {
     if (postContent.trim() !== "") {
       formData.append("postContent", postContent);
     }
-    const response = await createPost(formData);
+    const response = await updatePost(updatePostData._id, formData);
     if (response.status !== "SUCCESS") {
       setError(true);
       setLoader(false);
+      f;
     } else {
       setPostImg(null);
       setPostContent("");
@@ -44,9 +45,9 @@ function UpdatePost({ UpdatePostData }) {
     }
   };
   useEffect(() => {
-    console.log(UpdatePostData);
-    console.log('haii')
-  }, []);
+    setPostImg(updatePostData.img);
+    setPostContent(updatePostData.text);
+  }, [updatePostData]);
   return (
     <div className="flex flex-col p-3 justify-center items-center gap-2 w-full">
       <div className="w-full">
@@ -58,7 +59,7 @@ function UpdatePost({ UpdatePostData }) {
           disabled={createPostLoader}
         ></textarea>
       </div>
-      {postImg && (
+      {postImg && ( 
         <div className="">
           <div
             onClick={() => setPostImg(null)}

@@ -26,6 +26,7 @@ function Post({ posts, onDelete }) {
   const [likeCount, setLikeCount] = useState(false);
   const [isCommentSuccess, setCommentSuccess] = useState(false);
   const [commenttLoader, setCommentLoader] = useState(false);
+  const [isUpdateToggled, setUpdatetogggle] = useState(false);
 
   const { userInfo } = useSelector((state) => state.userAuth);
   const { img, user, comments, likes, text, _id } = posts;
@@ -60,10 +61,17 @@ function Post({ posts, onDelete }) {
     }
     setCommentLoader(false);
   };
-  const delePosthandler = async () => {
+  const deletePosthandler = async () => {
     const responce = await deletePost(_id);
     responce.status === "SUCCESS" ? onDelete() : "";
     onDelete();
+  };
+  const updatePosthandler = () => {
+    setUpdatetogggle(true);
+    toggleUpdatePostCard("openUpdatePostcard");
+  };
+  const clearUpdatePostData = () => {
+    setUpdatetogggle(false);
   };
   useEffect(() => {
     setUserLiked(likes.includes(userInfo.id));
@@ -71,16 +79,21 @@ function Post({ posts, onDelete }) {
   }, []);
   return (
     <div className="flex flex-row w-full justify-center ">
-      <dialog id="openUpdatePostcard" className="modal">
-        <div className="modal-box flex items-center justify-center">
-          <form method="dialog">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-              ✕
-            </button>
-          </form>
-          <UpdatePost updatePostData={posts} />
-        </div>
-      </dialog>
+      {isUpdateToggled && (
+        <dialog id="openUpdatePostcard" className="modal">
+          <div className="modal-box flex items-center justify-center">
+            <form method="dialog">
+              <button
+                className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+                onClick={clearUpdatePostData}
+              >
+                ✕
+              </button>
+            </form>
+            <UpdatePost updatePostData={posts} />
+          </div>
+        </dialog>
+      )}
       <div className="w-full">
         <div className="flex justify-between">
           <div className="flex gap-2 items-center">
@@ -116,15 +129,13 @@ function Post({ posts, onDelete }) {
                     <>
                       <li
                         className="p-2 hover:bg-gray-800 w-full hover:cursor-pointer"
-                        onClick={() =>
-                          toggleUpdatePostCard("openUpdatePostcard")
-                        }
+                        onClick={updatePosthandler}
                       >
                         Update
                       </li>
                       <li
                         className="p-2 hover:bg-gray-800 w-full text-red-700 hover:cursor-pointer"
-                        onClick={delePosthandler}
+                        onClick={deletePosthandler}
                       >
                         Delete
                       </li>

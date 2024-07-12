@@ -126,7 +126,6 @@ const updatePost = tryCatch(async (req, res) => {
   let { postContent, postImage } = req.body;
   const postId = req.params.id;
   const userId = req.userId;
-
   const postInfo = await Post.findById(postId).populate({
     path: "user",
     select: "-password",
@@ -141,22 +140,24 @@ const updatePost = tryCatch(async (req, res) => {
       await distroyFileFromCloudinary(postInfo.img);
     }
     postImage = await uploadFiletoCloudinary(postImage);
+    postInfo.img = postImage.secure_url;
   }
-  postInfo.text = postContent || postInfo.text;
-  postInfo.img = postImage.secure_url || postInfo.img;
+  if (postContent) { c
+    postInfo.text = postContent;
+  }
 
   const postUpdate = await postInfo.save();
   if (!postUpdate)
     throw new ApiError(INTERNAL_SERVER_ERROR, "can not update the post!");
   return res.status(SUCCESS).json({
-    SUCCESS: true,
+    SUCCESS: true, 
     message: "post updated successfully",
   });
 });
 const deletePost = tryCatch(async (req, res) => {
   const postId = req.params.id;
   const userId = req.userId;
-  
+
   const postInfo = await Post.findById(postId).populate({
     path: "user",
     select: "-password",

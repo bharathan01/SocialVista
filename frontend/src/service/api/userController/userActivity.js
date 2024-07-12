@@ -91,3 +91,21 @@ export const deletePost = async (postId) => {
     }
   }
 };
+export const updatePost = async (postId,postData) => {
+  try {
+    const responce = await API.post(`${CURR_USER.UPDATE_POST}/${postId}`, postData, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+    return responce.data;
+  } catch (errors) {
+    if (errors.response) {
+      const error = errors?.response?.data;
+      return error;
+    } else {
+      console.log("error maessege :", errors.message);
+    }
+  }
+};
