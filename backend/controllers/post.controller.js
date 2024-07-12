@@ -123,7 +123,8 @@ const userOwnPost = tryCatch(async (req, res) => {
   });
 });
 const updatePost = tryCatch(async (req, res) => {
-  let { postContent, postImage } = req.body;
+  let postContent = req.body?.postContent;
+  let postImage = req.body?.postImage;
   const postId = req.params.id;
   const userId = req.userId;
   const postInfo = await Post.findById(postId).populate({
@@ -135,14 +136,22 @@ const updatePost = tryCatch(async (req, res) => {
       BAD_REQUEST,
       "user is not authorized to update the post!"
     );
+
   if (postImage) {
-    if (postInfo.img) {
-      await distroyFileFromCloudinary(postInfo.img);
+    if (postImage != postInfo?.img) {
+      if (postInfo?.img) {
+        await distroyFileFromCloudinary(postInfo.img);
+      }
+      postImage = await uploadFiletoCloudinary(postImage);
+      postInfo.img = postImage.secure_url;
     }
-    postImage = await uploadFiletoCloudinary(postImage);
-    postInfo.img = postImage.secure_url;
+  } else {
+    if (postInfo?.img) {
+      await distroyFileFromCloudinary(postInfo.img);
+      postInfo.img = undefined;
+    }
   }
-  if (postContent) { c
+  if (postContent) {
     postInfo.text = postContent;
   }
 
@@ -150,7 +159,7 @@ const updatePost = tryCatch(async (req, res) => {
   if (!postUpdate)
     throw new ApiError(INTERNAL_SERVER_ERROR, "can not update the post!");
   return res.status(SUCCESS).json({
-    SUCCESS: true, 
+    SUCCESS: true,
     message: "post updated successfully",
   });
 });

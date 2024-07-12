@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   CreatePost,
   LogOutConfirm,
@@ -9,6 +9,14 @@ import {
 
 function Home() {
   const [changePage, setChangePage] = useState("following");
+
+  const dialogRef = useRef(null);
+
+  const closeCreateModel = () => {
+    if (dialogRef.current) {
+      dialogRef.current.close();
+    }
+  };
   return (
     <div className="flex-grow xl:ml-[14%] lg:ml-[20%] ml-[60px] mt-[64px] w-[63%]">
       <div className=" min-h-screen overflow-y-auto p-2 xl:w-[71%] lg:w-[62%] md:w-[57%] ">
@@ -41,14 +49,14 @@ function Home() {
         <div className="mt-[65px]">
           {changePage === "following" ? <ForYouFeed /> : <Following />}
         </div>
-        <dialog id="openCreatePostcard" className="modal">
+        <dialog id="openCreatePostcard" className="modal" ref={dialogRef}>
           <div className="modal-box md:w-[550px] w-[300px]">
             <form method="dialog">
               <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
                 ✕
               </button>
             </form>
-            <CreatePost />
+            <CreatePost onCloseModel={closeCreateModel} />
           </div>
         </dialog>
         <dialog id="openLogOutcard" className="modal">

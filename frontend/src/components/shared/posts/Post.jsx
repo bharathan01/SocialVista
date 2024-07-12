@@ -73,12 +73,15 @@ function Post({ posts, onDelete }) {
   const clearUpdatePostData = () => {
     setUpdatetogggle(false);
   };
+  const handleBlur = () => {
+    setMenuOpen((prev) => !prev);
+  };
   useEffect(() => {
     setUserLiked(likes.includes(userInfo.id));
     setLikeCount(likes.length);
   }, []);
   return (
-    <div className="flex flex-row w-full justify-center ">
+    <div className="flex flex-row w-full justify-center">
       {isUpdateToggled && (
         <dialog id="openUpdatePostcard" className="modal">
           <div className="modal-box flex items-center justify-center">
@@ -113,6 +116,7 @@ function Post({ posts, onDelete }) {
                 role="button"
                 className="flex flex-col justify-center items-center w-[40px] h-[40px] rounded-sm hover:cursor-pointer hover:bg-gray-900 p-1 gap-1"
                 onClick={() => setMenuOpen(!isMenuOpen)}
+                
               >
                 <span className="w-[3px] h-[3px] bg-white"></span>
                 <span className="w-[3px] h-[3px] bg-white"></span>

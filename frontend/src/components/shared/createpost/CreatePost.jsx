@@ -3,7 +3,7 @@ import { CiImageOn } from "react-icons/ci";
 import { createPost } from "../../../service/api/userController/userActivity";
 import Spinner from "../../common/loader/SpinnerLoader";
 
-function CreatePost() {
+function CreatePost({onCloseModel}) {
   const postImage = useRef(null);
   const [postImg, setPostImg] = useState(null);
   const [postContent, setPostContent] = useState("");
@@ -38,6 +38,7 @@ function CreatePost() {
       setLoader(false);
     } else {
       setPostImg(null);
+      onCloseModel()
       setPostContent("");
       setLoader(false);
     }
