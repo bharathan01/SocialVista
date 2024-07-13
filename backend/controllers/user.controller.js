@@ -27,16 +27,15 @@ const getUserProfile = tryCatch(async (req, res) => {
     throw new ApiError(BAD_REQUEST, "User profile details not found!");
 
   return res.status(SUCCESS).json({
-    status: 'SUCCESS',
+    status: "SUCCESS",
     message: "fetch user data",
     data: userProfileData,
   });
 });
 const userProfileUpadate = tryCatch(async (req, res) => {
   const { id } = req.params;
-  const { username, fullName, email, bio, profileImg, coverImg } = req.body;
-
-  const currentUserInfo = await userSchema.findById(id).select("-password");
+  let { username, fullName, email, bio, profileImg, coverImg } = req.body;
+  let currentUserInfo = await userSchema.findById(id).select("-password");
   if (!currentUserInfo)
     throw new ApiError(
       BAD_REQUEST,
@@ -44,15 +43,19 @@ const userProfileUpadate = tryCatch(async (req, res) => {
     );
 
   if (profileImg) {
-    if (currentUserInfo.profileImg) {
-      await distroyFileFromCloudinary(currentUserInfo.profileImg);
+    if (profileImg != currentUserInfo.profileImg) {
+      if (currentUserInfo.profileImg) {
+        await distroyFileFromCloudinary(currentUserInfo.profileImg);
+      }
+      const uploadedResponse = await uploadFiletoCloudinary(profileImg);
+      profileImg = uploadedResponse.secure_url;
     }
-    const uploadedResponse = await uploadFiletoCloudinary(profileImg);
-    profileImg = uploadedResponse.secure_url;
   }
   if (coverImg) {
-    if (currentUserInfo.coverImg) {
-      await distroyFileFromCloudinary(currentUserInfo.coverImg);
+    if (coverImg != currentUserInfo.coverImg) {
+      if (currentUserInfo.coverImg) {
+        await distroyFileFromCloudinary(currentUserInfo.coverImg);
+      }
     }
     const uploadedResponse = await uploadFiletoCloudinary(coverImg);
     coverImg = uploadedResponse.secure_url;
@@ -65,18 +68,29 @@ const userProfileUpadate = tryCatch(async (req, res) => {
   currentUserInfo.profileImg = profileImg || currentUserInfo.profileImg;
   currentUserInfo.coverImg = coverImg || currentUserInfo.coverImg;
 
-  const updateUser = await currentUserInfo.save();
-  if (!updateUser)
-    throw new ApiError(
-      INTERNAL_SERVER_ERROR,
-      "can not update profile! try after sometime."
-    );
-
-  return res.status(SUCCESS).json({
-    SUCCESS: true,
-    message: "user profile updated successfully",
-    updateUser,
-  });
+  try {
+    const updateUser = await currentUserInfo.save();
+    return res.status(SUCCESS).json({
+      status: "SUCCESS",
+      message: "User profile updated successfully",
+      updateUser,
+    });
+  } catch (error) {
+    if (error.code === 11000) {
+      const duplicateKey = Object.keys(error.keyPattern)[0];
+      const duplicateValue = error.keyValue[duplicateKey];
+      throw new ApiError(BAD_REQUEST, {
+        error: "DUPLICATE",
+        errorMessage: `Duplicate key error: ${duplicateKey} with value "${duplicateValue}" already exists.`,
+      });
+    } else {
+      // Handle other errors if necessary
+      throw new ApiError(
+        INTERNAL_SERVER_ERROR,
+        "Cannot update profile! Try after some time."
+      );
+    }
+  }
 });
 const suggestedUsers = tryCatch(async (req, res) => {
   const user = req.userId;

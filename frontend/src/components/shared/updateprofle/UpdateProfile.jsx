@@ -4,6 +4,8 @@ import { RiImageAddLine } from "react-icons/ri";
 import profilePlaceHolder from "../../../../public/images/avatar-placeholder.png";
 import coverPlaceHolder from "../../../../public/images/cover.png";
 import { updateUserProfile } from "../../../service/api/userProfileController/userProfile";
+import Spinner from "../../common/loader/SpinnerLoader";
+// import  Spinner  from "../../components";
 
 function UpdateProfile({ userData }) {
   const coverImage = useRef(null);
@@ -11,6 +13,7 @@ function UpdateProfile({ userData }) {
 
   const [coverImg, setCoverImg] = useState(userData?.coverImg);
   const [profileImg, setProfileImg] = useState(userData?.profileImg);
+  const [loader, setLoader] = useState(false);
   const [updatedValues, setUpdatedVlalues] = useState({
     username: userData?.username,
     fullName: userData?.fullName,
@@ -36,20 +39,22 @@ function UpdateProfile({ userData }) {
     setUpdatedVlalues({ ...updatedValues, [name]: value });
   };
   const handleUpdateProfile = async (e) => {
+    setLoader(true);
     e.preventDefault();
     const formData = new FormData();
-    formData.username = updatedValues.username;
-    formData.profileImg = profileImg;
-    formData.coverImg = coverImg;
-    formData.fullName = updatedValues.fullName;
-    formData.email = updatedValues.email;
-    formData.bio = updatedValues.bio;
+    formData.append("username", updatedValues.username);
+    formData.append("profileImg", profileImg);
+    formData.append("coverImg", coverImg);
+    formData.append("fullName", updatedValues.fullName);
+    formData.append("email", updatedValues.email);
+    formData.append("bio", updatedValues.bio);
     const responce = await updateUserProfile(userData._id, formData);
-    console.log(responce);
+    console.log(responce)
+    if (responce.status === "SUCCESS") {
+      setLoader(false);
+    }
+    setLoader(false);
   };
-  // useEffect(() => {
-  //   console.log(userData);
-  // }, []);
   return (
     <div>
       <div className="mt-4">
@@ -167,7 +172,7 @@ function UpdateProfile({ userData }) {
                 className="btn bg-[#772ba9]"
                 onClick={handleUpdateProfile}
               >
-                Button
+                {loader ? <Spinner /> : "update"}
               </button>
             </div>
           </div>

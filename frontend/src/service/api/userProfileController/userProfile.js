@@ -12,7 +12,7 @@ export const getUserProfileDetails = async (userId) => {
       const error = error?.response?.data;
       return error;
     } else {
-      console.log("error maessege :", errors.message);
+      console.log("error maessege :", error.message);
     }
   }
 };
@@ -44,14 +44,19 @@ export const getUserLikesPosts = async () => {
 };
 export const updateUserProfile = async (userId, profileData) => {
   try {
-    const responce = await API.get(
-      `${USER_PRO.UER_PRO_UPDATE}/${userId}`,
-      profileData
+    const responce = await API.post(
+      `${USER_PRO.USER_PRO_UPDATE}/${userId}`,
+      profileData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
     );
     return responce.data;
   } catch (error) {
     if (error.response) {
-      const error = error?.response?.data;
+      const error = error?.response;
       return error;
     } else {
       console.log("error maessege :", error.message);

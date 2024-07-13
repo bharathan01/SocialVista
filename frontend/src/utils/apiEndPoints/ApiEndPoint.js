@@ -18,7 +18,7 @@ export const ApiEndPoint = {
     USER_PROFILE: "/user/profile",
     USER_POST: "/post/userOwnPost",
     USER_LIKED_POST: "/post/likedpost",
-    UER_PRO_UPDATE: '/user/profileUpdate',
+    USER_PRO_UPDATE: "/user/profileUpdate",
     DELETE: `${import.meta.env.BASE_URL}/post/delete`,
     COMMENT: `${import.meta.env.BASE_URL}/post/comment`,
     LIKE_UNLIKE: `${import.meta.env.BASE_URL}/post/like-unlike`,
