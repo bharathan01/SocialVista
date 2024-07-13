@@ -27,7 +27,7 @@ const getUserProfile = tryCatch(async (req, res) => {
     throw new ApiError(BAD_REQUEST, "User profile details not found!");
 
   return res.status(SUCCESS).json({
-    SUCCESS: true,
+    status: 'SUCCESS',
     message: "fetch user data",
     data: userProfileData,
   });

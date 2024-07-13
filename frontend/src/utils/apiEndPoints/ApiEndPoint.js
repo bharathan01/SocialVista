@@ -18,8 +18,8 @@ export const ApiEndPoint = {
     DELETE_POST: "/post/deletePost",
     UPDATE_POST: "/post/updatePost",
   },
-  POST: {
-    ADD: "/post/add",
+  USER_PRO: {
+    USER_PROFILE: "/user/profile",
     UPDATE: `${import.meta.env.BASE_URL}/post/update`,
     DELETE: `${import.meta.env.BASE_URL}/post/delete`,
     COMMENT: `${import.meta.env.BASE_URL}/post/comment`,

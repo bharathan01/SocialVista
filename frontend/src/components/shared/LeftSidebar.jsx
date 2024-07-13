@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 
 function LeftSidebar() {
   const { toggleIslogOutCard } = useContext(CreateNewPostContext);
+  const { usrInfo } = useSelector((state) => state.userAuth);
   const [activeMenu, setActiveMenu] = useState(null);
   const { userInfo } = useSelector((state) => state.userAuth);
   const handleClick = (menu) => {
@@ -35,7 +36,7 @@ function LeftSidebar() {
       </div>
       <div className="w-full mb-5 flex items-center mt-[150px] ">
         <div className="flex items-center justify-around w-full rounded-3xl  p-1">
-          <Link to="/Profile">
+          <Link to={`/Profile/${userInfo.id}`}>
             <div className="rounded-full w-10 h-10 overflow-x-hidden object-contain hover:cursor-pointer ">
               {userInfo.profileImg ? (
                 <img src={userInfo.profileImg} alt="" />
@@ -44,7 +45,7 @@ function LeftSidebar() {
               )}
             </div>
           </Link>
-          <Link to="/Profile">
+          <Link to={`/Profile/${userInfo.id}`}>
             <div className="text-md lg:block md:hidden hidden hover:cursor-pointer ">
               {userInfo.fullName}
             </div>
