@@ -117,7 +117,7 @@ const userOwnPost = tryCatch(async (req, res) => {
     throw new ApiError(INTERNAL_SERVER_ERROR, "can not fetch user post!");
 
   res.status(SUCCESS).json({
-    SUCCESS: true,
+    status: "SUCCESS",
     message: "fetch user post sueccessfull",
     postInfo,
   });
@@ -247,7 +247,7 @@ const likedPost = tryCatch(async (req, res) => {
     });
 
   res.status(SUCCESS).json({
-    SUCCESS: true,
+    status: "SUCCESS",
     message: "user liked post",
     likedPosts,
   });
