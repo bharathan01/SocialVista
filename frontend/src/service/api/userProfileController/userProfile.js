@@ -38,7 +38,23 @@ export const getUserLikesPosts = async () => {
       const error = error?.response?.data;
       return error;
     } else {
-      console.log("error maessege :", errors.message);
+      console.log("error maessege :", error.message);
+    }
+  }
+};
+export const updateUserProfile = async (userId, profileData) => {
+  try {
+    const responce = await API.get(
+      `${USER_PRO.UER_PRO_UPDATE}/${userId}`,
+      profileData
+    );
+    return responce.data;
+  } catch (error) {
+    if (error.response) {
+      const error = error?.response?.data;
+      return error;
+    } else {
+      console.log("error maessege :", error.message);
     }
   }
 };

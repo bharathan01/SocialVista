@@ -29,9 +29,14 @@ function Profile() {
   //   navigate("/profile");
   // };
   const getUserProfile = async () => {
+    setLoading(true)
     const userDatails = await getUserProfileDetails(userId);
-    if (userDatails.status !== "SUCCESS") setUserProfile(true);
+    if (userDatails.status !== "SUCCESS"){
+       setUserProfile(true);
+       setLoading(false)
+      }
     setUserDetilas(userDatails.data);
+    setLoading(false)
   };
   const noOfOrgianlPost = (count) => {
     setNoOfPosts(count);
@@ -111,7 +116,7 @@ function Profile() {
                             ✕
                           </button>
                         </form>
-                        <UpdateProfile />
+                        <UpdateProfile userData={userDetails} />
                       </div>
                     </dialog>
                     <div className="w-full flex flex-col gap-1 mt-[10px]">
