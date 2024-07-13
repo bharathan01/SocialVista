@@ -5,6 +5,7 @@ const CreateNewPostContext = createContext();
 
 // Create the provider component
 const CreateNewPostProvider = ({ children }) => {
+  const [reload, setReload] = useState(false);
   const toggleCreatePost = (elememt) => {
     document.getElementById(elememt)?.showModal();
   };
@@ -14,9 +15,12 @@ const CreateNewPostProvider = ({ children }) => {
   const toggleUpdatePostCard = (element) => {
     document.getElementById(element)?.showModal();
   };
+  const reloadHomeComponent = () => {
+    setReload(!reload);
+  };
   return (
     <CreateNewPostContext.Provider
-      value={{ toggleCreatePost, toggleIslogOutCard ,toggleUpdatePostCard}}
+      value={{ toggleCreatePost, toggleIslogOutCard, toggleUpdatePostCard ,reload,reloadHomeComponent}}
     >
       {children}
     </CreateNewPostContext.Provider>

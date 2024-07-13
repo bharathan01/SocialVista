@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import {
   CreatePost,
   LogOutConfirm,
@@ -6,17 +6,21 @@ import {
   ForYouFeed,
   UpdatePost,
 } from "../../components";
+import { CreateNewPostContext } from "../../hooks/contexts/createpost/CreatePost";
 
 function Home() {
   const [changePage, setChangePage] = useState("following");
+  const { reloadHomeComponent, reload } = useContext(CreateNewPostContext);
 
   const dialogRef = useRef(null);
 
   const closeCreateModel = () => {
     if (dialogRef.current) {
       dialogRef.current.close();
+      reloadHomeComponent();
     }
   };
+  useEffect(() => {}, []);
   return (
     <div className="flex-grow xl:ml-[14%] lg:ml-[20%] ml-[60px] mt-[64px] w-[63%]">
       <div className=" min-h-screen overflow-y-auto p-2 xl:w-[71%] lg:w-[62%] md:w-[57%] ">
@@ -47,7 +51,11 @@ function Home() {
           </div>
         </div>
         <div className="mt-[65px]">
-          {changePage === "following" ? <ForYouFeed /> : <Following />}
+          {changePage === "following" ? (
+            <ForYouFeed key={reload} />
+          ) : (
+            <Following key={reload} />
+          )}
         </div>
         <dialog id="openCreatePostcard" className="modal" ref={dialogRef}>
           <div className="modal-box md:w-[550px] w-[300px]">

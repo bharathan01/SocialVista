@@ -159,7 +159,7 @@ const updatePost = tryCatch(async (req, res) => {
   if (!postUpdate)
     throw new ApiError(INTERNAL_SERVER_ERROR, "can not update the post!");
   return res.status(SUCCESS).json({
-    SUCCESS: true,
+    status: "SUCCESS",
     message: "post updated successfully",
   });
 });

@@ -1,10 +1,10 @@
-// import React from "react";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { CiImageOn } from "react-icons/ci";
 import { updatePost } from "../../../service/api/userController/userActivity";
 import Spinner from "../../common/loader/SpinnerLoader";
+import { CreateNewPostContext } from "../../../hooks/contexts/createpost/CreatePost";
 
-function UpdatePost({ updatePostData }) {
+function UpdatePost({ updatePostData, onCloseUpdateModel }) {
   const postImage = useRef(null);
   const [postImg, setPostImg] = useState(null);
   const [postContent, setPostContent] = useState();
@@ -37,11 +37,11 @@ function UpdatePost({ updatePostData }) {
     if (response.status !== "SUCCESS") {
       setError(true);
       setLoader(false);
-      f;
     } else {
       setPostImg(null);
       setPostContent("");
       setLoader(false);
+      onCloseUpdateModel();
     }
   };
   useEffect(() => {
@@ -59,7 +59,7 @@ function UpdatePost({ updatePostData }) {
           disabled={createPostLoader}
         ></textarea>
       </div>
-      {postImg && ( 
+      {postImg && (
         <div className="">
           <div
             onClick={() => setPostImg(null)}
