@@ -162,14 +162,14 @@ function Profile() {
                 </div>
                 <div className="w-full mt-6 p-2 flex items-center justify-around border-b-2">
                   <div
-                    className={`w-[50%] text-center p-2 
+                    className={`w-[50%] text-center p-2 cursor-pointer
 ${isSelectedPage === "posts" ? "bg-gray-900" : ""}`}
                     onClick={() => setSelectedPage("posts")}
                   >
                     <span>Posts</span>
                   </div>
                   <div
-                    className={`w-[50%]  text-center p-2 
+                    className={`w-[50%]  text-center p-2 cursor-pointer 
 ${isSelectedPage === "likedpost" ? "bg-gray-900" : ""}`}
                     onClick={() => setSelectedPage("likedpost")}
                   >

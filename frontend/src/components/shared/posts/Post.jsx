@@ -18,6 +18,7 @@ import {
 import { useSelector } from "react-redux";
 import { CreateNewPostContext } from "../../../hooks/contexts/createpost/CreatePost";
 import UpdatePost from "./UpdatePost";
+import { Link } from "react-router-dom";
 
 function Post({ posts, onDelete }) {
   const [isMenuOpen, setMenuOpen] = useState(false);
@@ -107,16 +108,18 @@ function Post({ posts, onDelete }) {
       )}
       <div className="w-full">
         <div className="flex justify-between">
-          <div className="flex gap-2 items-center">
-            <div className="flex justify-center items-center rounded-full md:w-[40px] md:h-[40px] w-[30px] h-[30px]">
-              {user.profileImg ? (
-                <img src={user.profileImg} alt="" />
-              ) : (
-                <img src={profileImage} alt="" />
-              )}
+          <Link to={`profile/${user._id}`}>
+            <div className="flex gap-2 items-center">
+              <div className="flex justify-center items-center rounded-full md:w-[40px] md:h-[40px] w-[30px] h-[30px]">
+                {user.profileImg ? (
+                  <img src={user.profileImg} alt="" />
+                ) : (
+                  <img src={profileImage} alt="" />
+                )}
+              </div>
+              <div className="text-lg">{user.username}</div>
             </div>
-            <div className="text-lg">{user.username}</div>
-          </div>
+          </Link>
           <div className="">
             <div>
               <div
