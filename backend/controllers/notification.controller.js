@@ -19,7 +19,7 @@ const getNotification = tryCatch(async (req, res) => {
   await Notification.updateMany({ to: userId }, { read: true });
 
   res.status(SUCCESS).json({
-    SUCCESS: true,
+    status: "SUCCESS",
     message: "notificaton",
     notifications,
   });
@@ -30,7 +30,7 @@ const deleteNotification = tryCatch(async (req, res) => {
   await Notification.deleteMany({ to: userId });
   res
     .status(SUCCESS)
-    .json({ SUCCESS: true, message: "Notifications deleted successfully" });
+    .json({ status: "SUCCESS", message: "Notifications deleted successfully" });
 });
 
 module.exports = {

@@ -7,8 +7,12 @@ import { useState } from "react";
 import OriginalPost from "../post/originalPost/OriginalPost";
 import LikedPost from "../post/likedPost/LikedPost";
 import { UpdateProfile } from "../../components";
-import { getUserProfileDetails } from "../../service/api/userProfileController/userProfile";
-import { ReloadPage, ProfileLoader,LogOutConfirm } from "../../components";
+import {
+  followUnfollow,
+  getCurrentUser,
+  getUserProfileDetails,
+} from "../../service/api/userProfileController/userProfile";
+import { ReloadPage, ProfileLoader, LogOutConfirm } from "../../components";
 import { useSelector } from "react-redux";
 import { IoSettingsOutline } from "react-icons/io5";
 import Settings from "../settings/Settings";
@@ -16,7 +20,6 @@ import Settings from "../settings/Settings";
 function Profile() {
   const navigate = useNavigate();
   const { userId } = useParams();
-  
 
   const [isSelectedPage, setSelectedPage] = useState("posts");
   const [isUserProfile, setUserProfile] = useState(false);
@@ -24,13 +27,8 @@ function Profile() {
   const [userDetails, setUserDetilas] = useState();
   const [noOfPosts, setNoOfPosts] = useState();
   const { userInfo } = useSelector((state) => state.userAuth);
-  // const handleEditProfile = () => {
-  //   navigate("/profile/edit");
-  // };
+  const [isFollowing, setFollowing] = useState(false);
 
-  // const closeModal = () => {
-  //   navigate("/profile");
-  // };
   const getUserProfile = async () => {
     setLoading(true);
     const userDatails = await getUserProfileDetails(userId);
@@ -44,7 +42,20 @@ function Profile() {
   const noOfOrgianlPost = (count) => {
     setNoOfPosts(count);
   };
+  const getCurrentUserInfo = async () => {
+    const responce = await getCurrentUser();
+    if (responce.status !== "SUCCESS") {
+    }
+    if (responce.data.following.includes(userId)) {
+      setFollowing(!isFollowing);
+    }
+  };
+  const followUser = async () => {
+    setFollowing(!isFollowing);
+    const responce = await followUnfollow(userId);
+  };
   useEffect(() => {
+    getCurrentUserInfo();
     getUserProfile();
   }, [userId]);
 
@@ -110,16 +121,33 @@ function Profile() {
                             className="w-[120px] p-2 border-2 border-white rounded-full text-center"
                             onClick={() => {
                               document.getElementById("my_modal_3").showModal();
-                              // handleEditProfile();
                             }}
                           >
                             <span>Edit Profile</span>
                           </div>
                         </>
                       ) : (
-                        <div className="md:w-[100px] w-[80px] bg-white md:p-2  rounded-full text-center">
-                          <span className="text-black">Follow</span>
-                        </div>
+                        <>
+                          {isFollowing ? (
+                            <>
+                              <div
+                                className="md:w-[100px] w-[80px] border-2 md:p-2  rounded-full text-center hover:cursor-pointer"
+                                onClick={followUser}
+                              >
+                                <span>Following</span>
+                              </div>
+                            </>
+                          ) : (
+                            <>
+                              <div
+                                className="md:w-[100px] w-[80px] bg-white md:p-2  rounded-full text-center hover:cursor-pointer"
+                                onClick={followUser}
+                              >
+                                <span className="text-black">Follow</span>
+                              </div>
+                            </>
+                          )}
+                        </>
                       )}
                     </div>
                     <dialog id="my_modal_3" className="modal">

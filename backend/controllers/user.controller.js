@@ -135,7 +135,7 @@ const followUnfollowUser = tryCatch(async (req, res) => {
       throw new ApiError(
         FORBIDDEN,
         "can not unfollow the user ! try after sometime"
-      );
+      ); 
 
     return res.status(SUCCESS).json({
       status: 'SUCCESS',

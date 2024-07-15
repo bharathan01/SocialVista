@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
 import profileImage from "../../../../public/images/avatar-placeholder.png";
 import { Link } from "react-router-dom";
+import { followUnfollow } from "../../../service/api/userProfileController/userProfile";
 
 function Suggections({ suggections }) {
   const [isFollowed, setFollowed] = useState(false);
+  const followUser = async () => {
+    setFollowed(!isFollowed);
+    const responce = await followUnfollow(suggections._id)
+  };
   return (
     <div className="w-full h-20 flex justify-between items-center">
       <Link to={`profile/${suggections._id}`}>
@@ -43,7 +48,7 @@ function Suggections({ suggections }) {
               ? "bg-transparent text-white border"
               : "bg-white text-black"
           }  hover:[bg-#d9dbda]`}
-          onClick={() => setFollowed(!isFollowed)}
+          onClick={followUser}
         >
           {" "}
           {isFollowed ? <span>Following</span> : <span>Follow</span>}

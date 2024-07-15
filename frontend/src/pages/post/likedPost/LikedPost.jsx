@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { Post } from "../../../components";
-import { getUserLikesPosts } from "../../../service/api/userProfileController/userProfile";
+import { getCurrentUser, getUserLikesPosts } from "../../../service/api/userProfileController/userProfile";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 function LikedPost({ userId }) {
   const [isError, setError] = useState(false);
   const [likedPosts, setLikedPosts] = useState();
+  const [currentUserInfo, setCurrentUserInfo] = useState();
   const getLikedPosts = async () => {
     const responce = await getUserLikesPosts(userId);
     if (responce.status !== "SUCCESS") setError(true);
     setLikedPosts(responce.likedPosts);
   };
+  const getCurrentUserInfo = async () => {
+    const responce = await getCurrentUser();
+    setCurrentUserInfo(responce.data);
+  };
   useEffect(() => {
+    getCurrentUserInfo();
     getLikedPosts();
   }, []);
   return (
@@ -18,7 +24,9 @@ function LikedPost({ userId }) {
       {likedPosts?.length !== 0 ? (
         <>
           {likedPosts?.map((post, index) => {
-            return <Post posts={post} key={index} />;
+            return (
+              <Post posts={post} key={index} currentUser={currentUserInfo} />
+            );
           })}
         </>
       ) : (
