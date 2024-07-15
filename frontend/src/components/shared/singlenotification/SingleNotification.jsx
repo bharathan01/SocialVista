@@ -39,7 +39,12 @@ function SingleNptificatiion({ notification }) {
         </div>
         <div>
           <span className="md:text-lg text-sm">
-            <b>{notification?.from?.username}</b> liked your post
+            <b>{notification?.from?.username}</b>{" "}
+            {notification?.type === "follow" ? (
+              <>started following you</>
+            ) : (
+              <>{notification?.type} your post</>
+            )}
           </span>
         </div>
       </div>

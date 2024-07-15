@@ -216,13 +216,16 @@ const likeUnlikePost = tryCatch(async (req, res) => {
     );
     await post.save();
     const updatedLike = post.likes;
-    const newNotification = new Notification({
-      type: "like",
-      from: userId,
-      to: post.user,
-    });
+    if (userId !== post.user.toString()) {
+      const newNotification = new Notification({
+        type: "like",
+        from: userId,
+        to: post.user,
+      });
 
-    await newNotification.save();
+      await newNotification.save();
+    }
+
     return res.status(SUCCESS).json({
       status: "SUCCESS",
       message: "successfully liked a post",
@@ -270,14 +273,16 @@ const commentPost = tryCatch(async (req, res) => {
 
   post.comments.push(comments);
 
-  await post.save();
-  const newNotification = new Notification({
-    type: "comment",
-    from: userId,
-    to: post.user,
-  });
+  const isCommentSuccess = await post.save();
+  if (userId !== post.user.toString()) {
+    const newNotification = new Notification({
+      type: "comment",
+      from: userId,
+      to: post.user,
+    });
 
-  await newNotification.save();
+    await newNotification.save();
+  }
 
   return res.status(SUCCESS).json({
     status: "SUCCESS",
