@@ -20,7 +20,13 @@ const CreateNewPostProvider = ({ children }) => {
   };
   return (
     <CreateNewPostContext.Provider
-      value={{ toggleCreatePost, toggleIslogOutCard, toggleUpdatePostCard ,reload,reloadHomeComponent}}
+      value={{
+        toggleCreatePost,
+        toggleIslogOutCard,
+        toggleUpdatePostCard,
+        reload,
+        reloadHomeComponent,
+      }}
     >
       {children}
     </CreateNewPostContext.Provider>

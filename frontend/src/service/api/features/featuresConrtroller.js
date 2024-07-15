@@ -29,3 +29,16 @@ export const getNotications = async () => {
     }
   }
 };
+export const deleteAllNotifications = async () => {
+  try {
+    const responce = await API.get(NOTIFICATIONS.DELETE_NOTIFICATION);
+    return responce.data;
+  } catch (errors) {
+    if (errors.response) {
+      const error = errors?.response?.data;
+      return error;
+    } else {
+      console.log("error maessege :", errors.message);
+    }
+  }
+};

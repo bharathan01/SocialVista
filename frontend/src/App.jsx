@@ -2,7 +2,7 @@ import { Routes, Route, Router, Navigate } from "react-router-dom";
 import Home from "./pages/home/Home";
 import SignIn from "./pages/auth/login/SignIn";
 import SignUp from "./pages/auth/register/SignUp";
-import { Header, LeftSidebar, RightSidebar } from "./components";
+import { Header, LeftSidebar, LogOutConfirm, RightSidebar } from "./components";
 import {
   News,
   Notification,
@@ -23,6 +23,19 @@ function App() {
   const { isUserLoggedIn } = useSelector((state) => state.userAuth);
   return (
     <div>
+      {isUserLoggedIn && (
+        <dialog id="openLogOutcard" className="modal">
+          <div className="modal-box flex items-center justify-center">
+            <form method="dialog">
+              <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                ✕
+              </button>
+            </form>
+            <LogOutConfirm />
+          </div>
+        </dialog>
+      )}
+
       {isUserLoggedIn && <Header />}
       <div className="flex">
         {isUserLoggedIn && <LeftSidebar />}

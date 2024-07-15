@@ -41,7 +41,7 @@ function Following() {
   }, [isPostDeleted]);
  
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-3">
       {isReloadPage ? (
         <ReloadPage />
       ) : loader ? (

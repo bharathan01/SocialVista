@@ -22,8 +22,8 @@ export const ApiEndPoint = {
     GET_CURR_USER: "/user/getCurrentUser",
     FOLLOWUNFOLLOW: "/user/followUnfolllow",
   },
-  NOTIFICATIONS:{
-    GET_NOTIFICATION:"/notification"
-  }
-  
+  NOTIFICATIONS: {
+    GET_NOTIFICATION: "/notification",
+    DELETE_NOTIFICATION: "/notification/delete",
+  },
 };

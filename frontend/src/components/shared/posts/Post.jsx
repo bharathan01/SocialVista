@@ -97,7 +97,7 @@ function Post({ posts, onDelete, currentUser }) {
     setLikeCount(likes.length);
   }, []);
   return (
-    <div className="flex flex-row w-full justify-center">
+    <div className="flex flex-row w-full justify-center bg-gray-900 rounded-lg ">
       {isUpdateToggled && (
         <dialog id="openUpdatePostcard" className="modal" ref={dialogRef}>
           <div className="modal-box flex items-center justify-center">
@@ -117,7 +117,7 @@ function Post({ posts, onDelete, currentUser }) {
         </dialog>
       )}
       <div className="w-full">
-        <div className="flex justify-between">
+        <div className="flex justify-between p-3">
           <Link to={`profile/${user._id}`}>
             <div className="flex gap-2 items-center">
               <div className="flex justify-center items-center rounded-full md:w-[40px] md:h-[40px] w-[30px] h-[30px]">
