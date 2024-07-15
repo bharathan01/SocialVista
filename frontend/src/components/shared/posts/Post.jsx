@@ -19,6 +19,7 @@ import { useSelector } from "react-redux";
 import { CreateNewPostContext } from "../../../hooks/contexts/createpost/CreatePost";
 import UpdatePost from "./UpdatePost";
 import { Link } from "react-router-dom";
+import { followUnfollow } from "../../../service/api/userProfileController/userProfile";
 
 function Post({ posts, onDelete, currentUser }) {
   const [isMenuOpen, setMenuOpen] = useState(false);
@@ -30,6 +31,7 @@ function Post({ posts, onDelete, currentUser }) {
   const [isUpdateToggled, setUpdatetogggle] = useState(false);
   const dialogRef = useRef(null);
   const { reloadHomeComponent } = useContext(CreateNewPostContext);
+  const [isUserFollowing, setUserFollowing] = useState();
 
   const { userInfo } = useSelector((state) => state.userAuth);
   const { img, user, comments, likes, text, _id } = posts;
@@ -82,9 +84,15 @@ function Post({ posts, onDelete, currentUser }) {
       reloadHomeComponent();
     }
   };
+  const userFollow = async () => {
+    setUserFollowing(!isUserFollowing);
+    const responce = await followUnfollow(user._id);
+    if (responce.status !== "SUCCESS") {
+    }
+  };
 
   useEffect(() => {
-    console.log(currentUser);
+    setUserFollowing(currentUser?.following.includes(user._id));
     setUserLiked(likes.includes(userInfo.id));
     setLikeCount(likes.length);
   }, []);
@@ -123,10 +131,36 @@ function Post({ posts, onDelete, currentUser }) {
             </div>
           </Link>
           <div className="flex">
-            <div className="h-[40px] flex items-center justify-center gap-1 text-[#772ba9] text-lg font-semibold">
-              <span className="text-lg font-semibold ">Follow </span>
-              <FiPlus />
-            </div>
+            {currentUser._id !== user._id ? (
+              <>
+                {isUserFollowing ? (
+                  <>
+                    <div className="h-[40px] flex items-center justify-center gap-1 text-[#772ba9] text-lg font-semibold">
+                      <span
+                        className="text-lg font-semibold hover:cursor-pointer"
+                        onClick={userFollow}
+                      >
+                        Following{" "}
+                      </span>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="h-[40px] flex items-center justify-center gap-1 text-[#772ba9] text-lg font-semibold">
+                      <span
+                        className="text-lg font-semibold hover:cursor-pointer"
+                        onClick={userFollow}
+                      >
+                        Follow{" "}
+                      </span>
+                      <FiPlus />
+                    </div>
+                  </>
+                )}
+              </>
+            ) : (
+              <></>
+            )}
             <div>
               <div
                 tabIndex={0}

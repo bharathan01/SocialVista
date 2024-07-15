@@ -76,3 +76,16 @@ export const updateUserProfile = async (userId, profileData) => {
     }
   }
 };
+export const followUnfollow = async (id) => {
+  try {
+    const responce = await API.post(`${USER_PRO.FOLLOWUNFOLLOW}/${id}`);
+    return responce.data;
+  } catch (error) {
+    if (error.response) {
+      const error = error?.response?.data;
+      return error;
+    } else {
+      console.log("error maessege :", error.message);
+    }
+  }
+};

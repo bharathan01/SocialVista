@@ -20,6 +20,7 @@ export const ApiEndPoint = {
     USER_PRO_UPDATE: "/user/profileUpdate",
     USER_SUGGECTION: "/user/suggested",
     GET_CURR_USER: "/user/getCurrentUser",
+    FOLLOWUNFOLLOW: "/user/followUnfolllow",
     DELETE: `${import.meta.env.BASE_URL}/post/delete`,
     COMMENT: `${import.meta.env.BASE_URL}/post/comment`,
     LIKE_UNLIKE: `${import.meta.env.BASE_URL}/post/like-unlike`,

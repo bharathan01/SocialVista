@@ -138,7 +138,7 @@ const followUnfollowUser = tryCatch(async (req, res) => {
       );
 
     return res.status(SUCCESS).json({
-      SUCCESS: true,
+      status: 'SUCCESS',
       message: "unfollow user successfully.",
     });
   } else {
