@@ -17,14 +17,14 @@ const router = express.Router();
 //post
 router.get("/allPost",isAuthorizedUser, getAllPost);
 router.post("/newPost",isAuthorizedUser, creatNewPost);
-router.get("/userOwnPost",isAuthorizedUser, userOwnPost);
+router.get("/userOwnPost/:id",isAuthorizedUser, userOwnPost);
 router.get("/getFollowingPost",isAuthorizedUser, getFollowingPost);
 router.post("/updatePost/:id",isAuthorizedUser, updatePost);
 router.post("/deletePost/:id",isAuthorizedUser, deletePost);
 
 //like
 router.get("/like/:id",isAuthorizedUser, likeUnlikePost);
-router.get("/likedpost",isAuthorizedUser, likedPost);
+router.get("/likedpost/:id",isAuthorizedUser, likedPost);
 
 //comment
 router.post("/comment/:id",isAuthorizedUser, commentPost);

@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TopNews from "./suggection/TopNews";
 import { IoMdOpen } from "react-icons/io";
 import { newsItems, userProfiles } from "../../utils/demoData/data.jsx";
 import { Link } from "react-router-dom";
 import Suggections from "./suggection/Suggections.jsx";
+import { getSuggection } from "../../service/api/features/featuresConrtroller.js";
 
 function RightSidebar() {
+  const [suggestedFollowers, setSuggestedFollowers] = useState();
+  const getSuggestedFollowers = async () => {
+    const responce = await getSuggection();
+    setSuggestedFollowers(responce.whoNotfollowByUser);
+  };
+  useEffect(() => {
+    getSuggestedFollowers();
+  }, []);
   return (
     <div
       className="xl:w-1/4  lg:w-[30%] md:w-[39%] md:block hidden  mt-[64px] fixed right-0 h-[91vh] overflow-y-scroll right-side"
@@ -45,13 +54,11 @@ function RightSidebar() {
           </div>
         </div>
         <div className="flex justify-center flex-col p-5 ">
-          {userProfiles.map((profile, index) => {
+          {suggestedFollowers?.map((profile, index) => {
             return (
               <React.Fragment key={index}>
                 <Suggections
-                  profileImg={profile.profileImage}
-                  username={profile.username}
-                  fullname={profile.fullName}
+                  suggections = {profile}
                 />
               </React.Fragment>
             );

@@ -8,12 +8,15 @@ import OriginalPost from "../post/originalPost/OriginalPost";
 import LikedPost from "../post/likedPost/LikedPost";
 import { UpdateProfile } from "../../components";
 import { getUserProfileDetails } from "../../service/api/userProfileController/userProfile";
-import { ReloadPage, ProfileLoader } from "../../components";
+import { ReloadPage, ProfileLoader,LogOutConfirm } from "../../components";
 import { useSelector } from "react-redux";
+import { IoSettingsOutline } from "react-icons/io5";
+import Settings from "../settings/Settings";
 
 function Profile() {
   const navigate = useNavigate();
   const { userId } = useParams();
+  
 
   const [isSelectedPage, setSelectedPage] = useState("posts");
   const [isUserProfile, setUserProfile] = useState(false);
@@ -29,21 +32,21 @@ function Profile() {
   //   navigate("/profile");
   // };
   const getUserProfile = async () => {
-    setLoading(true)
+    setLoading(true);
     const userDatails = await getUserProfileDetails(userId);
-    if (userDatails.status !== "SUCCESS"){
-       setUserProfile(true);
-       setLoading(false)
-      }
+    if (userDatails.status !== "SUCCESS") {
+      setUserProfile(true);
+      setLoading(false);
+    }
     setUserDetilas(userDatails.data);
-    setLoading(false)
+    setLoading(false);
   };
   const noOfOrgianlPost = (count) => {
     setNoOfPosts(count);
   };
   useEffect(() => {
     getUserProfile();
-  }, []);
+  }, [userId]);
 
   return (
     <div className="flex-grow xl:ml-[14%] lg:ml-[20%] ml-[60px] mt-[64px] w-[63%]">
@@ -94,15 +97,25 @@ function Profile() {
                   <div className="w-full">
                     <div className="w-full flex items-center justify-end p-3">
                       {userInfo?.id === userDetails?._id ? (
-                        <div
-                          className="w-[120px] p-2 border-2 border-white rounded-full text-center"
-                          onClick={() => {
-                            document.getElementById("my_modal_3").showModal();
-                            // handleEditProfile();
-                          }}
-                        >
-                          <span>Edit Profile</span>
-                        </div>
+                        <>
+                          <div
+                            className="text-3xl m-3 hover:cursor-pointer"
+                            onClick={() => {
+                              document.getElementById("settings").showModal();
+                            }}
+                          >
+                            <IoSettingsOutline />
+                          </div>
+                          <div
+                            className="w-[120px] p-2 border-2 border-white rounded-full text-center"
+                            onClick={() => {
+                              document.getElementById("my_modal_3").showModal();
+                              // handleEditProfile();
+                            }}
+                          >
+                            <span>Edit Profile</span>
+                          </div>
+                        </>
                       ) : (
                         <div className="md:w-[100px] w-[80px] bg-white md:p-2  rounded-full text-center">
                           <span className="text-black">Follow</span>
@@ -117,6 +130,26 @@ function Profile() {
                           </button>
                         </form>
                         <UpdateProfile userData={userDetails} />
+                      </div>
+                    </dialog>
+                    <dialog id="settings" className="modal">
+                      <div className="modal-box md:w-[550px] w-[300px]">
+                        <form method="dialog">
+                          <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                            ✕
+                          </button>
+                        </form>
+                        <Settings />
+                      </div>
+                    </dialog>
+                    <dialog id="openLogOutcard" className="modal">
+                      <div className="modal-box flex items-center justify-center">
+                        <form method="dialog">
+                          <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+                            ✕
+                          </button>
+                        </form>
+                        <LogOutConfirm />
                       </div>
                     </dialog>
                     <div className="w-full flex flex-col gap-1 mt-[10px]">
@@ -178,9 +211,12 @@ ${isSelectedPage === "likedpost" ? "bg-gray-900" : ""}`}
                 </div>
                 <div className="m-3 mt-5">
                   {isSelectedPage === "posts" ? (
-                    <OriginalPost origanlPostsNo={noOfOrgianlPost} />
+                    <OriginalPost
+                      origanlPostsNo={noOfOrgianlPost}
+                      userId={userId}
+                    />
                   ) : (
-                    <LikedPost />
+                    <LikedPost userId={userId} />
                   )}
                 </div>
               </div>

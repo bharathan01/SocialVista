@@ -16,22 +16,35 @@ export const getUserProfileDetails = async (userId) => {
     }
   }
 };
-export const getUserOwnPost = async () => {
+export const getCurrentUser = async () => {
   try {
-    const responce = await API.get(USER_PRO.USER_POST);
+    const responce = await API.get(USER_PRO.GET_CURR_USER);
     return responce.data;
   } catch (error) {
     if (error.response) {
       const error = error?.response?.data;
       return error;
     } else {
-      console.log("error maessege :", errors.message);
+      console.log("error maessege :", error.message);
     }
   }
 };
-export const getUserLikesPosts = async () => {
+export const getUserOwnPost = async (id) => {
   try {
-    const responce = await API.get(USER_PRO.USER_LIKED_POST);
+    const responce = await API.get(`${USER_PRO.USER_POST}/${id}`);
+    return responce.data;
+  } catch (error) {
+    if (error.response) {
+      const error = error?.response?.data;
+      return error;
+    } else {
+      console.log("error maessege :", error.message);
+    }
+  }
+};
+export const getUserLikesPosts = async (id) => {
+  try {
+    const responce = await API.get(`${USER_PRO.USER_LIKED_POST}/${id}`);
     return responce.data;
   } catch (error) {
     if (error.response) {

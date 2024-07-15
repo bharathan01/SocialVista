@@ -5,7 +5,6 @@ export const ApiEndPoint = {
     LOGOUT: "auth/logout",
   },
   CURR_USER: {
-    GET_CURR_USER: "",
     GET_FOLLOWING_POST: "/post/getFollowingPost",
     GET_FORYOU_POST: "/post/allPost",
     GET_LIKEUNLIKE_POST: "/post/like",
@@ -19,6 +18,8 @@ export const ApiEndPoint = {
     USER_POST: "/post/userOwnPost",
     USER_LIKED_POST: "/post/likedpost",
     USER_PRO_UPDATE: "/user/profileUpdate",
+    USER_SUGGECTION: "/user/suggested",
+    GET_CURR_USER: "/user/getCurrentUser",
     DELETE: `${import.meta.env.BASE_URL}/post/delete`,
     COMMENT: `${import.meta.env.BASE_URL}/post/comment`,
     LIKE_UNLIKE: `${import.meta.env.BASE_URL}/post/like-unlike`,

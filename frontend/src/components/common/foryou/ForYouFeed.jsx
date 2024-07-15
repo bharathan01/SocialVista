@@ -4,12 +4,14 @@ import PostLoader from "../loader/PostLoader";
 import ReloadPage from "../reloadPage/ReloadPage";
 import { getForYouPost } from "../../../service/api/userController/userActivity";
 import Spinner from "../loader/SpinnerLoader";
+import { getCurrentUser } from "../../../service/api/userProfileController/userProfile";
 
 function ForYouFeed() {
   const [forYouPost, setforYouPost] = useState([]);
   const [loader, setLoader] = useState(false);
   const [isReloadPage, setReloadPage] = useState(false);
   const [isPostDeleted, setPostDeleted] = useState(false);
+  const [currentUserInfo, setCurrentUserInfo] = useState();
 
   const getForYouUsersPost = async () => {
     setLoader(true);
@@ -29,7 +31,12 @@ function ForYouFeed() {
   const isUserDeletePost = () => {
     setPostDeleted(true);
   };
+  const getCurrentUserInfo = async () => {
+    const responce = await getCurrentUser();
+    setCurrentUserInfo(responce.data);
+  };
   useEffect(() => {
+    getCurrentUserInfo()
     getForYouUsersPost();
   }, [isPostDeleted]);
   return (
@@ -55,7 +62,11 @@ function ForYouFeed() {
           .reverse()
           .map((post, index) => (
             <React.Fragment key={index}>
-              <Post posts={post} onDelete={() => isUserDeletePost()} />
+              <Post
+                posts={post}
+                onDelete={() => isUserDeletePost()}
+                currentUser={currentUserInfo}
+              />
             </React.Fragment>
           ))
       )}

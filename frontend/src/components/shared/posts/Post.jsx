@@ -2,10 +2,10 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 
 import profileImage from "../../../../public/images/avatar-placeholder.png";
 import Comments from "./comments";
-import { FaHeart } from "react-icons/fa";
+import { FaHeart, FaPlus } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa";
 import { FaRegCommentAlt } from "react-icons/fa";
-import { FiSend } from "react-icons/fi";
+import { FiPlus, FiSend } from "react-icons/fi";
 import { FaRegBookmark } from "react-icons/fa";
 import { FaBookmark } from "react-icons/fa";
 import { VscSend } from "react-icons/vsc";
@@ -20,7 +20,7 @@ import { CreateNewPostContext } from "../../../hooks/contexts/createpost/CreateP
 import UpdatePost from "./UpdatePost";
 import { Link } from "react-router-dom";
 
-function Post({ posts, onDelete }) {
+function Post({ posts, onDelete, currentUser }) {
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [isCommentOpen, setCommentOpen] = useState(false);
   const [isUserLiked, setUserLiked] = useState(false);
@@ -82,7 +82,9 @@ function Post({ posts, onDelete }) {
       reloadHomeComponent();
     }
   };
+
   useEffect(() => {
+    console.log(currentUser);
     setUserLiked(likes.includes(userInfo.id));
     setLikeCount(likes.length);
   }, []);
@@ -120,7 +122,11 @@ function Post({ posts, onDelete }) {
               <div className="text-lg">{user.username}</div>
             </div>
           </Link>
-          <div className="">
+          <div className="flex">
+            <div className="h-[40px] flex items-center justify-center gap-1 text-[#772ba9] text-lg font-semibold">
+              <span className="text-lg font-semibold ">Follow </span>
+              <FiPlus />
+            </div>
             <div>
               <div
                 tabIndex={0}

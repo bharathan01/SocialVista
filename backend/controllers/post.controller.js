@@ -100,9 +100,9 @@ const getFollowingPost = tryCatch(async (req, res) => {
   });
 });
 const userOwnPost = tryCatch(async (req, res) => {
-  const userId = req.userId;
+  const { id } = req.params;
 
-  const postInfo = await Post.find({ user: userId })
+  const postInfo = await Post.find({ user: id })
     .sort({ createdAt: -1 })
     .populate({
       path: "user",
@@ -231,9 +231,8 @@ const likeUnlikePost = tryCatch(async (req, res) => {
   }
 });
 const likedPost = tryCatch(async (req, res) => {
-  const userId = req.userId;
-
-  const user = await userSchema.findById(userId);
+  const { id } = req.params;
+  const user = await userSchema.findById(id);
   if (!user) throw new ApiError(BAD_REQUEST, "user not found!");
 
   const likedPosts = await Post.find({ _id: { $in: user.likedPost } })

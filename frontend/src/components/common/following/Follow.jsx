@@ -4,12 +4,14 @@ import { getFollowingPost } from "../../../service/api/userController/userActivi
 import PostLoader from "../loader/PostLoader";
 import Spinner from "../loader/SpinnerLoader";
 import ReloadPage from "../reloadPage/ReloadPage";
+import { getCurrentUser } from "../../../service/api/userProfileController/userProfile";
 
 function Following() {
   const [followersPost, setFollowersPost] = useState([]);
   const [loader, setLoader] = useState(false);
   const [isReloadPage, setReloadPage] = useState(false);
   const [isPostDeleted, setPostDeleted] = useState(false);
+  const [currentUserInfo, setCurrentUserInfo] = useState()
 
   const getFollowingUsersPost = async () => {
     setLoader(true);
@@ -29,10 +31,15 @@ function Following() {
   const isUserDeletePost = () => {
     setPostDeleted(true);
   };
+  const getCurrentUserInfo = async () => {
+    const responce = await getCurrentUser();
+    setCurrentUserInfo(responce.data)
+  };
   useEffect(() => {
+    getCurrentUserInfo()
     getFollowingUsersPost();
   }, [isPostDeleted]);
-
+ 
   return (
     <div className="flex flex-col gap-10">
       {isReloadPage ? (
@@ -53,7 +60,7 @@ function Following() {
       ) : (
         followersPost.map((post, index) => (
           <React.Fragment key={index}>
-            <Post posts={post} onDelete={() => isUserDeletePost()} />
+            <Post posts={post} onDelete={() => isUserDeletePost()}  currentUser={currentUserInfo}/>
           </React.Fragment>
         ))
       )}

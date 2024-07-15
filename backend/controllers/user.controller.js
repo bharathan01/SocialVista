@@ -168,10 +168,27 @@ const followUnfollowUser = tryCatch(async (req, res) => {
     });
   }
 });
+const getUser = tryCatch(async (req, res) => {
+  const user = req.userId;
+  if (!user) throw new ApiError(NOT_FOUND, "User profile not found !");
+
+  const userProfileData = await userSchema
+    .findById({ _id: user })
+    .select("-password");
+  if (!userProfileData)
+    throw new ApiError(BAD_REQUEST, "User profile details not found!");
+
+  return res.status(SUCCESS).json({
+    status: "SUCCESS",
+    message: "fetch user data",
+    data: userProfileData,
+  });
+});
 
 module.exports = {
   userProfileUpadate,
   suggestedUsers,
   followUnfollowUser,
   getUserProfile,
+  getUser,
 };
