@@ -2,7 +2,14 @@ import { Routes, Route, Router, Navigate } from "react-router-dom";
 import Home from "./pages/home/Home";
 import SignIn from "./pages/auth/login/SignIn";
 import SignUp from "./pages/auth/register/SignUp";
-import { Header, LeftSidebar, LogOutConfirm, RightSidebar } from "./components";
+import {
+  Header,
+  LeftSidebar,
+  LogOutConfirm,
+  RightSidebar,
+  FollowerUser,
+  FollowingUser,
+} from "./components";
 import {
   News,
   Notification,
@@ -10,6 +17,7 @@ import {
   Messages,
   Explore,
   Search,
+  User,
 } from "./pages";
 import { useSelector } from "react-redux";
 
@@ -37,7 +45,7 @@ function App() {
       )}
 
       {isUserLoggedIn && <Header />}
-      <div className="flex">
+      <div className="flex ">
         {isUserLoggedIn && <LeftSidebar />}
         <Routes>
           <Route
@@ -80,6 +88,17 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/user"
+            element={
+              <ProtectedRoute isUserLoggedIn={isUserLoggedIn}>
+                <User />
+              </ProtectedRoute>
+            }
+          >
+            <Route path="following" element={<FollowingUser />}></Route>
+            <Route path="Follower" element={<FollowerUser />}></Route>
+          </Route>
           <Route
             path="/explore"
             element={

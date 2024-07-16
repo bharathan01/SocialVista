@@ -17,7 +17,7 @@ function LeftSidebar() {
     setActiveMenu(menu);
   };
   return (
-    <div className="lg:w-[20%] xl:w-[14%] w-[60px] border-r border-gray-700 fixed flex flex-col justify-between  left-0 top-[64px]  overflow-y-auto ">
+    <div className="lg:w-[20%] xl:w-[14%] w-[60px] border-r  border-gray-700 fixed flex flex-col justify-between   left-0 top-[64px]  overflow-y-auto ">
       <div className="flex justify-center">
         <div className="w-4/5 flex flex-col gap-3 mt-4">
           {contents.map((menu) => {

@@ -20,6 +20,7 @@ import { CreateNewPostContext } from "../../../hooks/contexts/createpost/CreateP
 import UpdatePost from "./UpdatePost";
 import { Link } from "react-router-dom";
 import { followUnfollow } from "../../../service/api/userProfileController/userProfile";
+import { relativeTimeString } from "../../../utils/date/DateAndTime";
 
 function Post({ posts, onDelete, currentUser }) {
   const [isMenuOpen, setMenuOpen] = useState(false);
@@ -32,6 +33,9 @@ function Post({ posts, onDelete, currentUser }) {
   const dialogRef = useRef(null);
   const { reloadHomeComponent } = useContext(CreateNewPostContext);
   const [isUserFollowing, setUserFollowing] = useState();
+  const [postDate, setPostDate] = useState(
+    relativeTimeString(posts?.createdAt)
+  );
 
   const { userInfo } = useSelector((state) => state.userAuth);
   const { img, user, comments, likes, text, _id } = posts;
@@ -116,7 +120,7 @@ function Post({ posts, onDelete, currentUser }) {
           </div>
         </dialog>
       )}
-      <div className="w-full">
+      <div className="w-full flex flex-col gap-2">
         <div className="flex justify-between p-3">
           <Link to={`profile/${user._id}`}>
             <div className="flex gap-2 items-center">
@@ -202,20 +206,21 @@ function Post({ posts, onDelete, currentUser }) {
             )}
           </div>
         </div>
-        <div className="mt-3 rounded-lg flex items-center justify-center">
+        <div className="m-3 rounded-lg flex items-center justify-center">
           {img && (
             <img
               src={img}
               alt=""
-              className="lg:w-[500px] lg:h-[500px] max-w-[500px] max-h-[500px] object-contain"
+              className="lg:w-[500px]  max-w-[500px]  object-contain"
             />
           )}
         </div>
         <div className="flex items-center">
-          <div className="flex items-center p-2">
+          <div className="flex items-center pl-4">
             <span className="md:text-lg text-xs">{text}</span>
           </div>
         </div>
+        <div className="pl-4 opacity-65">{postDate}</div>
         <div className="flex justify-between items-center p-2">
           <div className="flex items-center gap-4">
             <div className="flex flex-col w-10 h-12 justify-start items-center">

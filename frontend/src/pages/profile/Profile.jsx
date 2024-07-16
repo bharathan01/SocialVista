@@ -200,13 +200,15 @@ function Profile() {
                       </div>
                     </div>
                     <div className="flex mt-4 sm:ml-[50px] ml-[30px] gap-3 ">
-                      <div className="hover:cursor-pointer">
-                        <span className="font-bold text-lg">
-                          {userDetails?.followers.length}{" "}
-                        </span>
-                        <span className="opacity-55"> followers</span>
-                      </div>
-                      <Link>
+                      <Link to="/user/follower">
+                        <div className="hover:cursor-pointer">
+                          <span className="font-bold text-lg">
+                            {userDetails?.followers.length}{" "}
+                          </span>
+                          <span className="opacity-55"> followers</span>
+                        </div>
+                      </Link>
+                      <Link to="/user/following">
                         <div className="hover:cursor-pointer">
                           <span className="font-bold text-lg">
                             {userDetails?.following.length}
