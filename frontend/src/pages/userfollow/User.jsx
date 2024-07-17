@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 
 function User() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { id } = useParams();
   const [changePage, setChangePage] = useState();
 
   const goToFollowing = () => {
     setChangePage("following");
-    navigate("/user/following");
+    navigate(`/user/following/${id}`);
   };
 
   const goToFollower = () => {
     setChangePage("follower");
-    navigate("/user/follower");
+    navigate(`/user/follower/${id}`);
   };
   useEffect(() => {
     if (location.pathname.includes("/following")) {

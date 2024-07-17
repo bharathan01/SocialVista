@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import ProfileCard from "../../common/profileCard/ProfileCard";
 import { getFollowing } from "../../../service/api/features/featuresConrtroller";
+import { useParams } from "react-router-dom";
 
 function FollowingUser() {
+  const { id } = useParams();
   const [followingUser, setFollowingUser] = useState();
   const getFollowingUsers = async () => {
-    const resposnce = await getFollowing();
+    const resposnce = await getFollowing(id);
     if (resposnce.status !== "SUCCESS") {
     }
     setFollowingUser(resposnce.data[0].following);
@@ -33,9 +35,23 @@ function FollowingUser() {
         </label>
       </div>
       <div className="mt-32 flex flex-wrap w-full gap-3 justify-center">
-        {followingUser?.map((user, index) => {
-          return <ProfileCard FollowingUser={user} follow={'following'} key={index} />;
-        })}
+        {followingUser?.length === 0 ? (
+          <>
+          <div className="text-lg font-semibold opacity-65">No following</div>
+        </>
+        ) : (
+          <>
+            {followingUser?.map((user, index) => {
+              return (
+                <ProfileCard
+                  FollowingUser={user}
+                  follow={"following"}
+                  key={index}
+                />
+              );
+            })}
+          </>
+        )}
       </div>
     </div>
   );

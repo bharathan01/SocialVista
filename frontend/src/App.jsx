@@ -96,8 +96,8 @@ function App() {
               </ProtectedRoute>
             }
           >
-            <Route path="following" element={<FollowingUser />}></Route>
-            <Route path="Follower" element={<FollowerUser />}></Route>
+            <Route path="following/:id" element={<FollowingUser />}></Route>
+            <Route path="Follower/:id" element={<FollowerUser />}></Route>
           </Route>
           <Route
             path="/explore"

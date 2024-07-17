@@ -185,9 +185,9 @@ const getUser = tryCatch(async (req, res) => {
   });
 });
 const getFollowersDetails = tryCatch(async (req, res) => {
-  const userId = req.userId;
+  const { id } = req.params;
   const followingUserDetails = await userSchema
-    .find({ _id: userId })
+    .find({ _id: id })
     .select("followers")
     .populate({
       path: "followers",
@@ -204,9 +204,9 @@ const getFollowersDetails = tryCatch(async (req, res) => {
   });
 });
 const getFolloweingDetails = tryCatch(async (req, res) => {
-  const userId = req.userId;
+  const { id } = req.params;
   const followingUserDetails = await userSchema
-    .find({ _id: userId })
+    .find({ _id: id })
     .select("following")
     .populate({
       path: "following",

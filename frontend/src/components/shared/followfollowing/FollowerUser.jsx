@@ -1,7 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
+import { getFollowers } from "../../../service/api/features/featuresConrtroller";
+import { useParams } from "react-router-dom";
+import ProfileCard from "../../common/profileCard/ProfileCard";
 
 function FollowerUser() {
-  console.log("followres");
+  const { id } = useParams();
+  const [followersUser, setFollowersUser] = useState();
+  const getFollowersUsers = async () => {
+    const resposnce = await getFollowers(id);
+    if (resposnce.status !== "SUCCESS") {
+    }
+    setFollowersUser(resposnce.data[0].followers);
+  };
+  useState(() => {
+    getFollowersUsers();
+  }, []);
   return (
     <div>
       <div className=" h-[90px] p-5 flex items-center justify-center fixed xl:w-[61%] lg:w-[50%] md:w-[53%] w-[86%] mt-10">
@@ -20,6 +33,25 @@ function FollowerUser() {
             />
           </svg>
         </label>
+      </div>
+      <div className="mt-32 flex flex-wrap w-full gap-3 justify-center">
+        {followersUser?.length === 0 ? (
+          <>
+            <div className="text-lg font-semibold opacity-65">No followers</div>
+          </>
+        ) : (
+          <>
+            {followersUser?.map((user, index) => {
+              return (
+                <ProfileCard
+                  FollowingUser={user}
+                  follow={"followers"}
+                  key={index}
+                />
+              );
+            })}
+          </>
+        )}
       </div>
     </div>
   );

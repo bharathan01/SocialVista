@@ -200,7 +200,7 @@ function Profile() {
                       </div>
                     </div>
                     <div className="flex mt-4 sm:ml-[50px] ml-[30px] gap-3 ">
-                      <Link to="/user/follower">
+                      <Link to={`/user/follower/${userId}`}>
                         <div className="hover:cursor-pointer">
                           <span className="font-bold text-lg">
                             {userDetails?.followers.length}{" "}
@@ -208,7 +208,7 @@ function Profile() {
                           <span className="opacity-55"> followers</span>
                         </div>
                       </Link>
-                      <Link to="/user/following">
+                      <Link to={`/user/following/${userId}`}>
                         <div className="hover:cursor-pointer">
                           <span className="font-bold text-lg">
                             {userDetails?.following.length}

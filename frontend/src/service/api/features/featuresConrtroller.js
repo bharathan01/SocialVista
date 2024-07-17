@@ -42,9 +42,9 @@ export const deleteAllNotifications = async () => {
     }
   }
 };
-export const getFollowers = async () => {
+export const getFollowers = async (id) => {
   try {
-    const responce = await API.get(USER_PRO.GET_FOLLOWERS);
+    const responce = await API.get(`${USER_PRO.GET_FOLLOWERS}/${id}`);
     return responce.data;
   } catch (errors) {
     if (errors.response) {
@@ -55,9 +55,9 @@ export const getFollowers = async () => {
     }
   }
 };
-export const getFollowing = async () => {
+export const getFollowing = async (id) => {
   try {
-    const responce = await API.get(USER_PRO.GET_FOLLOWING);
+    const responce = await API.get(`${USER_PRO.GET_FOLLOWING}/${id}`);
     return responce.data;
   } catch (errors) {
     if (errors.response) {
