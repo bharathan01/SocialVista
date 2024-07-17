@@ -42,3 +42,29 @@ export const deleteAllNotifications = async () => {
     }
   }
 };
+export const getFollowers = async () => {
+  try {
+    const responce = await API.get(USER_PRO.GET_FOLLOWERS);
+    return responce.data;
+  } catch (errors) {
+    if (errors.response) {
+      const error = errors?.response?.data;
+      return error;
+    } else {
+      console.log("error maessege :", errors.message);
+    }
+  }
+};
+export const getFollowing = async () => {
+  try {
+    const responce = await API.get(USER_PRO.GET_FOLLOWING);
+    return responce.data;
+  } catch (errors) {
+    if (errors.response) {
+      const error = errors?.response?.data;
+      return error;
+    } else {
+      console.log("error maessege :", errors.message);
+    }
+  }
+};

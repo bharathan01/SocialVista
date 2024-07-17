@@ -135,10 +135,10 @@ const followUnfollowUser = tryCatch(async (req, res) => {
       throw new ApiError(
         FORBIDDEN,
         "can not unfollow the user ! try after sometime"
-      ); 
+      );
 
     return res.status(SUCCESS).json({
-      status: 'SUCCESS',
+      status: "SUCCESS",
       message: "unfollow user successfully.",
     });
   } else {
@@ -184,6 +184,44 @@ const getUser = tryCatch(async (req, res) => {
     data: userProfileData,
   });
 });
+const getFollowersDetails = tryCatch(async (req, res) => {
+  const userId = req.userId;
+  const followingUserDetails = await userSchema
+    .find({ _id: userId })
+    .select("followers")
+    .populate({
+      path: "followers",
+      select: "-password -likedPost -bio -followers -following",
+    });
+  if (!followingUserDetails) {
+    throw new ApiError(NOT_FOUND, "user not found");
+  }
+
+  res.status(SUCCESS).json({
+    status: "SUCCESS",
+    message: "data fetch successfully",
+    data: followingUserDetails,
+  });
+});
+const getFolloweingDetails = tryCatch(async (req, res) => {
+  const userId = req.userId;
+  const followingUserDetails = await userSchema
+    .find({ _id: userId })
+    .select("following")
+    .populate({
+      path: "following",
+      select: "-password -likedPost -bio -followers -following",
+    });
+  if (!followingUserDetails) {
+    throw new ApiError(NOT_FOUND, "user not found");
+  }
+
+  res.status(SUCCESS).json({
+    status: "SUCCESS",
+    message: "data fetch successfully",
+    data: followingUserDetails,
+  });
+});
 
 module.exports = {
   userProfileUpadate,
@@ -191,4 +229,6 @@ module.exports = {
   followUnfollowUser,
   getUserProfile,
   getUser,
+  getFollowersDetails,
+  getFolloweingDetails,
 };

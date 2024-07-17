@@ -4,7 +4,9 @@ const {
   getUserProfile,
   followUnfollowUser,
   suggestedUsers,
-  getUser
+  getUser,
+  getFollowersDetails,
+  getFolloweingDetails
 } = require("../controllers/user.controller.js");
 const isAuthorizedUser = require("../middleware/jwtTokenVerify.js");
 
@@ -15,6 +17,8 @@ router.get("/getCurrentUser",isAuthorizedUser, getUser);
 router.post("/profileUpdate/:id",isAuthorizedUser, userProfileUpadate);
 router.post("/followUnfolllow/:id",isAuthorizedUser, followUnfollowUser);
 router.get("/suggested",isAuthorizedUser, suggestedUsers);
+router.get("/getFollowers",isAuthorizedUser, getFollowersDetails);
+router.get("/getFollowing",isAuthorizedUser, getFolloweingDetails);
 // router.delete("/deleteAccount/:id",deleteAccount);
 
 module.exports = router;
