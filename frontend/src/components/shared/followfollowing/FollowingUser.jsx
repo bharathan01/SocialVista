@@ -6,20 +6,38 @@ import { useParams } from "react-router-dom";
 function FollowingUser() {
   const { id } = useParams();
   const [followingUser, setFollowingUser] = useState();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredUsers, setFilteredUsers] = useState([]);
   const getFollowingUsers = async () => {
-    const resposnce = await getFollowing(id);
-    if (resposnce.status !== "SUCCESS") {
+    const response = await getFollowing(id);
+    if (response.status !== "SUCCESS") {
     }
-    setFollowingUser(resposnce.data[0].following);
+    setFollowingUser(response.data[0].following);
+    setFilteredUsers(response.data[0].following);
+  };
+  const onChangeSearchTerm = (e) => {
+    setSearchTerm(e.target.value);
+    const filteredData = followingUser.filter(
+      (user) =>
+        user.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user.username.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredUsers(filteredData);
   };
   useState(() => {
     getFollowingUsers();
   }, []);
   return (
     <div>
-      <div className=" h-[90px] p-5 flex items-center justify-center fixed xl:w-[61%] lg:w-[50%] md:w-[53%] w-[86%] mt-10">
+      <div className=" h-[90px] p-5 flex items-center justify-center fixed xl:w-[61%] lg:w-[50%] md:w-[53%] w-[86%] mt-10 z-10">
         <label className="input input-bordered flex items-center gap-2 md:w-[60%] w-[90%]">
-          <input type="text" className="grow" placeholder="Search" />
+          <input
+            type="text"
+            className="grow"
+            placeholder="Search"
+            value={searchTerm}
+            onChange={onChangeSearchTerm}
+          />
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 16 16"
@@ -37,11 +55,11 @@ function FollowingUser() {
       <div className="mt-32 flex flex-wrap w-full gap-3 justify-center">
         {followingUser?.length === 0 ? (
           <>
-          <div className="text-lg font-semibold opacity-65">No following</div>
-        </>
+            <div className="text-lg font-semibold opacity-65">No following</div>
+          </>
         ) : (
           <>
-            {followingUser?.map((user, index) => {
+            {filteredUsers?.map((user, index) => {
               return (
                 <ProfileCard
                   FollowingUser={user}

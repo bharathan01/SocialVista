@@ -17,7 +17,7 @@ function FollowerUser() {
   }, []);
   return (
     <div>
-      <div className=" h-[90px] p-5 flex items-center justify-center fixed xl:w-[61%] lg:w-[50%] md:w-[53%] w-[86%] mt-10">
+      <div className=" h-[90px] p-5 flex items-center justify-center fixed xl:w-[61%] lg:w-[50%] md:w-[53%] w-[86%] mt-10 ">
         <label className="input input-bordered flex items-center gap-2 md:w-[60%] w-[90%]">
           <input type="text" className="grow" placeholder="Search" />
           <svg
