@@ -23,6 +23,7 @@ export const ApiEndPoint = {
     FOLLOWUNFOLLOW: "/user/followUnfolllow",
     GET_FOLLOWERS: "/user/getFollowers",
     GET_FOLLOWING: "/user/getFollowing",
+    GET_SEARCH_USER: "/user/getSearchUser",
   },
   NOTIFICATIONS: {
     GET_NOTIFICATION: "/notification",

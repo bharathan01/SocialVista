@@ -55,12 +55,12 @@ function SignIn() {
 
   return (
     <div className="w-full md:h-screen  flex items-center justify-center lg:gap-24 md:flex-row flex-col">
-      <div className="md:w-[50%] flex flex-col lg:items-end items-center">
+      <div className="md:w-[50%] flex flex-col lg:items-center items-center">
         <div className="md:mt-0 mt-2">
           <img
             src={logo}
             alt="logo"
-            className="lg:w-full lg:h-full md:w-[200px] md:h-[200px] w-[100px] h-100px]"
+            className="lg:w-[250px] lg:h-[250px] md:w-[150px] md:h-[150px] w-[100px] h-100px]"
           />
         </div>
         <div>

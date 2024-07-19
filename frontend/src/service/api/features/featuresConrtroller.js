@@ -68,3 +68,20 @@ export const getFollowing = async (id) => {
     }
   }
 };
+export const getSearchUser = async (searchUser) => {
+  try {
+    const responce = await API.get(USER_PRO.GET_SEARCH_USER, {
+      params: {
+        search: searchUser,
+      },
+    });
+    return responce.data;
+  } catch (errors) {
+    if (errors.response) {
+      const error = errors?.response?.data;
+      return error;
+    } else {
+      console.log("error maessege :", errors.message);
+    }
+  }
+};

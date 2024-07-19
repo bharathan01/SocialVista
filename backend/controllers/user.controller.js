@@ -223,6 +223,20 @@ const getFolloweingDetails = tryCatch(async (req, res) => {
   });
 });
 
+const getSearchUserData = tryCatch(async (req, res) => {
+  const { search } = req.query;
+  const searchRegex = new RegExp(search, "i");
+  const searchUser = await userSchema
+    .find({
+      $or: [{ username: searchRegex }, { fullName: searchRegex }],
+    })
+    .select("fullName username _id profileImg");
+  res.status(SUCCESS).json({
+    status: "SUCCESS",
+    data: searchUser,
+  });
+});
+
 module.exports = {
   userProfileUpadate,
   suggestedUsers,
@@ -231,4 +245,5 @@ module.exports = {
   getUser,
   getFollowersDetails,
   getFolloweingDetails,
+  getSearchUserData,
 };

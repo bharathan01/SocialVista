@@ -16,3 +16,4 @@ export { default as ProfileLoader } from "./common/loader/ProfileLoader.jsx";
 export { default as Spinner } from "./common/loader/SpinnerLoader.jsx";
 export { default as FollowingUser } from "./shared/followfollowing/FollowingUser.jsx";
 export { default as FollowerUser } from "./shared/followfollowing/FollowerUser.jsx";
+export { default as SearchUserProfile } from "./common/searchUser/SearchUserProfile.jsx";

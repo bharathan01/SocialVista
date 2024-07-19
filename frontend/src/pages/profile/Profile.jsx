@@ -16,6 +16,7 @@ import { ReloadPage, ProfileLoader, LogOutConfirm } from "../../components";
 import { useSelector } from "react-redux";
 import { IoSettingsOutline } from "react-icons/io5";
 import Settings from "../settings/Settings";
+import { relativeTimeString } from "../../utils/date/DateAndTime";
 
 function Profile() {
   const navigate = useNavigate();
@@ -90,7 +91,7 @@ function Profile() {
                       />
                     )}
                   </div>
-                  <div className="sm:w-[150px] sm:h-[150px] w-[100px] h-[100px] absolute  sm:top-[170px] top-[130px] sm:left-[40px] left-[20px]  border-[8px] rounded-2xl flex items-center justify-center border-black">
+                  <div className="sm:w-[150px] sm:h-[150px] w-[100px] h-[100px] absolute  sm:top-[170px] top-[130px] sm:left-[40px] left-[66px]  border-[8px] rounded-2xl flex items-center justify-center border-black">
                     {userDetails?.profileImg ? (
                       <img
                         src={userDetails?.profileImg}
@@ -106,7 +107,7 @@ function Profile() {
                     )}
                   </div>
                   <div className="w-full">
-                    <div className="w-full flex items-center justify-end p-3">
+                    <div className="w-full flex items-center justify-end p-3 md:text-base text-sm sm:mt-0 mt-[40px] ">
                       {userInfo?.id === userDetails?._id ? (
                         <>
                           <div
@@ -118,7 +119,7 @@ function Profile() {
                             <IoSettingsOutline />
                           </div>
                           <div
-                            className="w-[120px] p-2 border-2 border-white rounded-full text-center"
+                            className="md:w-[120px] w-[90px] p-2 border-2 border-white rounded-full text-center md:text-base text-sm "
                             onClick={() => {
                               document.getElementById("my_modal_3").showModal();
                             }}
@@ -192,6 +193,9 @@ function Profile() {
                             @{userDetails?.username}
                           </span>
                         </div>
+                      </div>
+                      <div className="sm:ml-[50px] ml-[30px] opacity-70">
+                        Joined {relativeTimeString(userDetails?.createdAt)}
                       </div>
                       <div className="sm:ml-[50px] ml-[30px]">
                         <span className="lg:text-base text-sm">

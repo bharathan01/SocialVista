@@ -206,7 +206,7 @@ function Post({ posts, onDelete, currentUser }) {
             )}
           </div>
         </div>
-        <div className="m-3 rounded-lg flex items-center justify-center">
+        <div className=" rounded-lg flex items-center justify-center">
           {img && (
             <img
               src={img}
@@ -217,10 +217,10 @@ function Post({ posts, onDelete, currentUser }) {
         </div>
         <div className="flex items-center">
           <div className="flex items-center pl-4">
-            <span className="md:text-lg text-xs">{text}</span>
+            <span className="md:text-lg text-sm">{text}</span>
           </div>
         </div>
-        <div className="pl-4 opacity-65">{postDate}</div>
+        <div className="pl-4 opacity-65 md:text-base text-[12px]">{postDate}</div>
         <div className="flex justify-between items-center p-2">
           <div className="flex items-center gap-4">
             <div className="flex flex-col w-10 h-12 justify-start items-center">

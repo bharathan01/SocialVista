@@ -16,13 +16,19 @@ function FollowingUser() {
     setFilteredUsers(response.data[0].following);
   };
   const onChangeSearchTerm = (e) => {
-    setSearchTerm(e.target.value);
-    const filteredData = followingUser.filter(
-      (user) =>
-        user.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        user.username.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setFilteredUsers(filteredData);
+    const term = e.target.value;
+    setSearchTerm(term);
+
+    if (term === "") {
+      setFilteredUsers(followingUser);
+    } else {
+      const filteredData = followingUser.filter(
+        (user) =>
+          user.fullName.toLowerCase().includes(term.toLowerCase()) ||
+          user.username.toLowerCase().includes(term.toLowerCase())
+      );
+      setFilteredUsers(filteredData);
+    }
   };
   useState(() => {
     getFollowingUsers();
