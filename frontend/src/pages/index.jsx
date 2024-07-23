@@ -5,3 +5,5 @@ export { default as Messages } from "./messages/Messages.jsx";
 export { default as Explore } from "./explore/Explore.jsx";
 export { default as Search } from "./search/Search.jsx";
 export { default as User } from "./userfollow/User.jsx";
+export { default as ForgotPassword } from "./forgotPassword/ForgotPassword.jsx";
+

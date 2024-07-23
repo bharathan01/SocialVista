@@ -18,6 +18,7 @@ import {
   Explore,
   Search,
   User,
+  ForgotPassword,
 } from "./pages";
 import { useSelector } from "react-redux";
 
@@ -128,6 +129,14 @@ function App() {
             element={
               <RedirectIfAuthenticated isUserLoggedIn={isUserLoggedIn}>
                 <SignUp />
+              </RedirectIfAuthenticated>
+            }
+          />
+          <Route
+            path="/forgot-password"
+            element={
+              <RedirectIfAuthenticated isUserLoggedIn={isUserLoggedIn}>
+                <ForgotPassword />
               </RedirectIfAuthenticated>
             }
           />

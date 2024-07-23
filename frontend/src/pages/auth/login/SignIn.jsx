@@ -113,6 +113,11 @@ function SignIn() {
                   <p className="text-red-600">{error.password}</p>
                 )}
               </div>
+              <div className=" w-fullflex text-end">
+                <Link to="/forgot-password">
+                  <span className="underline">forgot password </span>
+                </Link>
+              </div>
               <div>
                 <button className="btn bg-[#772ba9] w-full">Sign up</button>
               </div>
