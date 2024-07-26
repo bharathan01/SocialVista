@@ -4,15 +4,23 @@ import { IoMdOpen } from "react-icons/io";
 import { newsItems, userProfiles } from "../../utils/demoData/data.jsx";
 import { Link } from "react-router-dom";
 import Suggections from "./suggection/Suggections.jsx";
-import { getSuggection } from "../../service/api/features/featuresConrtroller.js";
+import { getLiveNews, getSuggection } from "../../service/api/features/featuresConrtroller.js";
 
 function RightSidebar() {
   const [suggestedFollowers, setSuggestedFollowers] = useState();
+  const [newses, setNews] = useState([]);
   const getSuggestedFollowers = async () => {
     const responce = await getSuggection();
     setSuggestedFollowers(responce.whoNotfollowByUser);
   };
+  const getNews = async () => {
+    const newsData = await getLiveNews();
+    if (!newsData.status === "ok") {
+    }
+    setNews(newsData.articles);
+  };
   useEffect(() => {
+    getNews();
     getSuggestedFollowers();
   }, []);
   return (
@@ -36,11 +44,11 @@ function RightSidebar() {
           </div>
         </div>
         <div className="flex justify-center flex-col p-2 ">
-          {newsItems.map((news, index) => {
+          {newses?.map((news, index) => {
             return (
               <React.Fragment key={index}>
                 <Link to="/news">
-                  <TopNews newsImage={news.image} newsHeading={news.heading} />
+                  <TopNews news={news}/>
                 </Link>
               </React.Fragment>
             );

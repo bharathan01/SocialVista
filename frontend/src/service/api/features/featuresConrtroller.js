@@ -1,7 +1,8 @@
+import axios from "axios";
 import { API } from "../../../config/apiClient.js/apiClient";
 import { ApiEndPoint } from "../../../utils/apiEndPoints/ApiEndPoint";
 
-const { USER_PRO, NOTIFICATIONS } = ApiEndPoint;
+const { USER_PRO, NOTIFICATIONS, LIVE_NEWS } = ApiEndPoint;
 
 export const getSuggection = async () => {
   try {
@@ -83,5 +84,16 @@ export const getSearchUser = async (searchUser) => {
     } else {
       console.log("error maessege :", errors.message);
     }
+  }
+};
+export const getLiveNews = async () => {
+  const { VITE_NEWS_API } = import.meta.env;
+  try {
+    const responce = await axios.get(
+      `${LIVE_NEWS.GET_LIVE_NEWS}&apiKey=${VITE_NEWS_API}`
+    );
+    return responce.data;
+  } catch (error) {
+    return error;
   }
 };

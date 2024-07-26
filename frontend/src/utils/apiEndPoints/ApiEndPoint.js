@@ -29,4 +29,7 @@ export const ApiEndPoint = {
     GET_NOTIFICATION: "/notification",
     DELETE_NOTIFICATION: "/notification/delete",
   },
+  LIVE_NEWS: {
+    GET_LIVE_NEWS: "https://newsapi.org/v2/top-headlines?sources=bbc-news",
+  },
 };
