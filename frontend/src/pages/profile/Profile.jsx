@@ -61,7 +61,7 @@ function Profile() {
   }, [userId]);
 
   return (
-    <div className="flex-grow xl:ml-[14%] lg:ml-[20%] ml-[60px] mt-[64px] w-[63%]">
+    <div className="flex-grow xl:ml-[14%] lg:ml-[20%] ml-[60px] mt-[64px] w-[63%] pl-1 pr-3">
       <div className="min-h-screen overflow-y-auto xl:w-[71%] lg:w-[62%] md:w-[57%] ">
         {isUserProfile ? (
           <div className="flex items-center justify-center">

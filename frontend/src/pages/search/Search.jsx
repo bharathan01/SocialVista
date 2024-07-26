@@ -9,7 +9,9 @@ function Search() {
     const query = e.target.value;
     setSearchQuery(query);
     if (!query) {
-      setSearchUser("");
+      setSearchUser(null);
+      console.log('hai')
+      return
     }
     const responce = await getSearchUser(searchQuery);
     if (responce.status !== "SUCCESS") {
@@ -51,8 +53,8 @@ function Search() {
             </>
           ) : (
             <>
-              {seachUser?.map((user) => {
-                return <SearchUserProfile user={user} />;
+              {seachUser?.map((user,index) => {
+                return <SearchUserProfile user={user} key={index} />;
               })}
             </>
           )}
