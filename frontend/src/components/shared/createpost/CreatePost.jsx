@@ -2,13 +2,16 @@ import React, { useRef, useState } from "react";
 import { CiImageOn } from "react-icons/ci";
 import { createPost } from "../../../service/api/userController/userActivity";
 import Spinner from "../../common/loader/SpinnerLoader";
+import EmojiPicker from "emoji-picker-react";
+import { BsEmojiSmile } from "react-icons/bs";
 
-function CreatePost({onCloseModel}) {
+function CreatePost({ onCloseModel }) {
   const postImage = useRef(null);
   const [postImg, setPostImg] = useState(null);
   const [postContent, setPostContent] = useState("");
   const [error, setError] = useState(false);
   const [createPostLoader, setLoader] = useState(false);
+  const [openEmoji, setOpenEmoji] = useState(false);
 
   const postImageChange = (e) => {
     const file = e.target.files[0];
@@ -38,10 +41,13 @@ function CreatePost({onCloseModel}) {
       setLoader(false);
     } else {
       setPostImg(null);
-      onCloseModel()
+      onCloseModel();
       setPostContent("");
       setLoader(false);
     }
+  };
+  const onEmojiClick = (e) => {
+    setPostContent([...postContent, e.emoji]);
   };
   return (
     <div className="flex flex-col p-3 justify-center items-center gap-2 w-full">
@@ -72,7 +78,7 @@ function CreatePost({onCloseModel}) {
         </div>
       )}
       <div className="flex items-center justify-between w-full">
-        <div>
+        <div className="flex items-start justify-center gap-3">
           <span className="text-2xl" onClick={() => postImage.current.click()}>
             <CiImageOn />
           </span>
@@ -83,6 +89,16 @@ function CreatePost({onCloseModel}) {
             ref={postImage}
             onChange={(e) => postImageChange(e)}
             disabled={createPostLoader}
+          />
+          <div className="text-xl" onClick={() => setOpenEmoji(!openEmoji)}>
+            <BsEmojiSmile />
+          </div>
+        </div>
+        <div className="">
+          <EmojiPicker
+            open={openEmoji}
+            onEmojiClick={onEmojiClick}
+            width={"300px"}
           />
         </div>
         <div>

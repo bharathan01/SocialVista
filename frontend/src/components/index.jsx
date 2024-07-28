@@ -17,4 +17,5 @@ export { default as Spinner } from "./common/loader/SpinnerLoader.jsx";
 export { default as FollowingUser } from "./shared/followfollowing/FollowingUser.jsx";
 export { default as FollowerUser } from "./shared/followfollowing/FollowerUser.jsx";
 export { default as SearchUserProfile } from "./common/searchUser/SearchUserProfile.jsx";
-export { default as NewsLoader} from "./common/loader/NewsLoader.jsx";
+export { default as NewsLoader } from "./common/loader/NewsLoader.jsx";
+export { default as PostCard } from "./shared/exploreCard/PostCard.jsx";

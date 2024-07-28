@@ -39,7 +39,7 @@ function LeftSidebar() {
           <Link to={`/Profile/${userInfo.id}`}>
             <div className="rounded-full w-10 h-10 overflow-x-hidden object-contain hover:cursor-pointer ">
               {userInfo.profileImg ? (
-                <img src={userInfo.profileImg} alt="" />
+                <img src={userInfo.profileImg} alt="" className="w-full h-full object-cover" />
               ) : (
                 <img src={profileImage} alt="" />
               )}
