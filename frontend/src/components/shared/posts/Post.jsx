@@ -21,6 +21,8 @@ import UpdatePost from "./UpdatePost";
 import { Link } from "react-router-dom";
 import { followUnfollow } from "../../../service/api/userProfileController/userProfile";
 import { relativeTimeString } from "../../../utils/date/DateAndTime";
+import { BsEmojiSmile } from "react-icons/bs";
+import EmojiPicker from "../emoji/EmojiPicker";
 
 function Post({ posts, onDelete, currentUser }) {
   const [isMenuOpen, setMenuOpen] = useState(false);
@@ -30,6 +32,7 @@ function Post({ posts, onDelete, currentUser }) {
   const [isCommentSuccess, setCommentSuccess] = useState(false);
   const [commenttLoader, setCommentLoader] = useState(false);
   const [isUpdateToggled, setUpdatetogggle] = useState(false);
+  const [openEmoji, setOpenEmoji] = useState(false);
   const dialogRef = useRef(null);
   const { reloadHomeComponent } = useContext(CreateNewPostContext);
   const [isUserFollowing, setUserFollowing] = useState();
@@ -94,6 +97,13 @@ function Post({ posts, onDelete, currentUser }) {
     if (responce.status !== "SUCCESS") {
     }
   };
+  const onEmojiSelect = (e) => {
+    const sym = e.unified.split("_");
+    const codeArray = [];
+    sym.forEach((el) => codeArray.push("0x" + el));
+    let emoji = String.fromCodePoint(...codeArray);
+    document.getElementById("comment").value += emoji;
+  };
 
   useEffect(() => {
     setUserFollowing(currentUser?.following.includes(user._id));
@@ -126,7 +136,11 @@ function Post({ posts, onDelete, currentUser }) {
             <div className="flex gap-2 items-center">
               <div className="flex justify-center items-center rounded-full md:w-[40px] md:h-[40px] w-[30px] h-[30px]">
                 {user.profileImg ? (
-                  <img src={user.profileImg} alt="" />
+                  <img
+                    src={user.profileImg}
+                    alt=""
+                    className="object-cover w-full h-full"
+                  />
                 ) : (
                   <img src={profileImage} alt="" />
                 )}
@@ -220,7 +234,9 @@ function Post({ posts, onDelete, currentUser }) {
             <span className="md:text-lg text-sm">{text}</span>
           </div>
         </div>
-        <div className="pl-4 opacity-65 md:text-base text-[12px]">{postDate}</div>
+        <div className="pl-4 opacity-65 md:text-base text-[12px]">
+          {postDate}
+        </div>
         <div className="flex justify-between items-center p-2">
           <div className="flex items-center gap-4">
             <div className="flex flex-col w-10 h-12 justify-start items-center">
@@ -265,11 +281,20 @@ function Post({ posts, onDelete, currentUser }) {
                   <input
                     type="text"
                     placeholder="comment here..."
-                    className="h-[40px] w-full p-4 outline-none"
+                    className="h-[40px] w-full p-4 outline-none text-[10px]"
                     name="comment"
                     id="comment"
+                    
                   />
                 </div>
+
+                <div
+                  className="absolute right-12 rounded-full md:text-2xl text-lg flex items-center justify-center hover:cursor-pointer"
+                  onClick={() => setOpenEmoji(!openEmoji)}
+                >
+                  <BsEmojiSmile />
+                </div>
+
                 <div
                   className="absolute right-0 md:h-[40px] md:w-[40px]  h-[30px] w-[30px] rounded-full bg-[#772ba9] md:text-2xl text-lg flex items-center justify-center hover:cursor-pointer"
                   onClick={commentOnThePost}
@@ -278,6 +303,11 @@ function Post({ posts, onDelete, currentUser }) {
                 </div>
               </div>
             </div>
+            {openEmoji && (
+              <div className="absolute lg:right-[25rem] lg:mt-12 md:right-[25rem] md:mt-12 xl:right-[29rem] xl:mt-4 right-0 mt-[3rem]">
+                <EmojiPicker onEmojiSelect={onEmojiSelect} />
+              </div>
+            )}
             <div>
               <Comments
                 comments={comments}

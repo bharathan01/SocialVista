@@ -24,7 +24,7 @@ function Home() {
   return (
     <div className="flex-grow xl:ml-[14%] lg:ml-[20%] ml-[60px] mt-[64px] w-[63%]">
       <div className=" min-h-screen overflow-y-auto p-2 xl:w-[71%] lg:w-[62%] md:w-[57%] ">
-        <div className="flex justify-around items-center p-4 fixed top-[64px] bg-black xl:w-[60%] lg:w-[49%] md:w-[53%] w-[90%] z-10">
+        <div className="flex justify-around items-center p-4 fixed top-[64px] bg-black xl:w-[60%] lg:w-[49%] md:w-[52%] w-[83%] z-10">
           <div
             className="hover:cursor-pointer p-1"
             onClick={() => setChangePage("following")}
@@ -58,7 +58,7 @@ function Home() {
           )}
         </div>
         <dialog id="openCreatePostcard" className="modal" ref={dialogRef}>
-          <div className="modal-box md:w-[550px] w-[300px]">
+          <div className="modal-box md:w-[550px] w-[300px] relative">
             <form method="dialog">
               <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
                 ✕

@@ -2,8 +2,8 @@ import React, { useRef, useState } from "react";
 import { CiImageOn } from "react-icons/ci";
 import { createPost } from "../../../service/api/userController/userActivity";
 import Spinner from "../../common/loader/SpinnerLoader";
-import EmojiPicker from "emoji-picker-react";
 import { BsEmojiSmile } from "react-icons/bs";
+import EmojiPicker from "../emoji/EmojiPicker";
 
 function CreatePost({ onCloseModel }) {
   const postImage = useRef(null);
@@ -46,8 +46,13 @@ function CreatePost({ onCloseModel }) {
       setLoader(false);
     }
   };
-  const onEmojiClick = (e) => {
-    setPostContent([...postContent, e.emoji]);
+  const onEmojiSelect = (e) => {
+    const sym = e.unified.split("_");
+    console.log(sym)
+    const codeArray = [];
+    sym.forEach((el) => codeArray.push("0x" + el));
+    let emoji = String.fromCodePoint(...codeArray);
+    setPostContent(postContent + emoji);
   };
   return (
     <div className="flex flex-col p-3 justify-center items-center gap-2 w-full">
@@ -79,7 +84,7 @@ function CreatePost({ onCloseModel }) {
       )}
       <div className="flex items-center justify-between w-full">
         <div className="flex items-start justify-center gap-3">
-          <span className="text-2xl" onClick={() => postImage.current.click()}>
+          <span className="text-2xl hover:cursor-pointer" onClick={() => postImage.current.click()}>
             <CiImageOn />
           </span>
           <input
@@ -90,16 +95,9 @@ function CreatePost({ onCloseModel }) {
             onChange={(e) => postImageChange(e)}
             disabled={createPostLoader}
           />
-          <div className="text-xl" onClick={() => setOpenEmoji(!openEmoji)}>
+          <span className="text-xl hover:cursor-pointer" onClick={() => setOpenEmoji(!openEmoji)}>
             <BsEmojiSmile />
-          </div>
-        </div>
-        <div className="">
-          <EmojiPicker
-            open={openEmoji}
-            onEmojiClick={onEmojiClick}
-            width={"300px"}
-          />
+          </span>
         </div>
         <div>
           <button
@@ -110,6 +108,11 @@ function CreatePost({ onCloseModel }) {
           </button>
         </div>
       </div>
+      {openEmoji && (
+        <div className="relative top-[-20px] md:right-[28px] right-0  ">
+          <EmojiPicker onEmojiSelect={onEmojiSelect} />
+        </div>
+      )}
     </div>
   );
 }

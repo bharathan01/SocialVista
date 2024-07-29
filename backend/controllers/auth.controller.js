@@ -97,7 +97,7 @@ const userLogin = tryCatch(async (req, res) => {
   const refreshToken = generateJwtToken(
     userInfo._id,
     process.env.REFRESH_TOKEN_SECRET_KEY,
-    "1d"
+    "15d"
   );
   const options = {
     httpOnly: true,

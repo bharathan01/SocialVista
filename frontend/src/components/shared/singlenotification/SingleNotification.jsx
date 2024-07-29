@@ -19,7 +19,7 @@ function SingleNptificatiion({ notification }) {
     };
   }, []);
   return (
-    <div className="flex p-3 ml-4 mr-4 justify-between items-center hover:bg-[#121212] hover:cursor-pointer">
+    <div className="flex p-3 md:ml-4 md:mr-4 justify-between items-center hover:bg-[#121212] hover:cursor-pointer">
       <div className="flex gap-5 items-center">
         <Link to={`/profile/${notification?.from?._id}`}>
           <div className="w-[40px] h-[40px] rounded-full">
@@ -36,14 +36,14 @@ function SingleNptificatiion({ notification }) {
                 <img
                   src={profileimg}
                   alt="profile image"
-                  className="w-[40px] h-[40px] rounded-full object-cover"
+                  className="w-full h-full  object-cover"
                 />
               </>
             )}
           </div>
         </Link>
         <div>
-          <span className="md:text-lg text-sm">
+          <span className="md:text-lg text-[12px]">
             <Link to={`/profile/${notification?.from?._id}`}>
               {" "}
               <b>{notification?.from?.username}</b>{" "}

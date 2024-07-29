@@ -131,9 +131,11 @@ function SignIn() {
           </div>
           <div className="divider h-6">OR</div>
           <div>
-            <button className="btn btn-primary w-full">
-              Already hava an account
-            </button>
+            <Link to={"/signup"}>
+              <button className="btn btn-primary w-full">
+                Already hava an account
+              </button>
+            </Link>
           </div>
         </div>
       </div>
