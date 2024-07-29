@@ -145,7 +145,7 @@ function Post({ posts, onDelete, currentUser }) {
                   <img src={profileImage} alt="" />
                 )}
               </div>
-              <div className="text-lg">{user.username}</div>
+              <div className="md:text-lg  text-base">{user.username}</div>
             </div>
           </Link>
           <div className="flex">
@@ -164,9 +164,9 @@ function Post({ posts, onDelete, currentUser }) {
                   </>
                 ) : (
                   <>
-                    <div className="h-[40px] flex items-center justify-center gap-1 text-[#772ba9] text-lg font-semibold">
+                    <div className="flex items-center justify-center md:gap-1 text-[#772ba9] text-lg font-semibold">
                       <span
-                        className="text-lg font-semibold hover:cursor-pointer"
+                        className="md:text-lg text-base font-semibold hover:cursor-pointer"
                         onClick={userFollow}
                       >
                         Follow{" "}

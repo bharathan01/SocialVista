@@ -17,6 +17,7 @@ import { useSelector } from "react-redux";
 import { IoSettingsOutline } from "react-icons/io5";
 import Settings from "../settings/Settings";
 import { relativeTimeString } from "../../utils/date/DateAndTime";
+import { LuMessagesSquare } from "react-icons/lu";
 
 function Profile() {
   const navigate = useNavigate();
@@ -91,7 +92,7 @@ function Profile() {
                       />
                     )}
                   </div>
-                  <div className="sm:w-[150px] sm:h-[150px] w-[100px] h-[100px] absolute  sm:top-[170px] top-[130px] sm:left-[40px] left-[66px]  border-[8px] rounded-2xl flex items-center justify-center border-black">
+                  <div className="sm:w-[150px] sm:h-[150px] w-[100px] h-[100px] absolute  sm:top-[170px] top-[130px] sm:left-[40px] left-[35%]  border-[8px] rounded-2xl flex items-center justify-center border-black">
                     {userDetails?.profileImg ? (
                       <img
                         src={userDetails?.profileImg}
@@ -107,7 +108,7 @@ function Profile() {
                     )}
                   </div>
                   <div className="w-full">
-                    <div className="w-full flex items-center justify-end p-3 md:text-base text-sm sm:mt-0 mt-[40px] ">
+                    <div className="w-full flex items-center md:justify-end justify-center p-3 md:text-base text-sm sm:mt-0 md:mt-[40px] mt-[60px]">
                       {userInfo?.id === userDetails?._id ? (
                         <>
                           <div
@@ -129,10 +130,17 @@ function Profile() {
                         </>
                       ) : (
                         <>
+                        <Link to={'/message'}>
+                          <div className="p-2 hover:bg-gray-900 border-2 rounded-full mr-2" title="message">
+                            <span className="text-xl">
+                              <LuMessagesSquare />
+                            </span>
+                          </div>
+                          </Link>
                           {isFollowing ? (
                             <>
                               <div
-                                className="md:w-[100px] w-[80px] border-2 md:p-2  rounded-full text-center hover:cursor-pointer"
+                                className="md:w-[100px] w-[80px] border-2 p-2  rounded-full text-center hover:cursor-pointer"
                                 onClick={followUser}
                               >
                                 <span>Following</span>
@@ -141,7 +149,7 @@ function Profile() {
                           ) : (
                             <>
                               <div
-                                className="md:w-[100px] w-[80px] bg-white md:p-2  rounded-full text-center hover:cursor-pointer"
+                                className="md:w-[100px] w-[80px] bg-white p-2  rounded-full text-center hover:cursor-pointer"
                                 onClick={followUser}
                               >
                                 <span className="text-black">Follow</span>
@@ -181,7 +189,7 @@ function Profile() {
                         <LogOutConfirm />
                       </div>
                     </dialog>
-                    <div className="w-full flex flex-col gap-1 mt-[10px]">
+                    <div className="w-full flex flex-col gap-1 mt-[10px] md:text-left text-center">
                       <div className="sm:ml-[50px] ml-[30px] flex flex-col gap-1 ">
                         <div>
                           <span className="text-lg font-bold">
@@ -203,7 +211,7 @@ function Profile() {
                         </span>
                       </div>
                     </div>
-                    <div className="flex mt-4 sm:ml-[50px] ml-[30px] gap-3 ">
+                    <div className="flex mt-4 sm:ml-[50px] ml-[30px] gap-3 md:justify-start justify-center ">
                       <Link to={`/user/follower/${userId}`}>
                         <div className="hover:cursor-pointer">
                           <span className="font-bold text-lg">
