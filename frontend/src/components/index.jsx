@@ -19,3 +19,4 @@ export { default as FollowerUser } from "./shared/followfollowing/FollowerUser.j
 export { default as SearchUserProfile } from "./common/searchUser/SearchUserProfile.jsx";
 export { default as NewsLoader } from "./common/loader/NewsLoader.jsx";
 export { default as PostCard } from "./shared/exploreCard/PostCard.jsx";
+export { default as VerifyEmail } from "./common/verifyEmail/VerifyEmail.jsx";

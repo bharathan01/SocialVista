@@ -34,7 +34,7 @@ function LeftSidebar() {
           })}
         </div>
       </div>
-      <div className="w-full mb-5 flex items-center mt-[80px] ">
+      <div className="w-full mb-5 flex items-center md:mt-[150px] mt-[80px] ">
         <div className="flex items-center justify-around w-full rounded-3xl  p-1">
           <Link to={`/Profile/${userInfo.id}`}>
             <div className="rounded-full w-10 h-10 overflow-x-hidden object-contain hover:cursor-pointer ">
@@ -44,7 +44,7 @@ function LeftSidebar() {
                 <img src={profileImage} alt="" />
               )}
             </div>
-          </Link>
+          </Link> 
           <Link to={`/Profile/${userInfo.id}`}>
             <div className="text-md lg:block md:hidden hidden hover:cursor-pointer ">
               {userInfo.fullName}

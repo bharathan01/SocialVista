@@ -15,6 +15,8 @@ const {
   uploadFiletoCloudinary,
 } = require("../utils/cloudinayFileUpload.js");
 const Notification = require("../models/notification.model.js");
+const generateJwtToken = require("../utils/generatejwttoken.js");
+const jwt = require("jsonwebtoken");
 
 const getUserProfile = tryCatch(async (req, res) => {
   const user = req.params.id;
@@ -236,6 +238,45 @@ const getSearchUserData = tryCatch(async (req, res) => {
     data: searchUser,
   });
 });
+const verifyEmailId = tryCatch(async (req, res) => {
+  const { emailId } = req.body;
+  if (!emailId) throw new ApiError(BAD_REQUEST, "email is required");
+
+  const isUserFind = await userSchema.findOne({ email: emailId });
+  if (!isUserFind) {
+    throw new ApiError(
+      BAD_REQUEST,
+      "email id can not find ! use valid email is."
+    );
+  }
+
+  const token = generateJwtToken(
+    isUserFind._id,
+    process.env.EMAIL_VERIFY_TOKEN,
+    "15m"
+  );
+  const passwordRestLink = `${process.env.BACK_END_URL}/api/v1/user/reset-password/${isUserFind._id}/${token}`;
+  res.status(SUCCESS).json({
+    status: "SUCCESS",
+    passwordRestLink,
+  });
+});
+
+const resetPassword = tryCatch(async (req, res) => {
+  const { id, token } = req.params;
+  if (!id && !token) {
+    throw new ApiError(
+      BAD_REQUEST,
+      "Unable to process the url ! please try after sometime."
+    );
+  }
+
+  const isTokenValid = jwt.verify(token, process.env.EMAIL_VERIFY_TOKEN);
+  if (!isTokenValid) {
+    throw new ApiError(BAD_REQUEST, "can not validate the token !");
+  }
+  res.render("index", { id, token, status: "Not Verified" });
+});
 
 module.exports = {
   userProfileUpadate,
@@ -246,4 +287,6 @@ module.exports = {
   getFollowersDetails,
   getFolloweingDetails,
   getSearchUserData,
+  verifyEmailId,
+  resetPassword,
 };
