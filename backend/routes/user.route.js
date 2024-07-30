@@ -10,6 +10,7 @@ const {
   getSearchUserData,
   verifyEmailId,
   resetPassword,
+  getNewPassword,
 } = require("../controllers/user.controller.js");
 const isAuthorizedUser = require("../middleware/jwtTokenVerify.js");
 
@@ -25,6 +26,7 @@ router.get("/getFollowing/:id", isAuthorizedUser, getFolloweingDetails);
 router.get("/getSearchUser", isAuthorizedUser, getSearchUserData);
 router.post("/forgotPassword", verifyEmailId);
 router.get("/reset-password/:id/:token", resetPassword);
+router.post("/reset-password/:id/:token", getNewPassword);
 // router.delete("/deleteAccount/:id",deleteAccount);
 
 module.exports = router;

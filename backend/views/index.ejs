@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SocialVista</title>
+    <script>
+      var status = "<%- JSON.stringify(status) %>";
+      console.log("Status:", status);
+      const form = document.getElementById("form-el");
+      const container = document.getElementById("container");
+      if (status === "SUCCESS") {
+        form.style.display = "none";
+        const text = document.createElement("h2");
+        text.style.color = "green";
+        text.innerHTML = "Password reset successfull";
+        container.appendChild(text);
+      } else {
+        form.display = "none";
+        const text = document.createElement("h2");
+        text.style.color = "red";
+        text.innerHTML = "Password reset Unsuccessfull";
+        container.appendChild(text);
+      }
+    </script>
+    <style>
+      body {
+        background-color: #000000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+      }
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: rgb(17, 24, 39);
+        width: 50%;
+        height: 40%;
+        border-radius: 20px;
+        padding: 20px;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      form div {
+        margin-bottom: 10px;
+      }
+      input[type="password"] {
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+      }
+      input[type="submit"] {
+        padding: 10px 20px;
+        border-radius: 5px;
+        border: none;
+        background-color: #772ba9;
+        color: white;
+        cursor: pointer;
+      }
+      .field {
+        display: flex;
+        flex-direction: column;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container" id="container">
+      <h2>SocialVista</h2>
+      <h3>Create a new password</h3>
+      <form action="" method="post" id="form-el">
+        <div class="field">
+          <label for="password">New password</label>
+          <input type="password" name="password" placeholder="new password" />
+        </div>
+        <div class="field">
+          <label for="confirmPassword">Confirm password</label>
+          <input
+            type="password"
+            name="confirmPassword"
+            placeholder="confirm password"
+          />
+        </div>
+        <div>
+          <input type="submit" value="Submit" />
+        </div>
+      </form>
+    </div>
+  </body>
+</html>

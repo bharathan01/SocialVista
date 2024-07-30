@@ -2,6 +2,7 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const path = require("path");
 
 const authRouter = require("./routes/auth.route.js");
 const userRouter = require("./routes/user.route.js");
@@ -21,11 +22,11 @@ app.use(
 );
 app.use(express.json({ limit: "50mb" }));
 app.set("view engine", "ejs");
-app.use(express.urlencoded({ extended: false, limit: "50mb" }));
+app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 cloudinaryConfig();
- 
+
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/post", postRouter);

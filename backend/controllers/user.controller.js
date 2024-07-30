@@ -270,12 +270,39 @@ const resetPassword = tryCatch(async (req, res) => {
       "Unable to process the url ! please try after sometime."
     );
   }
-
   const isTokenValid = jwt.verify(token, process.env.EMAIL_VERIFY_TOKEN);
   if (!isTokenValid) {
     throw new ApiError(BAD_REQUEST, "can not validate the token !");
   }
   res.render("index", { id, token, status: "Not Verified" });
+});
+const getNewPassword = tryCatch(async (req, res) => {
+  const { id } = req.params; 
+  const { password } = req.body;
+  if (!id && !password) {
+    throw new ApiError(
+      BAD_REQUEST,
+      "Unable to process the url ! please try after sometime."
+    );
+  }
+  const newHasedPassword = await hashPassword(password);
+
+  const updateNewPassword = await userSchema.findByIdAndUpdate(
+    { _id: id },
+    {
+      $set: {
+        password: newHasedPassword,
+      },
+    }
+  );
+  if (!updateNewPassword) {
+    throw new ApiError(BAD_REQUEST, "somthing went wrong!");
+  }
+  res.render('index',{status:"SUCCESS"})
+  res.status(SUCCESS).json({
+    SUCCESS,
+    message: "password rest successfully",
+  });
 });
 
 module.exports = {
@@ -289,4 +316,5 @@ module.exports = {
   getSearchUserData,
   verifyEmailId,
   resetPassword,
+  getNewPassword,
 };
