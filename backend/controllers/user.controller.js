@@ -245,10 +245,10 @@ const verifyEmailId = tryCatch(async (req, res) => {
 
   const isUserFind = await userSchema.findOne({ email: emailId });
   if (!isUserFind) {
-    throw new ApiError(
-      BAD_REQUEST,
-      "email id can not find ! use valid email is."
-    );
+    throw new ApiError(BAD_REQUEST, {
+      invalidEmail: true,
+      error: "email id can not find ! use valid email is.",
+    });
   }
 
   const token = generateJwtToken(
@@ -258,7 +258,6 @@ const verifyEmailId = tryCatch(async (req, res) => {
   );
   const passwordRestLink = `${process.env.BACK_END_URL}/api/v1/user/reset-password/${isUserFind._id}/${token}`;
   const isSendMail = await sendMailToResetPassword(passwordRestLink, emailId);
-  console.log(isSendMail);
   if (!isSendMail) {
     throw new ApiError(INTERNAL_SERVER_ERROR, {
       error: "can not send password reset link! try after sometime!",

@@ -5,6 +5,8 @@ import logo from "../../../../public/images/logo.png";
 import { login } from "../../../service/api/auth/AuthController";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../../redux/slice/userAuth.slice";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { firebaseAuth } from "../../../firebase";
 function SignIn() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -50,6 +52,18 @@ function SignIn() {
       }
     } catch (error) {
       console.error("Error submitting form:", error);
+    }
+  };
+  const loginWithGoogle = async () => {
+    const provider = new GoogleAuthProvider();
+    const {
+      user: { displayName: fullName, photoURL: profileImg, email },
+    } = await signInWithPopup(firebaseAuth, provider);
+    const userData = {
+      
+    }
+    if (email) {
+      const response = await loginWithGoogle(userData)
     }
   };
 
@@ -124,7 +138,10 @@ function SignIn() {
             </div>
           </form>
           <div className="mt-3">
-            <button className="btn btn-outline bg-white w-full">
+            <button
+              className="btn btn-outline bg-white w-full text-black"
+              onClick={loginWithGoogle}
+            >
               <FcGoogle />
               Sign up with Google
             </button>
@@ -133,7 +150,7 @@ function SignIn() {
           <div>
             <Link to={"/signup"}>
               <button className="btn btn-primary w-full">
-                Already hava an account
+                don't hava an account
               </button>
             </Link>
           </div>

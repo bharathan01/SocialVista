@@ -16,6 +16,19 @@ export const login = async (userData) => {
     }
   }
 };
+export const loginWithGoogle = async (userData) => {
+  try {
+    const responce = await API.post(AUTH.REGISTER_LOGIN_GOOGLE, userData);
+    return responce.data;
+  } catch (errors) {
+    if (errors.response) {
+      const error = errors?.response?.data;
+      return error;
+    } else {
+      console.log("eeror maessege :", errors.message);
+    }
+  }
+};
 
 export const register = async (userData) => {
   try {

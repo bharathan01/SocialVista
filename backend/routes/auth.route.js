@@ -1,8 +1,9 @@
 const express = require("express");
 const {
   userLogin,
-  userRegsitration,
-  userLoguot,
+  userRegistration,
+  registerOrLoginWithGoogle,
+  userLogout,
 } = require("../controllers/auth.controller.js");
 const isAuthorizedUser = require("../middleware/jwtTokenVerify.js");
 const {
@@ -13,7 +14,8 @@ const {
 const router = express.Router();
 
 router.post("/login", validateLoginFields, userLogin);
-router.post("/register", validateRegisterFields, userRegsitration);
-router.get("/logout", isAuthorizedUser, userLoguot);
+router.post("/register", validateRegisterFields, userRegistration);
+router.post("/loginWithGoogle", registerOrLoginWithGoogle);
+router.get("/logout", isAuthorizedUser, userLogout);
 
 module.exports = router;

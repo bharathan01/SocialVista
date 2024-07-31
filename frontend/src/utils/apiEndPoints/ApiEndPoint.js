@@ -2,6 +2,7 @@ export const ApiEndPoint = {
   AUTH: {
     LOGIN: "/auth/login",
     REGISTER: "/auth/register",
+    REGISTER_LOGIN_GOOGLE: "/auth/loginWithGoogle",
     LOGOUT: "auth/logout",
   },
   CURR_USER: {
@@ -24,6 +25,7 @@ export const ApiEndPoint = {
     GET_FOLLOWERS: "/user/getFollowers",
     GET_FOLLOWING: "/user/getFollowing",
     GET_SEARCH_USER: "/user/getSearchUser",
+    RESET_PASSWORD: "/user/forgotPassword",
   },
   NOTIFICATIONS: {
     GET_NOTIFICATION: "/notification",

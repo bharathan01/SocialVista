@@ -97,3 +97,20 @@ export const getLiveNews = async () => {
     return error;
   }
 };
+export const resetPassword = async (emailId) => {
+  try {
+    const responce = await API.post(USER_PRO.RESET_PASSWORD, {emailId}, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return responce.data;
+  } catch (errors) {
+    if (errors.response) {
+      const error = errors?.response?.data;
+      return error;
+    } else {
+      console.log("error maessege :", errors.message);
+    }
+  }
+};
