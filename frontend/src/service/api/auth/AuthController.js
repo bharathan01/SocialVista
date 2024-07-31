@@ -16,7 +16,7 @@ export const login = async (userData) => {
     }
   }
 };
-export const loginWithGoogle = async (userData) => {
+export const sendGoogleLoginRequest = async (userData) => {
   try {
     const responce = await API.post(AUTH.REGISTER_LOGIN_GOOGLE, userData);
     return responce.data;

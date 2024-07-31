@@ -20,3 +20,4 @@ export { default as SearchUserProfile } from "./common/searchUser/SearchUserProf
 export { default as NewsLoader } from "./common/loader/NewsLoader.jsx";
 export { default as PostCard } from "./shared/exploreCard/PostCard.jsx";
 export { default as VerifyEmail } from "./common/verifyEmail/VerifyEmail.jsx";
+export { default as MessageProfile } from "./common/messageProfile/MessageProfile.jsx";

@@ -2,7 +2,7 @@ import React, { useId, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../../../public/images/logo.png";
-import { login } from "../../../service/api/auth/AuthController";
+import { login, sendGoogleLoginRequest } from "../../../service/api/auth/AuthController";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../../redux/slice/userAuth.slice";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
@@ -57,13 +57,20 @@ function SignIn() {
   const loginWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
     const {
-      user: { displayName: fullName, photoURL: profileImg, email },
+      user: { displayName: fullName, photoUrl: profileImg, email },
     } = await signInWithPopup(firebaseAuth, provider);
     const userData = {
-      
-    }
+      fullName,
+      profileImg,
+      email,
+      username: fullName.replace(/\s+/g, ""),
+    };
     if (email) {
-      const response = await loginWithGoogle(userData)
+      const response = await sendGoogleLoginRequest(userData);
+      if (response.status === "SUCCESS") {
+        dispatch(loginUser(response.data));
+        navigate("/");
+      }
     }
   };
 
