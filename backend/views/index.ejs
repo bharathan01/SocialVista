@@ -4,25 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SocialVista</title>
-    <script>
-      var status = "<%- JSON.stringify(status) %>";
-      console.log("Status:", status);
-      const form = document.getElementById("form-el");
-      const container = document.getElementById("container");
-      if (status === "SUCCESS") {
-        form.style.display = "none";
-        const text = document.createElement("h2");
-        text.style.color = "green";
-        text.innerHTML = "Password reset successfull";
-        container.appendChild(text);
-      } else {
-        form.display = "none";
-        const text = document.createElement("h2");
-        text.style.color = "red";
-        text.innerHTML = "Password reset Unsuccessfull";
-        container.appendChild(text);
-      }
-    </script>
     <style>
       body {
         background-color: #000000;
@@ -41,7 +22,7 @@
         justify-content: center;
         background-color: rgb(17, 24, 39);
         width: 50%;
-        height: 40%;
+        height: 300px;
         border-radius: 20px;
         padding: 20px;
       }
@@ -76,7 +57,12 @@
     <div class="container" id="container">
       <h2>SocialVista</h2>
       <h3>Create a new password</h3>
-      <form action="" method="post" id="form-el">
+      <% if (status === "SUCCESS") { %>
+      <h2 style="color: green">Password reset successful</h2>
+      <% } else if (status === "FAIL") { %>
+      <h2 style="color: red">Password reset unsuccessful</h2>
+      <% } else{%>
+      <form method="post" action="" id="form-el">
         <div class="field">
           <label for="password">New password</label>
           <input type="password" name="password" placeholder="new password" />
@@ -90,9 +76,10 @@
           />
         </div>
         <div>
-          <input type="submit" value="Submit" />
+          <input type="submit" value="Submit" id="submit" />
         </div>
       </form>
+      <% } %>
     </div>
   </body>
 </html>

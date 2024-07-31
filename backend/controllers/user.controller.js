@@ -17,6 +17,7 @@ const {
 const Notification = require("../models/notification.model.js");
 const generateJwtToken = require("../utils/generatejwttoken.js");
 const jwt = require("jsonwebtoken");
+const sendMailToResetPassword = require("../utils/nodemailer.js");
 
 const getUserProfile = tryCatch(async (req, res) => {
   const user = req.params.id;
@@ -256,9 +257,15 @@ const verifyEmailId = tryCatch(async (req, res) => {
     "15m"
   );
   const passwordRestLink = `${process.env.BACK_END_URL}/api/v1/user/reset-password/${isUserFind._id}/${token}`;
+  const isSendMail = await sendMailToResetPassword(passwordRestLink, emailId);
+  console.log(isSendMail);
+  if (!isSendMail) {
+    throw new ApiError(INTERNAL_SERVER_ERROR, {
+      error: "can not send password reset link! try after sometime!",
+    });
+  }
   res.status(SUCCESS).json({
     status: "SUCCESS",
-    passwordRestLink,
   });
 });
 
@@ -277,13 +284,17 @@ const resetPassword = tryCatch(async (req, res) => {
   res.render("index", { id, token, status: "Not Verified" });
 });
 const getNewPassword = tryCatch(async (req, res) => {
-  const { id } = req.params; 
-  const { password } = req.body;
+  const { id } = req.params;
+  const { password, confirmPassword } = req.body;
+  console.log(password, confirmPassword);
   if (!id && !password) {
     throw new ApiError(
       BAD_REQUEST,
       "Unable to process the url ! please try after sometime."
     );
+  }
+  if (password !== confirmPassword) {
+    res.render("index", { status: "FAIL" });
   }
   const newHasedPassword = await hashPassword(password);
 
@@ -298,11 +309,7 @@ const getNewPassword = tryCatch(async (req, res) => {
   if (!updateNewPassword) {
     throw new ApiError(BAD_REQUEST, "somthing went wrong!");
   }
-  res.render('index',{status:"SUCCESS"})
-  res.status(SUCCESS).json({
-    SUCCESS,
-    message: "password rest successfully",
-  });
+  res.render("index", { status: "SUCCESS" });
 });
 
 module.exports = {
