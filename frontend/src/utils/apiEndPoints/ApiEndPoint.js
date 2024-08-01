@@ -34,4 +34,9 @@ export const ApiEndPoint = {
   LIVE_NEWS: {
     GET_LIVE_NEWS: "https://newsapi.org/v2/top-headlines?sources=bbc-news",
   },
+  MESSAGE:{
+    GET_CONVERSATIONS:'/message/getMessage',
+    GET_CHAT:'/message/getChat/:conversationId',
+    NEW_MESSAGE:'/message/addMessage'
+  }
 };

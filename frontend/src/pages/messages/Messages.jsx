@@ -1,9 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
 import { MessageProfile } from "../../components";
 import { Link } from "react-router-dom";
+import { getConversations } from "../../service/api/messsage/message";
 
 function Messages() {
   const [isMessageEmpty, setMessageEmpty] = useState(false);
+  const [conversations, setConversations] = useState();
+  const getUserConversations = async () => {
+    const responce = await getConversations();
+    if (responce.status !== "SUCCESS") {
+    }
+    setConversations(responce?.conversations);
+  };
+  useEffect(() => {
+    getUserConversations();
+  }, []);
   return (
     <div className="flex-grow xl:ml-[14%] lg:ml-[20%] ml-[60px] mt-[64px] w-[63%]">
       <div className="overflow-y-auto xl:w-[71%] lg:w-[61%] md:w-[57%] ">
@@ -33,13 +44,9 @@ function Messages() {
             </>
           ) : (
             <>
-              <MessageProfile />
-              <MessageProfile />
-              <MessageProfile />
-              <MessageProfile />
-              <MessageProfile />
-              <MessageProfile />
-              <MessageProfile />
+              {conversations?.map((chats) => {
+                return <MessageProfile key={chats._id} chats={chats} />;
+              })}
             </>
           )}
         </div>
