@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { MessageProfile } from "../../components";
+import { Link } from "react-router-dom";
 
 function Messages() {
   const [isMessageEmpty, setMessageEmpty] = useState(false);
@@ -26,7 +27,9 @@ function Messages() {
         <div className="mt-28 flex flex-wrap w-full gap-3 justify-center">
           {isMessageEmpty ? (
             <>
-              <span className="font-semibold opacity-65 text-xl">No messages</span>
+              <span className="font-semibold opacity-65 text-xl">
+                No messages
+              </span>
             </>
           ) : (
             <>

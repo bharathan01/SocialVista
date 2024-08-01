@@ -21,3 +21,5 @@ export { default as NewsLoader } from "./common/loader/NewsLoader.jsx";
 export { default as PostCard } from "./shared/exploreCard/PostCard.jsx";
 export { default as VerifyEmail } from "./common/verifyEmail/VerifyEmail.jsx";
 export { default as MessageProfile } from "./common/messageProfile/MessageProfile.jsx";
+export { default as ChatProfile } from "./common/chatprofile/ChatProfile.jsx";
+export { default as ChatProfileUser } from "./common/chatprofile/ChatProfileUser.jsx";

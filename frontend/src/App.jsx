@@ -19,6 +19,7 @@ import {
   Search,
   User,
   ForgotPassword,
+  SingleChat,
 } from "./pages";
 import { useSelector } from "react-redux";
 
@@ -113,6 +114,14 @@ function App() {
             element={
               <ProtectedRoute isUserLoggedIn={isUserLoggedIn}>
                 <Search />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/message/:id"
+            element={
+              <ProtectedRoute isUserLoggedIn={isUserLoggedIn}>
+                <SingleChat />
               </ProtectedRoute>
             }
           />

@@ -6,4 +6,5 @@ export { default as Explore } from "./explore/Explore.jsx";
 export { default as Search } from "./search/Search.jsx";
 export { default as User } from "./userfollow/User.jsx";
 export { default as ForgotPassword } from "./forgotPassword/ForgotPassword.jsx";
+export { default as SingleChat } from "./singleChat/SingleChat.jsx";
 
