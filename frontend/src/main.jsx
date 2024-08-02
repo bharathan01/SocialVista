@@ -11,7 +11,6 @@ import AppContext from "./hooks/contexts/AppContext.jsx";
 import { Provider } from "react-redux";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <AppContext>
@@ -21,5 +20,4 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         </AppContext>
       </PersistGate>
     </Provider>
-  </React.StrictMode>
 );

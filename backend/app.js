@@ -13,8 +13,9 @@ const errorHandle = require("./middleware/errorHander.js");
 const ApiError = require("./utils/ApiError.js");
 const { NOT_FOUND } = require("./utils/httpStatusCodes.js");
 const cloudinaryConfig = require("./db/cloudinaryConfig.js");
+const { app } = require("./webSocket.io/socket.io.js");
 
-const app = express();
+
 app.use(
   cors({
     origin: "http://localhost:5173",

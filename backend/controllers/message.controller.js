@@ -2,6 +2,7 @@ const Conversation = require("../models/userchat.model/chatConversation.model");
 const Message = require("../models/userchat.model/message.model");
 const { SUCCESS } = require("../utils/httpStatusCodes");
 const tryCatch = require("../utils/tryCatch");
+const userSchema = require("../models/user.model");
 
 const getTheUserMessages = tryCatch(async (req, res) => {
   const userId = req.userId;
@@ -22,11 +23,37 @@ const getTheUserMessages = tryCatch(async (req, res) => {
 });
 
 const getTheUserChat = tryCatch(async (req, res) => {
-  const { conversationId } = req.params;
-  const messages = await Message.find({
-    conversation: conversationId,
-  }).populate("sender", "username profileImg");
-  res.status(200).json(messages);
+  const userId = req.userId;
+  const { receiverId } = req.params;
+  const conversation = await Conversation.findOne({
+    participants: { $all: [receiverId, userId] },
+  });
+
+  if (!conversation) {
+    const recieverInfo = await userSchema
+      .findOne({ _id: receiverId })
+      .select("_id username profileImg");
+    return res.status(SUCCESS).json({
+      status: "EMPTY",
+      message: "No conversation found between the users.",
+      recieverInfo,
+    });
+  }
+  await Conversation.updateOne(
+    { _id: conversation._id },
+    { $set: { readed: true } }
+  );
+  const messages = await Message.find({ conversation: conversation._id })
+    .populate("sender", "username profileImg")
+    .populate({
+      path: "conversation",
+      populate: { path: "participants", select: "username profileImg" },
+    });
+
+  res.status(SUCCESS).json({
+    status: "SUCCESS",
+    messages,
+  });
 });
 
 const addMessages = tryCatch(async (req, res) => {

@@ -36,7 +36,7 @@ export const ApiEndPoint = {
   },
   MESSAGE:{
     GET_CONVERSATIONS:'/message/getMessage',
-    GET_CHAT:'/message/getChat/:conversationId',
+    GET_CHAT:'/message/getChat',
     NEW_MESSAGE:'/message/addMessage'
   }
 };

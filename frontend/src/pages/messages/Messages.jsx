@@ -2,16 +2,35 @@ import React, { useEffect, useRef, useState } from "react";
 import { MessageProfile } from "../../components";
 import { Link } from "react-router-dom";
 import { getConversations } from "../../service/api/messsage/message";
+import { useSelector } from "react-redux";
 
 function Messages() {
   const [isMessageEmpty, setMessageEmpty] = useState(false);
   const [conversations, setConversations] = useState();
+  const { userInfo } = useSelector((state) => state.userAuth);
+  const loggedInUserId = userInfo.id;
+  const filterConversations = (conversation, loggedInUserId) => {
+    return conversation.map((conversation) => {
+      const otherParticipants = conversation.participants.filter(
+        (participant) => participant._id !== loggedInUserId
+      );
+      return {
+        ...conversation,
+        participants: otherParticipants,
+      };
+    });
+  };
   const getUserConversations = async () => {
     const responce = await getConversations();
     if (responce.status !== "SUCCESS") {
     }
-    setConversations(responce?.conversations);
+    const userWhoChats = filterConversations(
+      responce?.conversations,
+      loggedInUserId
+    );
+    setConversations(userWhoChats);
   };
+  
   useEffect(() => {
     getUserConversations();
   }, []);
@@ -36,7 +55,7 @@ function Messages() {
           </label>
         </div>
         <div className="mt-28 flex flex-wrap w-full gap-3 justify-center">
-          {isMessageEmpty ? (
+          {isMessageEmpty.length === 0 ? (
             <>
               <span className="font-semibold opacity-65 text-xl">
                 No messages

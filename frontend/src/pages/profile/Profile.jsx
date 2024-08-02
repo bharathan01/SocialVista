@@ -130,7 +130,7 @@ function Profile() {
                         </>
                       ) : (
                         <>
-                        <Link to={'/message'}>
+                        <Link to={`/message/${userDetails?._id}`}>
                           <div className="p-2 hover:bg-gray-900 border-2 rounded-full mr-2" title="message">
                             <span className="text-xl">
                               <LuMessagesSquare />

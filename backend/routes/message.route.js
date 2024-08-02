@@ -9,7 +9,7 @@ const {
 const router = express.Router();
 
 router.get("/getMessage", isAuthorizedUser, getTheUserMessages);
-router.get("/getChat/:conversationId", isAuthorizedUser, getTheUserChat);
+router.get("/getChat/:receiverId", isAuthorizedUser, getTheUserChat);
 router.post("/addMessage", isAuthorizedUser, addMessages);
 
 module.exports = router;
