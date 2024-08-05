@@ -12,18 +12,19 @@ import {
 import { Link, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import EmojiPicker from "../../components/shared/emoji/EmojiPicker";
-import io from "socket.io-client";
+import useChat from "../../hooks/message/useChat";
 
 function SingleChat() {
   const [userChats, setChats] = useState();
   const [receiverInfo, setReceiverInfo] = useState();
   const [isAlreadyChated, setAlreadyChated] = useState(false);
-  const [socketConnected, setSocketConnected] = useState(false);
   const [chatId, setChatid] = useState();
   const { userInfo } = useSelector((state) => state.userAuth);
   const [openEmoji, setOpenEmoji] = useState(false);
+  const { messages, sendNewUserMessage } = useChat(chatId);
   const loggedInUserId = userInfo.id;
   const { id } = useParams();
+
   const filterConversations = (conversation, loggedInUserId) => {
     return conversation.map((conversation) => {
       const otherParticipants = conversation.conversation.participants.filter(
@@ -51,9 +52,12 @@ function SingleChat() {
   };
   const sendMessage = async () => {
     const message = document.getElementById("message").value;
+
     const formData = new FormData();
     if (!message) {
     }
+    sendNewUserMessage(loggedInUserId, message);
+    setChats((prevChat) => [...prevChat, messages]);
     formData.append("content", message);
     formData.append("receiverId", receiverInfo?._id);
     const responce = await sendNewMessage(formData);
@@ -69,12 +73,9 @@ function SingleChat() {
     let emoji = String.fromCodePoint(...codeArray);
     document.getElementById("message").value += emoji;
   };
-  const endpoint = "http://localhost:8000";
+
   useEffect(() => {
     getOneToOneChat();
-    const socket = io(endpoint);
-    socket.emit("setup", userInfo.id);
-    socket.on("connection", () => setSocketConnected(true));
   }, []);
 
   return (
@@ -124,10 +125,17 @@ function SingleChat() {
               </div>
             </div>
           </div>
-          <div className="absolute bottom-16 xl:w-[60%] lg:w-[50%] md:w-[53%] w-[86%] mr-4 ml-2">
+          <div className="absolute h-screen bottom-16 xl:w-[60%] lg:w-[50%] md:w-[53%] w-[86%] mr-4 ml-2">
             {isAlreadyChated &&
               userChats?.map((message) => {
-                return <ChatProfile key={message._id} message={message} />;
+                return (
+                  <ChatProfile
+                    key={message._id}
+                    profileImg={receiverInfo?.profileImg}
+                    message={message?.content}
+                    sender={message?.sender?._id}
+                  />
+                );
               })}
           </div>
           {openEmoji && (

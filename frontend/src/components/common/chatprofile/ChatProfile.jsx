@@ -1,28 +1,25 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import avater from "../../../../public/images/avatar-placeholder.png";
-function ChatProfile({ message }) {
+function ChatProfile({ profileImg, message, sender }) {
   const [chatByUser, setChatByUser] = useState(false);
   const { userInfo } = useSelector((state) => state.userAuth);
+  console.log(message);
   return (
     <div>
       <div
-        className={
-          message.sender._id == userInfo.id
-            ? "chat chat-end"
-            : " chat chat-start"
-        }
+        className={sender == userInfo.id ? "chat chat-end" : " chat chat-start"}
       >
-        {message.sender._id != userInfo.id ? (
+        {sender != userInfo.id ? (
           <>
             <div className="chat-image avatar">
               <div className="w-10 rounded-full">
                 <>
-                  {message.sender?.profileImg ? (
+                  {profileImg ? (
                     <>
                       <img
                         alt="Tailwind CSS chat bubble component"
-                        src={message.sender?.profileImg}
+                        src={profileImg}
                       />
                     </>
                   ) : (
@@ -41,7 +38,7 @@ function ChatProfile({ message }) {
           <></>
         )}
 
-        <div className="chat-bubble">{message?.content}</div>
+        <div className="chat-bubble">{message}</div>
       </div>
     </div>
   );

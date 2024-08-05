@@ -14,27 +14,19 @@ const io = socketIo(server, {
   },
 });
 io.on("connection", (socket) => {
-  socket.on("setup", (userInfo) => {
-    socket.join(userInfo);
-    console.log(userInfo);
-    socket.emit("connected");
-
-    socket.on("joinChat", (chatId) => {
-      socket.join(chatId);
-      console.log(`User joined chat: ${chatId}`);
-    });
-
-    socket.on("sendMessage", async (messageData) => {
-      const { sender, content, conversationId } = messageData;
-
-      //   const message = await addMessages(sender, content, conversationId);
-      io.to(conversationId).emit("messageReceived", message);
-    });
-
-    socket.on("disconnect", () => {
-      console.log("User disconnected", socket.id);
-    });
+  socket.on("joinChat", (chatId) => {
+    socket.join(chatId);
+    console.log(`Uesr joined chat: ${chatId}`);
   });
-}); 
+
+  socket.on("sendMessage", async (messageData) => {
+    const { sender, content, conversationId } = messageData;
+    io.to(conversationId).emit("messageReceived", messageData);
+  });
+
+  socket.on("disconnect", () => {
+    console.log("User disconnected", socket.id);
+  });
+});
 
 module.exports = { server, app, io };
