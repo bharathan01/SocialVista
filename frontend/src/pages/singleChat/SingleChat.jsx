@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import avatar from "../../../public/images/avatar-placeholder.png";
 import { BsEmojiSmile, BsTelephone } from "react-icons/bs";
 import { PiVideoCamera } from "react-icons/pi";
-import { FaCircle, FaSadCry } from "react-icons/fa";
-import { ChatProfile, ChatProfileUser } from "../../components";
+import { FaCircle } from "react-icons/fa";
+import { ChatProfile } from "../../components";
 import { VscSend } from "react-icons/vsc";
 import {
   getUsersChatData,
@@ -15,7 +15,7 @@ import EmojiPicker from "../../components/shared/emoji/EmojiPicker";
 import useChat from "../../hooks/message/useChat";
 
 function SingleChat() {
-  const [userChats, setChats] = useState();
+  const [userChats, setChats] = useState([]);
   const [receiverInfo, setReceiverInfo] = useState();
   const [isAlreadyChated, setAlreadyChated] = useState(false);
   const [chatId, setChatid] = useState();
@@ -24,7 +24,7 @@ function SingleChat() {
   const { messages, sendNewUserMessage } = useChat(chatId);
   const loggedInUserId = userInfo.id;
   const { id } = useParams();
-
+  const chatContainerRef = useRef(null);
   const filterConversations = (conversation, loggedInUserId) => {
     return conversation.map((conversation) => {
       const otherParticipants = conversation.conversation.participants.filter(
@@ -39,10 +39,12 @@ function SingleChat() {
   const getOneToOneChat = async () => {
     const responce = await getUsersChatData(id);
     if (responce.status !== "SUCCESS") {
+      return;
     }
     if (responce.status === "EMPTY") {
       setAlreadyChated(false);
       setReceiverInfo(responce?.recieverInfo);
+      return;
     }
     setChatid(responce.messages[0].conversation._id);
     setAlreadyChated(true);
@@ -50,22 +52,25 @@ function SingleChat() {
     const receiver = filterConversations(responce?.messages, loggedInUserId);
     setReceiverInfo(receiver[0].participants[0]);
   };
+
   const sendMessage = async () => {
     const message = document.getElementById("message").value;
+    if (!message) {
+      return;
+    }
+    sendNewUserMessage(message, loggedInUserId);
+    setChats((prevChat) => [...prevChat, ...messages]);
+    document.getElementById("message").value = "";
 
     const formData = new FormData();
-    if (!message) {
-    }
-    sendNewUserMessage(loggedInUserId, message);
-    setChats((prevChat) => [...prevChat, messages]);
     formData.append("content", message);
     formData.append("receiverId", receiverInfo?._id);
     const responce = await sendNewMessage(formData);
     if (responce.status !== "SUCCESS") {
+      return;
     }
-
-    document.getElementById("message").value = "";
   };
+
   const onEmojiSelect = (e) => {
     const sym = e.unified.split("_");
     const codeArray = [];
@@ -77,6 +82,13 @@ function SingleChat() {
   useEffect(() => {
     getOneToOneChat();
   }, []);
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop =
+        chatContainerRef.current.scrollHeight;
+      console.log(chatContainerRef.current.scrollHeight);
+    }
+  }, [messages]);
 
   return (
     <div className="flex-grow xl:ml-[14%] lg:ml-[20%] ml-[60px] mt-[64px] w-[63%]">
@@ -87,24 +99,19 @@ function SingleChat() {
               <div className="flex items-center gap-3 hover:cursor-pointer">
                 <div className="w-11 h-11 rounded-full">
                   {receiverInfo?.profileImg ? (
-                    <>
-                      <img
-                        src={receiverInfo?.profileImg}
-                        alt="avatar"
-                        className="w-full h-full object-cover"
-                      />
-                    </>
+                    <img
+                      src={receiverInfo?.profileImg}
+                      alt="avatar"
+                      className="w-full h-full object-cover"
+                    />
                   ) : (
-                    <>
-                      <img
-                        src={avatar}
-                        alt="avatar"
-                        className="w-full h-full object-cover"
-                      />
-                    </>
+                    <img
+                      src={avatar}
+                      alt="avatar"
+                      className="w-full h-full object-cover"
+                    />
                   )}
                 </div>
-
                 <div className="flex flex-col">
                   <span className="font-semibold text-xl">
                     {receiverInfo?.username}
@@ -112,7 +119,7 @@ function SingleChat() {
                   <div className="text-green-500 flex items-center gap-1 text-sm font-normal">
                     <FaCircle />
                     Online
-                  </div>{" "}
+                  </div>
                 </div>
               </div>
             </Link>
@@ -125,18 +132,29 @@ function SingleChat() {
               </div>
             </div>
           </div>
-          <div className="absolute h-screen bottom-16 xl:w-[60%] lg:w-[50%] md:w-[53%] w-[86%] mr-4 ml-2">
+          <div
+            className="absolute h-[73vh]  bottom-16 xl:w-[60%] lg:w-[50%] md:w-[53%] w-[86%] mr-4 ml-2 overflow-y-auto"
+            ref={chatContainerRef}
+          >
             {isAlreadyChated &&
-              userChats?.map((message) => {
+              userChats?.map((message, index) => {
                 return (
                   <ChatProfile
-                    key={message._id}
+                    key={index}
                     profileImg={receiverInfo?.profileImg}
                     message={message?.content}
                     sender={message?.sender?._id}
                   />
                 );
               })}
+            {messages?.map((message, index) => (
+              <ChatProfile
+                key={index}
+                profileImg={receiverInfo?.profileImg}
+                message={message?.content}
+                sender={message?.sender?._id}
+              />
+            ))}
           </div>
           {openEmoji && (
             <div
@@ -157,11 +175,9 @@ function SingleChat() {
                   id="message"
                 />
               </div>
-
               <div className="absolute right-12 rounded-full md:text-2xl text-lg flex items-center justify-center hover:cursor-pointer">
                 <BsEmojiSmile onClick={() => setOpenEmoji(!openEmoji)} />
               </div>
-
               <div
                 className="absolute right-0 md:h-[40px] md:w-[40px]  h-[30px] w-[30px] rounded-full bg-[#772ba9] md:text-2xl text-lg flex items-center justify-center hover:cursor-pointer"
                 onClick={sendMessage}

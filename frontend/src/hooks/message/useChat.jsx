@@ -1,28 +1,39 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import io from "socket.io-client";
 
-const endpoint = "http://localhost:8000";
+const {VITE_FRONT_END} = import.meta.env;
 
 function useChat(conversationId) {
-  const [messages, setMessage] = useState([]);
-  const socket = io(endpoint);
+  const [messages, setMessages] = useState([]);
+  const socket = io(VITE_FRONT_END);
+
   useEffect(() => {
-    socket.emit("joinChat", conversationId);
+    if (conversationId) {
+      socket.emit("joinChat", conversationId);
 
-    socket.on("messageReceived", (message) => {
-      setMessage((prev) => [...prev, message]);
-    });
-
+      socket.on("messageReceived", (message) => {
+        setMessages((prevMessages) => [...prevMessages, message]);
+      });
+    }
     return () => {
       socket.disconnect();
     };
-  }, [socket, conversationId]);
+  }, [conversationId]);
 
-  const sendNewUserMessage = (content, sender) => {
-    const message = { sender, content, conversationId };
-    socket.emit("sendMessage", message);
-    setMessage((prevMessages) => [...prevMessages, message]);
-  };
+  const sendNewUserMessage = useCallback(
+    (content, sender) => {
+      const message = {
+        conversationId,
+        content,
+        sender: {
+          _id: sender,
+        },
+      };
+      socket.emit("sendMessage", message);
+      setMessages((prevMessages) => [...prevMessages, message]);
+    },
+    [conversationId]
+  );
 
   return { sendNewUserMessage, messages };
 }

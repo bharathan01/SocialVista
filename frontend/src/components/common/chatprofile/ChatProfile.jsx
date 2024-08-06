@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import avater from "../../../../public/images/avatar-placeholder.png";
 function ChatProfile({ profileImg, message, sender }) {
   const [chatByUser, setChatByUser] = useState(false);
   const { userInfo } = useSelector((state) => state.userAuth);
-  console.log(message);
   return (
     <div>
       <div
