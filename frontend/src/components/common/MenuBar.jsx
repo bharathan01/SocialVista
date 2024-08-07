@@ -10,7 +10,7 @@ function MenuBar({ menuIcon, menuText, path, isActive }) {
   return (
     <Link to={`/${path}`}>
       <div
-        className={`w-full h-12 flex items-center  gap-3 p-2 text-white rounded-xl hover:bg-gray-900 
+        className={`w-full h-12 flex items-center md:justify-start justify-center  gap-3 p-2 text-white rounded-xl hover:bg-gray-900 
         ${isActive ? "bg-gray-900" : ""}`}
         onClick={()=>{menuText ==="Create"? toggleCreatePost('openCreatePostcard'):''}}
       >

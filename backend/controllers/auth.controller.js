@@ -10,24 +10,45 @@ const { hashPassword, compairPassword } = require("../utils/hashPassword.js");
 const generateJwtToken = require("../utils/generatejwttoken.js");
 
 const createTokenCookies = (res, userId) => {
-  const accessToken = generateJwtToken(userId, process.env.ACCESS_TOKEN_SECRET_KEY, "15m");
-  const refreshToken = generateJwtToken(userId, process.env.REFRESH_TOKEN_SECRET_KEY, "15d");
-  const options = { httpOnly: true, secure: true };
-  
-  res.cookie("refreshToken", refreshToken, options)
-     .cookie("accessToken", accessToken, options);
+  const accessToken = generateJwtToken(
+    userId,
+    process.env.ACCESS_TOKEN_SECRET_KEY,
+    "15m"
+  );
+  const refreshToken = generateJwtToken(
+    userId,
+    process.env.REFRESH_TOKEN_SECRET_KEY,
+    "15d"
+  );
+  const options = { httpOnly: true, sameSite: "Strict", secure: true };
+
+  res
+    .cookie("refreshToken", refreshToken, options)
+    .cookie("accessToken", accessToken, options);
 };
 
 const userRegistration = tryCatch(async (req, res) => {
   const { username, fullName, email, password } = req.body;
 
   if (await userSchema.findOne({ $or: [{ username }, { email }] })) {
-    throw new ApiError(BAD_REQUEST, { errors: [{ path: "usernameOrEmail", msg: "Username or Email is already present!" }] });
+    throw new ApiError(BAD_REQUEST, {
+      errors: [
+        {
+          path: "usernameOrEmail",
+          msg: "Username or Email is already present!",
+        },
+      ],
+    });
   }
 
   const encryptPassword = await hashPassword(password);
 
-  const newUser = new userSchema({ username, fullName, email, password: encryptPassword });
+  const newUser = new userSchema({
+    username,
+    fullName,
+    email,
+    password: encryptPassword,
+  });
   await newUser.save();
 
   res.status(SUCCESS).json({
@@ -46,10 +67,14 @@ const userLogin = tryCatch(async (req, res) => {
   const { username, email, password } = req.body;
   const userId = username || email;
 
-  const userInfo = await userSchema.findOne({ $or: [{ username: userId }, { email: userId }] });
+  const userInfo = await userSchema.findOne({
+    $or: [{ username: userId }, { email: userId }],
+  });
 
   if (!userInfo || !(await compairPassword(password, userInfo.password))) {
-    throw new ApiError(BAD_REQUEST, { errors: [{ path: "usernameOrEmail", msg: "Invalid user credentials!" }] });
+    throw new ApiError(BAD_REQUEST, {
+      errors: [{ path: "usernameOrEmail", msg: "Invalid user credentials!" }],
+    });
   }
 
   createTokenCookies(res, userInfo._id);
@@ -73,7 +98,11 @@ const registerOrLoginWithGoogle = tryCatch(async (req, res) => {
   const { email, username, profileImg, fullName } = req.body;
 
   if (!email || !username || !fullName) {
-    throw new ApiError(BAD_REQUEST, { errors: [{ path: "invalidCredentials", msg: "Invalid user credentials!" }] });
+    throw new ApiError(BAD_REQUEST, {
+      errors: [
+        { path: "invalidCredentials", msg: "Invalid user credentials!" },
+      ],
+    });
   }
 
   let user = await userSchema.findOne({ email });

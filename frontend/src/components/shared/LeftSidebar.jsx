@@ -17,7 +17,7 @@ function LeftSidebar() {
     setActiveMenu(menu);
   };
   return (
-    <div className="lg:w-[20%] xl:w-[14%] w-[60px] border-r  border-gray-700 fixed flex flex-col justify-between   left-0 top-[64px]  overflow-y-auto ">
+    <div className="lg:w-[20%] xl:w-[14%] w-[60px] border-r h-[100vh]   border-gray-700 fixed flex flex-col  left-0 top-[64px]  overflow-y-auto ">
       <div className="flex justify-center">
         <div className="w-4/5 flex flex-col gap-3 mt-4">
           {contents.map((menu) => {
@@ -34,17 +34,21 @@ function LeftSidebar() {
           })}
         </div>
       </div>
-      <div className="w-full mb-5 flex items-center md:mt-[150px] mt-[80px] ">
+      <div className="w-full mb-5 flex items-end md:mt-[150px] mt-[80px]   ">
         <div className="flex items-center justify-around w-full rounded-3xl  p-1">
           <Link to={`/Profile/${userInfo.id}`}>
             <div className="rounded-full w-10 h-10 overflow-x-hidden object-contain hover:cursor-pointer ">
               {userInfo.profileImg ? (
-                <img src={userInfo.profileImg} alt="" className="w-full h-full object-cover" />
+                <img
+                  src={userInfo.profileImg}
+                  alt=""
+                  className="w-full h-full object-cover"
+                />
               ) : (
                 <img src={profileImage} alt="" />
               )}
             </div>
-          </Link> 
+          </Link>
           <Link to={`/Profile/${userInfo.id}`}>
             <div className="text-md lg:block md:hidden hidden hover:cursor-pointer ">
               {userInfo.fullName}

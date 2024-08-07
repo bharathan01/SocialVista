@@ -39,12 +39,10 @@ function SingleChat() {
   const getOneToOneChat = async () => {
     const responce = await getUsersChatData(id);
     if (responce.status !== "SUCCESS") {
-      return;
     }
     if (responce.status === "EMPTY") {
       setAlreadyChated(false);
       setReceiverInfo(responce?.recieverInfo);
-      return;
     }
     setChatid(responce.messages[0].conversation._id);
     setAlreadyChated(true);
@@ -86,7 +84,6 @@ function SingleChat() {
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop =
         chatContainerRef.current.scrollHeight;
-      console.log(chatContainerRef.current.scrollHeight);
     }
   }, [messages]);
 
@@ -133,7 +130,7 @@ function SingleChat() {
             </div>
           </div>
           <div
-            className="absolute h-[73vh]  bottom-16 xl:w-[60%] lg:w-[50%] md:w-[53%] w-[86%] mr-4 ml-2 overflow-y-auto"
+            className="absolute h-[73vh]  bottom-16 xl:w-[60%] lg:w-[50%] md:w-[53%] w-[82%] mr-4 ml-2 overflow-y-auto"
             ref={chatContainerRef}
           >
             {isAlreadyChated &&
