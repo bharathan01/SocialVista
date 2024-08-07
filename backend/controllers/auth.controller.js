@@ -20,7 +20,7 @@ const createTokenCookies = (res, userId) => {
     process.env.REFRESH_TOKEN_SECRET_KEY,
     "15d"
   );
-  const options = { httpOnly: true, sameSite: "Strict", secure: true };
+  const options = { httpOnly: true, sameSite: "none", secure: true };
 
   res
     .cookie("refreshToken", refreshToken, options)
