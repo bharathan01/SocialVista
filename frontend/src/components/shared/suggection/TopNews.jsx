@@ -12,7 +12,7 @@ function TopNews({news}) {
   return (
     <div className="w-full flex justify-center xl:flex-row  items-center   gap-4 hover:bg-black p-1">
       <div className="w-48 h-16  ">
-        <img className="w-48 max-w-24 h-16 object-cover" src={news?.urlToImage} alt="" />
+        <img className="w-48 max-w-24 h-16 object-cover" src={news?.image_url} alt="" />
       </div>
       <div className="flex items-center justify-center text-sm">
         <span>{structureHeading()}</span>

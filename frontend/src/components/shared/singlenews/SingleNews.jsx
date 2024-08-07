@@ -12,16 +12,16 @@ function SingleNews({ news }) {
           </span>
         </div>
         <div>
-          <img src={news?.urlToImage} alt="news image" />
+          <img src={news?.image_url} alt="news image" />
         </div>
         <div>
           <span className="md:text-base text-sm">{news?.description}</span>
           <span className="md:text-base text-sm">
             {news?.content.replace(/\s\[\+\d+\schars\]$/, "")}{" "}
-            <Link to={news?.url} target="_blank">
+            <Link to={news?.link} target="_blank">
               {" "}
               <span className="underline text-[#772ba9]">
-                Read on BBC span{" "}
+                Read more{" "}
                 <div className="inline-flex">
                   <MdOpenInNew />
                 </div>{" "}
@@ -31,7 +31,7 @@ function SingleNews({ news }) {
         </div>
         <div>
           <span className="md:text-base text-sm opacity-65">
-            Published: {new Date(news?.publishedAt).toString().slice(0, 15)}
+            Published: {new Date(news?.pubDate).toString().slice(0, 15)}
           </span>
         </div>
       </div>

@@ -90,7 +90,7 @@ export const getLiveNews = async () => {
   const { VITE_NEWS_API } = import.meta.env;
   try {
     const responce = await axios.get(
-      `${LIVE_NEWS.GET_LIVE_NEWS}&apiKey=${VITE_NEWS_API}`
+      `${LIVE_NEWS.GET_LIVE_NEWS}&apiKey=${VITE_NEWS_API}&language=en`
     );
     return responce.data;
   } catch (error) {
@@ -99,11 +99,15 @@ export const getLiveNews = async () => {
 };
 export const resetPassword = async (emailId) => {
   try {
-    const responce = await API.post(USER_PRO.RESET_PASSWORD, {emailId}, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const responce = await API.post(
+      USER_PRO.RESET_PASSWORD,
+      { emailId },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     return responce.data;
   } catch (errors) {
     if (errors.response) {

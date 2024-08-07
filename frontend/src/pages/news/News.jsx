@@ -11,7 +11,7 @@ function News() {
     if (!newsData.status === "ok") {
       setloader(false);
     }
-    setNews(newsData.articles);
+    setNews(newsData.results);
     setloader(false);
   };
   useEffect(() => {

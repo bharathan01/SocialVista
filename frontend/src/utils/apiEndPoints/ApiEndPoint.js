@@ -32,7 +32,7 @@ export const ApiEndPoint = {
     DELETE_NOTIFICATION: "/notification/delete",
   },
   LIVE_NEWS: {
-    GET_LIVE_NEWS: "https://newsapi.org/v2/top-headlines?sources=bbc-news",
+    GET_LIVE_NEWS: "https://newsdata.io/api/1/latest?apikey=pub_50304e39cfbce9f3f75e11b4b7906c0d2e3c8&language=en",
   },
   MESSAGE:{
     GET_CONVERSATIONS:'/message/getMessage',
