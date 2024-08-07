@@ -49,7 +49,7 @@ export const logOut = async () => {
   try {
     const responce = await API.get(AUTH.LOGOUT);
     return responce.data;
-  } catch (error) {
+  } catch (errors) {
     if (errors.response) {
       const error = errors?.response?.data;
       return error;

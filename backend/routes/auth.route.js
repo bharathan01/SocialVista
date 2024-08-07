@@ -16,6 +16,6 @@ const router = express.Router();
 router.post("/login", validateLoginFields, userLogin);
 router.post("/register", validateRegisterFields, userRegistration);
 router.post("/loginWithGoogle", registerOrLoginWithGoogle);
-router.get("/logout", isAuthorizedUser, userLogout);
+router.get("/logout", userLogout);
 
 module.exports = router;

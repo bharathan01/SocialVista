@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import profileImage from "../../../../public/images/avatar-placeholder.png";
 import { IoIosHeartEmpty } from "react-icons/io";
 import { IoIosHeart } from "react-icons/io";
 import { relativeTimeString } from "../../../utils/date/DateAndTime";
 
 function comments({ comments, isCommentSuccess }) {
+  const [isLikeComment, setLikeComment] = useState(false);
   useEffect(() => {}, [isCommentSuccess]);
   return comments.length <= 0 ? (
     <div className="text-center opacity-60">No comments</div>
@@ -41,9 +42,20 @@ function comments({ comments, isCommentSuccess }) {
                     <span className="md:text-sm text-xs">{comment.text}</span>
                   </div>
                 </div>
-                <div className="text-center">
-                  <IoIosHeartEmpty />
-                  <span className="text-xs ">1</span>
+                <div
+                  className="text-center hover:cursor-pointer"
+                  onClick={() => setLikeComment(!isLikeComment)}
+                >
+                  {isLikeComment ? (
+                    <>
+                      <IoIosHeartEmpty />
+                    </>
+                  ) : (
+                    <>
+                      <IoIosHeart className="text-red-600" />
+                      <span className="text-xs ">1</span>
+                    </>
+                  )}
                 </div>
               </div>
             </div>

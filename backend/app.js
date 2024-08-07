@@ -15,10 +15,9 @@ const { NOT_FOUND } = require("./utils/httpStatusCodes.js");
 const cloudinaryConfig = require("./db/cloudinaryConfig.js");
 const { app } = require("./webSocket.io/socket.io.js");
 
-
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: process.env.FRONT_END_URL,
     credentials: true,
   })
 );
