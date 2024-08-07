@@ -4,7 +4,10 @@ import { IoMdOpen } from "react-icons/io";
 import { newsItems, userProfiles } from "../../utils/demoData/data.jsx";
 import { Link } from "react-router-dom";
 import Suggections from "./suggection/Suggections.jsx";
-import { getLiveNews, getSuggection } from "../../service/api/features/featuresConrtroller.js";
+import {
+  getLiveNews,
+  getSuggection,
+} from "../../service/api/features/featuresConrtroller.js";
 
 function RightSidebar() {
   const [suggestedFollowers, setSuggestedFollowers] = useState();
@@ -44,15 +47,23 @@ function RightSidebar() {
           </div>
         </div>
         <div className="flex justify-center flex-col p-2 ">
-          {newses?.map((news, index) => {
-            return (
-              <React.Fragment key={index}>
-                <Link to="/news">
-                  <TopNews news={news}/>
-                </Link>
-              </React.Fragment>
-            );
-          })}
+          {newses ? (
+            <>
+              {newses?.map((news, index) => {
+                return (
+                  <React.Fragment key={index}>
+                    <Link to="/news">
+                      <TopNews news={news} />
+                    </Link>
+                  </React.Fragment>
+                );
+              })}
+            </>
+          ) : (
+            <>
+             <span></span>
+            </>
+          )}
         </div>
       </div>
       <div className="w-[95%] flex flex-col justify-center bg-gray-900 rounded-md mt-4 mb-3">
@@ -65,9 +76,7 @@ function RightSidebar() {
           {suggestedFollowers?.map((profile, index) => {
             return (
               <React.Fragment key={index}>
-                <Suggections
-                  suggections = {profile}
-                />
+                <Suggections suggections={profile} />
               </React.Fragment>
             );
           })}
