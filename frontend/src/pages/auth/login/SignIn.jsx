@@ -48,6 +48,7 @@ function SignIn() {
         dispatch(loginUser(response.data));
         navigate("/");
       } else {
+        setLoader(false)
         const errData = response?.message?.errors;
         if (errData && Array.isArray(errData)) {
           const newErrors = {};

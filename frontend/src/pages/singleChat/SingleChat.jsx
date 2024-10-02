@@ -57,7 +57,6 @@ function SingleChat() {
       return;
     }
     sendNewUserMessage(message, loggedInUserId);
-    setChats((prevChat) => [...prevChat, ...messages]);
     document.getElementById("message").value = "";
 
     const formData = new FormData();
@@ -85,7 +84,7 @@ function SingleChat() {
       chatContainerRef.current.scrollTop =
         chatContainerRef.current.scrollHeight;
     }
-  }, [messages]);
+  }, []);
 
   return (
     <div className="flex-grow xl:ml-[14%] lg:ml-[20%] ml-[60px] mt-[64px] w-[63%]">

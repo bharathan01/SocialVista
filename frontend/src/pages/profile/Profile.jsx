@@ -20,7 +20,6 @@ import { relativeTimeString } from "../../utils/date/DateAndTime";
 import { LuMessagesSquare } from "react-icons/lu";
 
 function Profile() {
-  const navigate = useNavigate();
   const { userId } = useParams();
 
   const [isSelectedPage, setSelectedPage] = useState("posts");
@@ -45,20 +44,41 @@ function Profile() {
     setNoOfPosts(count);
   };
   const getCurrentUserInfo = async () => {
-    const responce = await getCurrentUser();
-    if (responce.status !== "SUCCESS") {
-    }
-    if (responce.data.following.includes(userId)) {
-      setFollowing(!isFollowing);
+    try {
+      const responce = await getCurrentUser();
+
+      if (responce?.status !== "SUCCESS") {
+        return; 
+      }
+
+      if (responce?.data?.following?.includes(userId)) {
+        setFollowing(true); 
+      }
+    } catch (error) {
+      console.error("Error fetching current user info:", error);
     }
   };
+
   const followUser = async () => {
-    setFollowing(!isFollowing);
-    const responce = await followUnfollow(userId);
+    try {
+      const responce = await followUnfollow(userId);
+      if (responce?.status === "SUCCESS") {
+        setFollowing(!isFollowing);
+      }
+    } catch (error) {
+      console.error("Error following/unfollowing user:", error);
+    }
   };
+
   useEffect(() => {
-    getCurrentUserInfo();
-    getUserProfile();
+    const fetchData = async () => {
+      await getCurrentUserInfo();
+      await getUserProfile();
+    };
+
+    if (userId) {
+      fetchData();
+    }
   }, [userId]);
 
   return (
@@ -130,12 +150,15 @@ function Profile() {
                         </>
                       ) : (
                         <>
-                        <Link to={`/message/${userDetails?._id}`}>
-                          <div className="p-2 hover:bg-gray-900 border-2 rounded-full mr-2" title="message">
-                            <span className="text-xl">
-                              <LuMessagesSquare />
-                            </span>
-                          </div>
+                          <Link to={`/message/${userDetails?._id}`}>
+                            <div
+                              className="p-2 hover:bg-gray-900 border-2 rounded-full mr-2"
+                              title="message"
+                            >
+                              <span className="text-xl">
+                                <LuMessagesSquare />
+                              </span>
+                            </div>
                           </Link>
                           {isFollowing ? (
                             <>
