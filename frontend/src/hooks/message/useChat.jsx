@@ -12,7 +12,7 @@ function useChat(conversationId) {
       socket.emit("joinChat", conversationId);
 
       socket.on("messageReceived", (message) => {
-        setMessages((prevMessages) => [...prevMessages]);
+        setMessages((prevMessages) => [ message]);
       });
     }
     return () => {
