@@ -1,8 +1,6 @@
 
-
-1.![SocialVista Homepage](https://github.com/bharathan01/SocialVista/blob/main/frontend/public/images/Screenshot%202024-10-03%20011431.png)
-2. User Profile Page: https://example.com/path-to-profile-screenshot.png
-3. Live Chat Interface: https://example.com/path-to-chat-interface-screenshot.png
+![SocialVista logIn](https://github.com/bharathan01/SocialVista/blob/main/frontend/public/images/Screenshot%202024-10-03%20011456.png)
+![SocialVista Homepage](https://github.com/bharathan01/SocialVista/blob/main/frontend/public/images/Screenshot%202024-10-03%20011431.png)
 
 SOCIALVISTA - A SOCIAL MEDIA PLATFORM
 --------------------------------------
