@@ -11,9 +11,7 @@ export const getConversations = async (userId) => {
     if (error.response) {
       const error = error?.response?.data;
       return error;
-    } else {
-      console.log("error maessege :", error.message);
-    }
+    } 
   }
 };
 export const getUsersChatData = async (conversationId) => {
@@ -24,9 +22,7 @@ export const getUsersChatData = async (conversationId) => {
     if (error.response) {
       const error = error?.response?.data;
       return error;
-    } else {
-      console.log("error maessege :", error.message);
-    }
+    } 
   }
 };
 export const sendNewMessage = async (messageData) => {
@@ -41,8 +37,6 @@ export const sendNewMessage = async (messageData) => {
     if (error.response) {
       const error = error?.response?.data;
       return error;
-    } else {
-      console.log("error maessege :", error.message);
-    }
+    } 
   }
 };

@@ -3,10 +3,12 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../../../public/images/logo.png";
 import { register } from "../../../service/api/auth/AuthController";
+import { Spinner } from "../../../components";
 
 function SignUp() {
   const navigate = useNavigate();
   const [error, setError] = useState({});
+  const [loder, setLoader] = useState(false);
   const [userFormCredentials, setUserFormCredentials] = useState({
     username: "",
     fullName: "",
@@ -19,11 +21,14 @@ function SignUp() {
   };
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    setLoader(true);
     try {
       const userData = await register(userFormCredentials);
       if (userData.status === "SUCCESS") {
+        setLoader(false);
         navigate("/signin");
       } else {
+        setLoader(false)
         const errData = userData?.message?.errors;
         if (errData && Array.isArray(errData)) {
           const newErrors = {};
@@ -34,17 +39,22 @@ function SignUp() {
         }
       }
     } catch (error) {
-      console.error("Error submitting form:", error);
+      setLoader(false)
+      return
     }
   };
   return (
     <div className="w-full md:h-screen  flex items-center justify-center lg:gap-24 md:flex-row flex-col">
       <div className="md:w-[50%] flex flex-col lg:items-end items-center">
         <div className="md:mt-0 mt-2">
-          <img src={logo} alt="logo" className="lg:w-full lg:h-full md:w-[200px] md:h-[200px] w-[100px] h-100px]" />
+          <img
+            src={logo}
+            alt="logo"
+            className="lg:w-full lg:h-full md:w-[200px] md:h-[200px] w-[100px] h-100px]"
+          />
         </div>
         <div>
-          <h2 className="md:text-2xl text-xl font-thin text-center mt-5">
+          <h2 className="md:text-2xl text-xl font-thin text-center mt-5 p-5">
             Experience the joy of sharing and connecting on <br />
             <span className="font-bold md:text-3xl text-2xl text-[#772ba9]">
               SOCIALVISTA.
@@ -121,7 +131,9 @@ function SignUp() {
                 )}
               </div>
               <div>
-                <button className="btn bg-[#772ba9] w-full">Sign up</button>
+                <button className="btn bg-[#772ba9] w-full">
+                  {loder ? <Spinner /> : "Sign up"}
+                </button>
               </div>
             </div>
           </form>

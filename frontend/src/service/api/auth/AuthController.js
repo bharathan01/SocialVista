@@ -12,7 +12,7 @@ export const login = async (userData) => {
       const error = errors?.response?.data;
       return error;
     } else {
-      console.log("eeror maessege :", errors.message);
+       return
     }
   }
 };
@@ -25,7 +25,7 @@ export const sendGoogleLoginRequest = async (userData) => {
       const error = errors?.response?.data;
       return error;
     } else {
-      console.log("eeror maessege :", errors.message);
+      return
     }
   }
 };
@@ -39,7 +39,7 @@ export const register = async (userData) => {
       const error = errors?.response?.data;
       return error;
     } else {
-      console.log("eeror maessege :", errors.message);
+      return
     }
   }
 };
@@ -54,7 +54,7 @@ export const logOut = async () => {
       const error = errors?.response?.data;
       return error;
     } else {
-      console.log("eeror maessege :", errors.message);
+      return
     }
   }
 };

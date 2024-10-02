@@ -34,7 +34,7 @@ function LeftSidebar() {
           })}
         </div>
       </div>
-      <div className="w-full mb-5 flex items-end md:mt-[150px] mt-[80px]   ">
+      <div className="w-full mb-5 flex items-end md:mt-[150px] mt-[20px]   ">
         <div className="flex items-center justify-around w-full rounded-3xl  p-1">
           <Link to={`/Profile/${userInfo.id}`}>
             <div className="rounded-full w-10 h-10 overflow-x-hidden object-contain hover:cursor-pointer ">

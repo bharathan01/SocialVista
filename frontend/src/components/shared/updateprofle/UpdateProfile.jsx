@@ -49,7 +49,6 @@ function UpdateProfile({ userData }) {
     formData.append("email", updatedValues.email);
     formData.append("bio", updatedValues.bio);
     const responce = await updateUserProfile(userData._id, formData);
-    console.log(responce);
     if (responce.status === "SUCCESS") {
       setLoader(false);
     }

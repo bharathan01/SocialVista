@@ -285,7 +285,6 @@ const resetPassword = tryCatch(async (req, res) => {
 const getNewPassword = tryCatch(async (req, res) => {
   const { id } = req.params;
   const { password, confirmPassword } = req.body;
-  console.log(password, confirmPassword);
   if (!id && !password) {
     throw new ApiError(
       BAD_REQUEST,

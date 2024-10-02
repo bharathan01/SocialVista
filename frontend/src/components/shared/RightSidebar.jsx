@@ -20,7 +20,6 @@ function RightSidebar() {
     const newsData = await getLiveNews();
     if (!newsData.status === "ok") {
     }
-    console.log(newsData.results)
     setNews(newsData.results);
   };
   useEffect(() => {

@@ -10,7 +10,6 @@ function Search() {
     setSearchQuery(query);
     if (!query) {
       setSearchUser(null);
-      console.log('hai')
       return
     }
     const responce = await getSearchUser(searchQuery);

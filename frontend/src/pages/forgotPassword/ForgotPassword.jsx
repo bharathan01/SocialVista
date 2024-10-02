@@ -6,8 +6,8 @@ function ForgotPassword() {
     console.log(data);
   };
   return (
-    <div className="flex w-full h-screen items-center justify-center">
-      <div className="md:w-[50%] w-[100%] h-[50%] bg-gray-900 flex flex-col items-center justify-center rounded-lg gap-4">
+    <div className="flex w-full h-screen items-center justify-center p-4">
+      <div className="md:w-[50%] w-[100%] h-[50%] bg-gray-900 flex flex-col items-center justify-center rounded-lg gap-4 p-3">
         <div className="flex items-center flex-col mb-3">
           <div className="flex items-center ">
             <img src={logo} alt="logo" className="w-12 h-12 object-contain" />

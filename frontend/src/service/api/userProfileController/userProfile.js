@@ -11,9 +11,7 @@ export const getUserProfileDetails = async (userId) => {
     if (error.response) {
       const error = error?.response?.data;
       return error;
-    } else {
-      console.log("error maessege :", error.message);
-    }
+    } 
   }
 };
 export const getCurrentUser = async () => {
@@ -24,9 +22,7 @@ export const getCurrentUser = async () => {
     if (error.response) {
       const error = error?.response?.data;
       return error;
-    } else {
-      console.log("error maessege :", error.message);
-    }
+    } 
   }
 };
 export const getUserOwnPost = async (id) => {
@@ -37,9 +33,7 @@ export const getUserOwnPost = async (id) => {
     if (error.response) {
       const error = error?.response?.data;
       return error;
-    } else {
-      console.log("error maessege :", error.message);
-    }
+    } 
   }
 };
 export const getUserLikesPosts = async (id) => {
@@ -50,9 +44,7 @@ export const getUserLikesPosts = async (id) => {
     if (error.response) {
       const error = error?.response?.data;
       return error;
-    } else {
-      console.log("error maessege :", error.message);
-    }
+    } 
   }
 };
 export const updateUserProfile = async (userId, profileData) => {
@@ -71,8 +63,6 @@ export const updateUserProfile = async (userId, profileData) => {
     if (error.response) {
       const error = error?.response;
       return error;
-    } else {
-      console.log("error maessege :", error.message);
     }
   }
 };
@@ -84,8 +74,6 @@ export const followUnfollow = async (id) => {
     if (error.response) {
       const error = error?.response?.data;
       return error;
-    } else {
-      console.log("error maessege :", error.message);
-    }
+    } 
   }
 };

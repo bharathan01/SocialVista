@@ -37,8 +37,6 @@ function ProfileCard({ FollowingUser, follow }) {
     responce.data?._id === followUser._id
       ? setCurrentUser(true)
       : setCurrentUser(false);
-
-    console.log(responce.data._id === FollowingUser._id);
   };
   useState(() => {
     getUser();

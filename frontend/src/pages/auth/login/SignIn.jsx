@@ -2,15 +2,20 @@ import React, { useId, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../../../public/images/logo.png";
-import { login, sendGoogleLoginRequest } from "../../../service/api/auth/AuthController";
+import {
+  login,
+  sendGoogleLoginRequest,
+} from "../../../service/api/auth/AuthController";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../../redux/slice/userAuth.slice";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { firebaseAuth } from "../../../firebase";
+import { Spinner } from "../../../components";
 function SignIn() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { userInfo, isUserLoggedIn } = useSelector((state) => state.userAuth);
+  const [ loader, setLoader ] = useState(false);
   const [logInCredentials, setlogIncredentials] = useState({
     userId: "",
     password: "",
@@ -35,9 +40,11 @@ function SignIn() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoader(true);
     try {
       const response = await login(isUserField());
       if (response.status === "SUCCESS") {
+        setLoader(false)
         dispatch(loginUser(response.data));
         navigate("/");
       } else {
@@ -51,7 +58,7 @@ function SignIn() {
         }
       }
     } catch (error) {
-      console.error("Error submitting form:", error);
+       return
     }
   };
   const loginWithGoogle = async () => {
@@ -140,7 +147,9 @@ function SignIn() {
                 </Link>
               </div>
               <div>
-                <button className="btn bg-[#772ba9] w-full">Sign up</button>
+                <button className="btn bg-[#772ba9] w-full">
+                  {loader ? <Spinner /> : "Sign up"}
+                </button>
               </div>
             </div>
           </form>

@@ -130,7 +130,7 @@ function SingleChat() {
             </div>
           </div>
           <div
-            className="absolute h-[73vh]  bottom-16 xl:w-[60%] lg:w-[50%] md:w-[53%] w-[82%] mr-4 ml-2 overflow-y-auto"
+            className="absolute h-[70vh]  bottom-16 xl:w-[60%] lg:w-[50%] md:w-[53%] w-[82%] mr-4 ml-2 overflow-y-auto"
             ref={chatContainerRef}
           >
             {isAlreadyChated &&

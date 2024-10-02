@@ -48,7 +48,6 @@ function CreatePost({ onCloseModel }) {
   };
   const onEmojiSelect = (e) => {
     const sym = e.unified.split("_");
-    console.log(sym)
     const codeArray = [];
     sym.forEach((el) => codeArray.push("0x" + el));
     let emoji = String.fromCodePoint(...codeArray);

@@ -11,9 +11,7 @@ export const getFollowingPost = async () => {
     if (errors.response) {
       const error = errors?.response?.data;
       return error;
-    } else {
-      console.log("error maessege :", errors.message);
-    }
+    } 
   }
 };
 export const getForYouPost = async () => {
@@ -24,9 +22,7 @@ export const getForYouPost = async () => {
     if (errors.response) {
       const error = errors?.response?.data;
       return error;
-    } else {
-      console.log("error maessege :", errors.message);
-    }
+    } 
   }
 };
 export const likeUnlikePost = async (postId) => {
@@ -39,9 +35,7 @@ export const likeUnlikePost = async (postId) => {
     if (errors.response) {
       const error = errors?.response?.data;
       return error;
-    } else {
-      console.log("error maessege :", errors.message);
-    }
+    } 
   }
 };
 export const commentPost = async (postId, commentData) => {
@@ -55,9 +49,7 @@ export const commentPost = async (postId, commentData) => {
     if (errors.response) {
       const error = errors?.response?.data;
       return error;
-    } else {
-      console.log("error maessege :", errors.message);
-    }
+    } 
   }
 };
 export const createPost = async (postData) => {
@@ -73,9 +65,7 @@ export const createPost = async (postData) => {
     if (errors.response) {
       const error = errors?.response?.data;
       return error;
-    } else {
-      console.log("error maessege :", errors.message);
-    }
+    } 
   }
 };
 export const deletePost = async (postId) => {
@@ -86,9 +76,7 @@ export const deletePost = async (postId) => {
     if (errors.response) {
       const error = errors?.response?.data;
       return error;
-    } else {
-      console.log("error maessege :", errors.message);
-    }
+    } 
   }
 };
 export const updatePost = async (postId,postData) => {
@@ -104,8 +92,6 @@ export const updatePost = async (postId,postData) => {
     if (errors.response) {
       const error = errors?.response?.data;
       return error;
-    } else {
-      console.log("error maessege :", errors.message);
     }
   }
 };

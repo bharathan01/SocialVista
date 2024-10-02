@@ -12,9 +12,7 @@ export const getSuggection = async () => {
     if (errors.response) {
       const error = errors?.response?.data;
       return error;
-    } else {
-      console.log("error maessege :", errors.message);
-    }
+    } 
   }
 };
 export const getNotications = async () => {
@@ -25,9 +23,7 @@ export const getNotications = async () => {
     if (errors.response) {
       const error = errors?.response?.data;
       return error;
-    } else {
-      console.log("error maessege :", errors.message);
-    }
+    } 
   }
 };
 export const deleteAllNotifications = async () => {
@@ -38,9 +34,7 @@ export const deleteAllNotifications = async () => {
     if (errors.response) {
       const error = errors?.response?.data;
       return error;
-    } else {
-      console.log("error maessege :", errors.message);
-    }
+    } 
   }
 };
 export const getFollowers = async (id) => {
@@ -51,9 +45,7 @@ export const getFollowers = async (id) => {
     if (errors.response) {
       const error = errors?.response?.data;
       return error;
-    } else {
-      console.log("error maessege :", errors.message);
-    }
+    } 
   }
 };
 export const getFollowing = async (id) => {
@@ -64,9 +56,7 @@ export const getFollowing = async (id) => {
     if (errors.response) {
       const error = errors?.response?.data;
       return error;
-    } else {
-      console.log("error maessege :", errors.message);
-    }
+    } 
   }
 };
 export const getSearchUser = async (searchUser) => {
@@ -81,9 +71,7 @@ export const getSearchUser = async (searchUser) => {
     if (errors.response) {
       const error = errors?.response?.data;
       return error;
-    } else {
-      console.log("error maessege :", errors.message);
-    }
+    } 
   }
 };
 export const getLiveNews = async () => {
@@ -113,8 +101,6 @@ export const resetPassword = async (emailId) => {
     if (errors.response) {
       const error = errors?.response?.data;
       return error;
-    } else {
-      console.log("error maessege :", errors.message);
-    }
+    } 
   }
 };
