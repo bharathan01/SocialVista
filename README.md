@@ -1,6 +1,6 @@
 
-![SocialVista logIn](https://github.com/bharathan01/SocialVista/blob/main/frontend/public/images/Screenshot%202024-10-03%20011456.png)
-![SocialVista Homepage](https://github.com/bharathan01/SocialVista/blob/main/frontend/public/images/Screenshot%202024-10-03%20011431.png)
+![SocialVista logIn](https://github.com/bharathan01/SocialVista/blob/main/frontend/public/images/Screenshot%202024-10-03%20011456.png)![SocialVista Homepage](https://github.com/bharathan01/SocialVista/blob/main/frontend/public/images/Screenshot%202024-10-03%20011431.png)
+
 
 SOCIALVISTA - A SOCIAL MEDIA PLATFORM
 --------------------------------------
